@@ -1,0 +1,95 @@
+\documentclass[floats,floatfix,showpacs,amssymb,prd,superscriptaddress,nofootinbib]{revtex4-2} % documentation at https://journals.aps.org/revtex/revtex-faq#u2
+\bibliographystyle{apsrev}
+
+% \documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{xparse}
+\usepackage[backend=biber]{biblatex}
+\addbibresource{references.bib}
+\usepackage{minted}
+\usepackage{xcolor}
+\definecolor{LightGray}{gray}{0.9}
+\usepackage[left=2.54cm,right=2.54cm,top=2.54cm,bottom=2.54cm]{geometry}
+\font\titlefont=cmr12 at 16pt
+% inserting cover sheet: https://tex.stackexchange.com/questions/438775/how-to-insert-a-pdf-page-as-a-front-cover
+
+% \newcommand{\PL}[1]{\textsf{\color{green!80!black}{\textsuperscript{PL}#1}}}
+\newcommand{\code}{\texttt}
+\setlength{\parindent}{20pt}
+% \setstretch{1.25}
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=0.9\columnwidth]{images/Kyle_BLvsCR.png}
+%     \caption{Recovered binary neutron star tidal parameters with and without binary Love relations, as compared to the common radius approximation.}
+%     \label{fig:BLvsCR}
+% \end{figure}
+
+\begin{document}
+
+\title{{\titlefont Effects of variable resolution and cosmological parameters
+\\on the hydrogen 21cm cosmic dawn signal}\\{\small Supervised by Prof. Anastasia Fialkov and Jiten Dhandha}}
+% project title : Impact of structure formation and cosmology on the hydrogen 21-cm signal from cosmic dawn
+\date{9 December, 2024}
+\author{Kyle Wong}
+\affiliation{Institute of Astronomy, University of Cambridge, Madingley Road, Cambridge, CB3 0HA, UK}
+
+% \begin{abstract}
+% Summarize the problem we are solving and our main findings.
+% \end{abstract}
+
+\maketitle
+\section{Introduction}
+\subsection{21cm Cosmology}
+Understanding the formation and evolution of cosmic structure remains one of the central goals of modern cosmology. While observations of the cosmic microwave background (CMB) and large-scale structure surveys have provided invaluable insights into the early and late-time universe, there exists a significant observational gap between the release of the CMB ($\sim$380,000 years after the Big Bang) and the emergence of the first luminous structures several hundred million years later. This intermediate period, encompassing the so-called Dark Ages, Cosmic Dawn, and the Epoch of Reionization (EoR), holds crucial information about the universe's thermal and ionization history, the formation of the first stars and galaxies, and the onset of feedback processes.
+
+21cm cosmology offers a unique and powerful tool to probe this otherwise inaccessible era. The signal arises from the hyperfine transition of neutral hydrogen (HI), which occurs when the relative spin orientation of the proton and electron flips from parallel to antiparallel, emitting or absorbing a photon with a rest-frame wavelength of 21 centimeters (corresponding to 1.42 GHz). Because neutral hydrogen was the most abundant element in the early universe, the 21cm line provides a pervasive and potentially highly informative tracer of matter distribution over cosmic time.
+
+As the universe expands, the 21cm signal is redshifted, allowing observations at different frequencies to correspond to different epochs. By mapping the sky across frequency channels, it is possible to construct a three-dimensional tomographic view of the intergalactic medium (IGM). This makes the 21cm line a particularly sensitive probe for the thermal history of the IGM, the timing and topology of reionization, the formation of the first stars and black holes, and potentially, physics beyond the standard cosmological model, such as dark matter interactions or exotic energy injection.
+
+The brightness temperature of the 21cm signal, measured relative to the CMB, depends on the spin temperature of hydrogen, the neutral fraction, and the local density field. The differential brightness temperature can be written as
+
+\begin{equation}
+    \delta T_b (\nu) = 27 \ x_{HI} \ (1 + \delta_b) \left(1 - \frac{T_\gamma}{T_s} \right) \left(\frac{1 + z}{10} \frac{0.15}{\Omega_m h^2} \right)^{1/2} \left( \frac{\Omega_b h^2}{0.023} \right) \text{mK}
+\end{equation}
+
+\noindent where $x_{HI}$ is the neutral hydrogen fraction, $\delta_b$ is the baryon overdensity, $T_s$ is the spin temperature, $T_\gamma$ is the CMB temperature at redshift $z$, and $\Omega_m$, $\Omega_b$ are the matter and baryon density parameters respectively.
+
+Detecting this signal presents substantial technical challenges. The cosmological 21cm signal is typically five orders of magnitude fainter than galactic and extragalactic foregrounds, including synchrotron emission from our Galaxy. Additionally, instrumental systematics, ionospheric effects, and radio frequency interference (RFI) must be mitigated with extreme precision.
+
+Despite these obstacles, a growing number of dedicated low-frequency radio interferometers—such as LOFAR, MWA, HERA, and the upcoming Square Kilometre Array (SKA)—are designed to detect and characterize the 21cm signal from the early universe. These instruments aim to measure the power spectrum of 21cm fluctuations, and eventually, perform direct imaging of the neutral IGM.
+
+21cm cosmology is poised to become a cornerstone of observational cosmology, potentially offering a detailed timeline of the universe's first billion years and enabling precision tests of fundamental physics in a previously uncharted epoch.
+
+\subsection{Initial conditions}
+
+
+\section{21cmSPACE}
+As with any physical system, simulations are an effective way to 
+
+\section{Project definition}
+
+\section{Results}
+
+\section{Discussion}
+\subsection{Comparison with current constraints}
+
+\section{Conclusion and future work}
+
+
+
+% \begin{acknowledgments}
+% K.W. thanks...
+% \end{acknowledgments}
+
+\nocite{*}
+\printbibliography[title={References}]
+
+\end{document}
