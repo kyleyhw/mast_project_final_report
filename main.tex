@@ -191,6 +191,8 @@ The underlying cosmology in 21cmSPACE can therefore be changed by altering these
 
 In principle, this will enable exploration of the cosmological parameter space, relating each point in the five-dimensional space to a particular shape of the global signal and a particular shape of the power spectrum. Along with experimental data, the parameter space may then be constrained to narrow down possible locations for the true cosmology of the Universe. As well as this, the comparison of simulated signals with physical measurements will enable the verification or rejection of cosmological theories.
 
+\red{Do I need to show preliminary differences in the CAMB IC power spectra here, illustrating that the project is expected to make a measurable impact in simulated wavenumbers?}
+
 
 \newpage
 \section{Theoretical Background}
@@ -343,10 +345,10 @@ To define $v_{bc}$, the velocity divergence must first be defined as
     \centering
     \begin{tabular}{|c|c|}
         \hline
-        Parameter & Value\\ \hhline{|=|=|}
+        Parameter \red{needs units} & Value\\ \hhline{|=|=|}
         $h$ & $0.6704$\\ \hline
-        $\Omega_{\text{b}, 0}$ & $0.12038$\\ \hline
-        $\Omega_{\text{dm}, 0}$ & $0.022032$\\ \hline
+        $\Omega_{\text{b}, 0}$ & $0.022032$\\ \hline
+        $\Omega_{\text{dm}, 0}$ & $0.12038$\\ \hline
         $\Omega_{\text{k}}, 0$ & \red{$-0.001$(https://www.aanda.org/articles/aa/pdf/2014/11/aa21591-13.pdf eq67b)}\\ \hline
         $T_{\text{CMB},0}$ & \red{???} \\ \hline
     \end{tabular}
@@ -443,8 +445,31 @@ As well as this, the calculation of velocity divergence requires the value of $H
 
 \noindent with the radiation pressure $\Omega_R$ hard-coded to $8.5522 \times 10^{-5}$ \red{where is this from?}. To keep consistent with the input cosmology, this \code{get\_H\_z} method is now instead replaced with the \code{astropy.cosmology} instance's \code{H} method.
 
+Since the new code is all written in the same language, a given random seed should cause all calculations to be deterministically performed. Therefore, any discrepancy in the initial condition grids must be due to a difference in the propagation of the cosmological parameters. This is illustrated in fig. \ref{fig:initial_condition_grid_WMAP9}, fig. \ref{fig:initial_condition_grid_Planck18}, and fig. \ref{fig:difference_in_initial_grid_WMAP9_Planck18}, which show a slice of initial condition boxes generated using the same random seed: the upper plots show that the initial conditions are, by eye, very similar (due to the deterministic nature of the random draws with a fixed seed). The lower plot, however, shows the difference in initial condition boxes, with deviations of up to $5 \%$.
 
+\newpage
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{images/ic_grids/initial_condition_grid_WMAP9.png}
+    \caption{CAPTION}
+    \label{fig:initial_condition_grid_WMAP9}
+\end{figure}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{images/ic_grids/initial_condition_grid_Planck18.png}
+    \caption{CAPTION}
+    \label{fig:initial_condition_grid_Planck18}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{images/ic_grids/difference_in_initial_grid_WMAP9_Planck18.png}
+    \caption{CAPTION}
+    \label{fig:difference_in_initial_grid_WMAP9_Planck18}
+\end{figure}
+
+\newpage
 \subsection{Incorporation of Cosmology into the Halo Mass Function}
 \subsection{Consistency Checks}
 Although the rewriting of code maintained the same mathematical algorithm, translating code from one language into another often introduces inconsistencies due to the nature of hardware interaction, or variations in implicitly-called library package subroutines. It is therefore important to perform consistency checks at every stage, in order to maintain confidence that the simulation is reflective of the underlying physics.
@@ -453,61 +478,136 @@ Due to the statistical nature of measurements, however, the stochacity in the in
 
 It is therefore important to iterate the algorithm in both MATLAB and Python multiple times, and statistically compare the power spectra that these initial condition boxes produce. Specifically, after generating the initial condition boxes, the power spectrum can be computed independently from its generation. Taking each power spectrum from individual initial condition boxes, their average value at each $k$ sample may be calculated as a best estimate of the power at that wavenumber; similarly, the standard deviation of the power value at each $k$ sample may be used as an estimate of the uncertainty in the power, as a result of propogation of randomness from the initial Gaussian field. In principle, averaging an infinite number of iterations will return the original power spectrum which should perfectly agree with each other. However, in practice, each algorithm has an associated computational cost, limiting the number of samples; yet, as shown in fig. \ref{fig:compare_generators_power_spectrum_noCAMB_delta_m} and fig. \ref{fig:compare_generators_power_spectrum_noCAMB_vbc}, only as few as $10$ runs is needed to clearly illustrate the agreement of the two code scripts with each other. The plots also include the fractional error, calculated by taking the absolute difference between the two methods, and then dividing by the legacy method's best estimate.
 
+\newpage
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\columnwidth]{images/compare_generators_averaged_power_spectra_with_residual_noCAMB_delta_m.png}
+    \includegraphics[width=0.9\columnwidth]{images/ic_power_spectra/compare_generators_averaged_power_spectra_with_residual_noCAMB_delta_m.png}
     \caption{The upper axes show a comparison of power spectra between legacy and new initial condition generation scripts, \textbf{before} the incorporation of CAMB. Best estimates are calculated using the average of power at each $k$ sample over $10$ iterations to smooth out effects from randomness in the initial Gaussian draws, and error bars are calculated by taking the standard deviation of the same quantity. The lower axes show the fractional error between the two scripts, treating the legacy script as truth.}
     \label{fig:compare_generators_power_spectrum_noCAMB_delta_m}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\columnwidth]{images/compare_generators_averaged_power_spectra_with_residual_noCAMB_v_bc.png}
+    \includegraphics[width=0.9\columnwidth]{images/ic_power_spectra/compare_generators_averaged_power_spectra_with_residual_noCAMB_v_bc.png}
     \caption{CAPTION}
     \label{fig:compare_generators_power_spectrum_noCAMB_vbc}
 \end{figure}
 
-As is illustrated \red{the formatting needs to be cleared up; it is hard to see.} in the fractional error plots, it is 
+\newpage
+As is illustrated \red{the formatting needs to be cleared up; it is hard to see.} in the fractional error plots, the deviation between the legacy and new scripts is negligible; furthermore, all error bars overlap with $0 \%$ error, signifying that the legacy and new scripts, despite written in different languages and having different subroutines for the initialisation of Gaussian random fields, perform the same calculations and, more importantly, preserve the physics behind the computation.
 
 The incorporation of \code{CAMB} into each execution of \code{get\_IC\_N} is also a potential source of deviation. As \code{CAMB} is an independently maintained code package, it is possible that \code{CAMB} has undergone changes in its parameters, calculation, or post-processing over the \red{decade} since the original legacy precomputed transfer functions used in \code{get\_IC\_N} were written to file. Therefore, it is useful to check that \code{get\_IC\_N}'s output, when using the legacy code with hard-coded Planck 2013 parameters, is consistent with the new code when directly calling \code{CAMB}, also using Planck 2013 parameters. The comparisons are shown in fig. \ref{fig:compare_generators_power_spectrum_delta_m} and \ref{fig:compare_generators_power_spectrum_vbc}.
 
+\newpage
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\columnwidth]{images/compare_generators_averaged_power_spectra_with_residual_delta_m.png}
+    \includegraphics[width=0.9\columnwidth]{images/ic_power_spectra/compare_generators_averaged_power_spectra_with_residual_delta_m.png}
     \caption{The upper axes show a comparison of power spectra between legacy and new initial condition generation scripts, \textbf{after} the incorporation of CAMB. Best estimates are calculated using the average of power at each $k$ sample over $10$ iterations to smooth out effects from randomness in the initial Gaussian draws, and error bars are calculated by taking the standard deviation of the same quantity. The lower axes show the fractional error between the two scripts, treating the legacy script as truth.}
     \label{fig:compare_generators_power_spectrum_delta_m}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\columnwidth]{images/compare_generators_averaged_power_spectra_with_residual_v_bc.png}
+    \includegraphics[width=0.9\columnwidth]{images/ic_power_spectra/compare_generators_averaged_power_spectra_with_residual_v_bc.png}
     \caption{CAPTION}
     \label{fig:compare_generators_power_spectrum_vbc}
 \end{figure}
 
+\newpage
+The fractional error plot in $v_{bc}$ shows all error bars overlapping with $0$ error; therefore, the $v_{bc}$ calculation when incorporating \code{CAMB} can be taken to be statistically identical. However, fractional error in the $\delta_m$ power spectrum shows an error of about $3 \%$. This is perhaps unsurprising, \red{since the legacy generation used parameters drawn from different sources, some updated over the years}. As well as this, $3 \%$ error is negligible in the scheme of current instrumental errors in observational 21-cm astronomy. Together, these consistency checks \red{are convincing} enough to approve the use of the \code{CAMB}-incorporated Python version of \code{get\_IC\_N} into 21cmSPACE.
 
+With the infrastructure in place, it is also important to check that different cosmologies indeed imprint differences in the power spectra. This is shown in fig. \ref{fig:compare_cosmologies_averaged_IC_power_spectra}: in the range of wavenumbers simulated by 21cmSPACE, there is already measurable differences depending on the cosmology used.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{images/ic_power_spectra/compare_cosmologies_averaged_power_spectra.png}
+    \caption{CAPTION}
+    \label{fig:compare_cosmologies_averaged_IC_power_spectra}
+\end{figure}
 
 \newpage
 \section{Results}
 \subsection{Simulation Suite}
-So far, two successful 21cmSPACE runs have been executed with varied cosmology \red{with more to come}. These use the 
-\subsection{Global 21cm Signal}
+So far, two \red{(more to come)} successful 21cmSPACE runs have been executed different initial conditions, each of which incorporates different cosmological parameters. These use cosmolgies included in \code{astropy}'s presets -- specifically, the WMAP9 and Planck 2018 \code{FlatLambdaCDM} instances. Their parameter values are summarized in tab. \ref{tab:astropy_cosmology_parameter_values}.
+
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Parameter \red{needs units} & WMAP9 & Planck 2018\\ \hhline{|=|=|=|}
+        $h$ & $0.6932$ & $0.6766$\\ \hline
+        $\Omega_{\text{b}, 0}$ & $0.04628$ & $0.04897$\\ \hline
+        $\Omega_{\text{dm}, 0}$ & $0.24022$ & $026069$\\ \hline
+        $\Omega_{\text{k}}, 0$ & $0.0$ & $0.0$\\ \hline
+        $T_{\text{CMB},0}$ & 2.725 & $2.7255$\\ \hline
+    \end{tabular}
+    \caption{Included cosmology parameter values}
+    \label{tab:astropy_cosmology_parameter_values}
+\end{table}
+
 \subsection{21cm Power Spectrum}
-% \subsection{Halo Mass Function Results}
+Using these parameter values, 21cmSPACE was executed from beginning to end, and the results plotted. Fig. \ref{fig:power_spectrum_difference_Planck18_WMAP9} shows the effect of the two different sets of cosmological parameters on the 21-cm power spectrum, with \ref{fig:power_spectrum_difference_default_WMAP9} and \ref{fig:power_spectrum_difference_default_Planck18} the differences between the new cosmology and legacy code, before the incorporation of variable cosmology. 
+
+\newpage
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{images/simulation_results/power_spectrum_difference_Planck18_WMAP9.png}
+    \caption{CAPTION}
+    \label{fig:power_spectrum_difference_Planck18_WMAP9}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{images/simulation_results/power_spectrum_difference_default_WMAP9.png}
+    \caption{CAPTION}
+    \label{fig:power_spectrum_difference_default_WMAP9}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{images/simulation_results/power_spectrum_difference_default_Planck18.png}
+    \caption{CAPTION}
+    \label{fig:power_spectrum_difference_default_Planck18}
+\end{figure}
+
+\subsection{Global 21cm Signal}
+Analogously to the 21-cm power spectrum, fig. \ref{fig:global_signal_difference_Planck18_WMAP9} shows the effect of the two different sets of cosmological parameters on the 21-cm global signal, with \ref{fig:global_signal_difference_default_WMAP9} and \ref{fig:global_signal_difference_default_Planck18} the differences between the new cosmology and legacy code, before the incorporation of variable cosmology. 
+
+\newpage
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{images/simulation_results/global_signal_difference_Planck18_WMAP9.png}
+    \caption{CAPTION}
+    \label{fig:global_signal_difference_Planck18_WMAP9}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{images/simulation_results/global_signal_difference_default_WMAP9.png}
+    \caption{CAPTION}
+    \label{fig:global_signal_difference_default_WMAP9}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{images/simulation_results/global_signal_difference_default_Planck18.png}
+    \caption{CAPTION}
+    \label{fig:global_signal_difference_default_Planck18}
+\end{figure}
 
 \newpage
 \section{Discussion}
-\subsection{Implications for Cosmology with 21cm}
+\red{to be done after incorporating more results}
+% \subsection{Implications for Cosmology with 21cm}
 \subsection{Accuracy of Implementation}
 \subsection{Comparison with Prior Work}
 \subsection{Uncertainties and Error Bars}
 \subsection{Relevance for Upcoming Experiments}
 
-\newpage
 \section{Conclusion and Future Work}
-\subsection{Conclusions}
-\subsection{Project Achievements}
-\subsection{Future Work}
+% \subsection{Conclusions}
+% \subsection{Project Achievements}
+% \subsection{Future Work}
 
 \section{Acknowledgements}
 
