@@ -88,7 +88,7 @@ Through the advantages and disadvantages of both numerical and analytical models
 \subsection{Design principles}
 21cmSPACE (21-cm Semi-numerical Predictions Across Cosmic Epochs) evolves large-scale structure using analytic or perturbative solutions, while key astrophysical processes are included via parametric, sub-grid models and numerical integration where necessary. The core aim of 21cmSPACE is to propagate the 21-cm brightness temperature field forward in time, in order to compute observable quantities such as the global (sky-averaged) 21-cm signal and its power spectrum. To achieve this, the code self-consistently tracks the evolution of all relevant fields -- e.g., the hydrogen spin temperature $T_S$, the background radiation temperature $T_\gamma$, the hydrogen neutral fraction $x_{\text{HI}}$, as well as derived quantities like star formation rates and radiation intensities.
 
-By design, 21cmSPACE divides the problem according to scale: large-scale intergalactic fields (such as density, velocity, radiation backgrounds) are evolved on a coarsely resolved simulation grid, while small-scale phenomena (halo collapse, star formation, feedback) are handled by sub-grid prescriptions. \red{include illustration as in thomas thesis?} THis separation of scales is the key to computational efficiency, without needing to sacrifice essential physical processes.
+By design, 21cmSPACE divides the problem according to scale: large-scale intergalactic fields (such as density, velocity, radiation backgrounds) are evolved on a coarsely resolved simulation grid, while small-scale phenomena (halo collapse, star formation, feedback) are handled by sub-grid prescriptions. \red{include illustration as in thomas thesis?} This separation of scales is the key to computational efficiency, without needing to sacrifice essential physical processes.
 
 Several design philosophies underlie 21cmSPACE. First, it emphasises flexibility in exploring astrophysical scenarios -- a wide array of input parameters \red{include table like in thomas thesis?} control star formation efficiencies, feedback strengths, spectral emissivities, etc., enabling the user to test different models of early-Universe astrophysics. For example, the efficiencies of Pop II  and Pop III star formation ($f_{\textasteriskcentered,II}$, $f_{\textasteriskcentered,III}$) and the delay time between Pop III and Pop II episodes ($t_{\text{delay}}$) are all tunable inputs. Likewise, the relative X-ray luminosity of high-$z$ X-ray binaries ($f_X$) and any additional radio background strength ($f_r$) can be specified. Second, the code is structured for performance: any components of the calculation that do not depend on the specific astrophysical parameters are precomputed once and stored for reuse. This includes, for instance, cosmological tables, linear perturbation growth factors, and radiation window functions (used for fast radiative transfer, discussed later). Third, 21cmSPACE assumes a fixed cosmological model during a run (by default the Planck 2013 $\Lambda$CDM parameters) \red{and is optimized under that assumption. In principle the cosmology can be changed by updating internal lookup tables and regenerating precomputed grids, but the code is primarily designed to vary astrophysical inputs rather than cosmological ones, since uncertainties in high-$z$ astrophysics are much larger than current cosmology uncertainties}. Overall, the architecture of 21cmSPACE prioritizes physical fidelity (by including all major known 21-cm relevant processes) while maintaining speed through analytical treatments and precomputation. This makes it well-suited to produce rapid predictions of 21-cm observables across cosmic dawn and reionization for a range of scenarios.
 
@@ -244,7 +244,7 @@ Once reionization completed, the vast majority of the IGM remained ionized up to
 
 In astronomy, imaging a signal over a solid angle of sky is often seen as the holy grail of an experimental field. Unfortunately, in the case of 21-cm astronomy, this is inaccessible for a number of physical reasons. First and foremost, the 21-cm signal is extremely faint, with signals from the Epoch of Reionization often on the order of $1 \text{mK}$ to $10 \text{mK}$ \red{cite Furlanetto et al. 2006, Morales \& Wyithe 2010}. In contrast, a single radio-antenna system at  $\sim 150 \text{MHz}$ (\red{within the 50 to 250 MHz frequency band of HERA}) receives hundreds to thousands of kelvin of Galactic synchrotron emission and receiver noise. Because of this low signal-to-noise (SNR) ratio, there is not enough sensitivity to produce a high-fidelity image. In addition to this, recent experiments in 21-cm astronomy have heavily favored interferometric approaches over single-dish approaches, due to the advantage that variable and vastly long baselines are essential in providing high angular resolution, as well as the statistical simplicity \red{(bias free)} in data correlation. However, interferometers inherently miss the total power unless single-dish auto-correlations are included, which is impractical in current experiments due to dominant receiver systematics. \red{cite}
 
-Therefore, experiments in the field of 21-cm astronomy rely on statistical observations to inform the history of the universe. The most important of these is arguably the \textit{power spectrum}, whose measurement is the main focus for many current experiments (\red{cite HERA, etc?}). To define the power spectrum, first consider the three-dimensional Fourier transform from physical space to frequency space, defined by
+Therefore, experiments in the field of 21-cm astronomy rely on statistical observations to inform the history of the universe. The most important of these is arguably the \textit{power spectrum}, whose measurement is the main focus for many current experiments (\red{cite HERA, etc?}). To define the power spectrum, first consider the three-dimensional Fourier transform from physical space to Fourier space, defined by
 
 \begin{equation}
     \tilde{T} (\textbf{k}) \equiv \int^\infty _{-\infty} d^3 r e^{-i\textbf{k} \cdot \textbf{r}} T(\textbf{r})
@@ -262,7 +262,7 @@ The power spectrum can then be defined by the equation
     \langle \tilde{T} (\textbf{k}) \tilde{T} (\textbf{k}') ^{*} \rangle = (2 \pi)^3 \delta^{D}  (\textbf{k} - \textbf{k}') P(\textbf{k})
 \end{equation}
 
-\noindent with $\delta^D$ the Dirac delta function in $D$ dimensions, and $\langle ... \rangle$ the ensemble average operation. Equivalently, and perhaps more intuitively, the power spectrum can be interpreted as the Fourier transform of the correlation function $\xi(\textbf{x}) \equiv \langle T(\textbf{r}) T(\textbf{r} - \textbf{x}) \rangle$, emphasizing the fact that the power spectrum measures correlations in position space, but simply is expressed in frequency space:
+\noindent with $\delta^D$ the Dirac delta function in $D$ dimensions, and $\langle ... \rangle$ the ensemble average operation. Equivalently, and perhaps more intuitively, the power spectrum can be interpreted as the Fourier transform of the correlation function $\xi(\textbf{x}) \equiv \langle T(\textbf{r}) T(\textbf{r} - \textbf{x}) \rangle$, emphasizing the fact that the power spectrum measures correlations in position space, but simply is expressed in Fourier space:
 
 \begin{equation}
     \xi(\textbf{x}) = \int \frac{d^3 k}{(2 \pi)^3} P(\textbf{k}) e^{-i \textbf{k} \cdot \textbf{x}}.
@@ -302,6 +302,31 @@ While the power spectrum holds information about spatial fluctuations, it is als
 \subsection{Initial conditions}
 \subsubsection{Mass overdensities}
 \subsubsection{Streaming velocity effect}
+
+To define $v_{bc}$, the velocity divergence must first be defined as 
+
+\begin{equation}
+    \theta \equiv a^{-1} \nabla \cdot \textbf{v}
+    \label{eq:velocity_divergence}
+\end{equation}
+
+\noindent where $a$ is the dimensionless cosmological scale factor of the universe. \red{what is this divergence physically?} Then, the relative velocity is
+
+\begin{equation}
+    \textbf{v}_{bc} = \frac{\hat{k}}{ik} \left[ \theta_b (\textbf{k}) - \theta_c (\textbf{k}) \right]
+    \label{eq:vbc_definition}
+\end{equation}
+
+\noindent where the subscripts $b$ and $c$ denote the $\theta$ for baryons and CDM respectively. The power spectrum of $v_{bc}$ is given by 
+
+\begin{equation}
+\begin{split}
+        \langle v_{bc}^2 (\textbf{x}) \rangle 
+        & = \int \frac{dk}{k} \Delta_\zeta^2 (k) \left[ \frac{\theta_b (k) - \theta_c (k)}{k} \right]^2 \\
+        & = \int \frac{dk}{k} \Delta_{\text{vbc}}^2 (k)
+\end{split}
+\end{equation}
+
 \subsection{Press-Schechter Halo Mass Function}
 % \subsection{Impact on First Stars and the 21-cm Signal}
 % \subsection{Thermal and Ionization History, with uncertainties}
@@ -314,7 +339,7 @@ While the power spectrum holds information about spatial fluctuations, it is als
 21cmSPACE, originally written in MATLAB, takes as input pre-computed 3-dimensional initial condition grids: the matter overdensity field $\delta_m(\textbf{x})$ and the relative velocity field $v_{bc}(\textbf{x})$, and global values for the initial gas temperature and ionization fraction. These were previously hard-coded to follow the Planck 2013 \red{cite} cosmology, with parameters defined as the best estimates of the Planck collaboration's results \red{https://www.aanda.org/articles/aa/pdf/2014/11/aa21591-13.pdf table 2, Planck+WP best fit}, as shown in Table \ref{tab:Planck13_parameter_values}. 
 
 
-\begin{table}
+\begin{table}[!h]
     \centering
     \begin{tabular}{|c|c|}
         \hline
@@ -339,11 +364,53 @@ The generation of initial conditions was done primarily in the file \code{21cmSP
     P(k) = P_0 (k) T^2 (k).
 \end{equation}
 
-These transfer functions from each redshift are then used in \code{get\_IC\_N} to calculate the overdensity field 
+\noindent The primordial power spectrum itself is defined by 
+
+\begin{equation}
+    P_0 (k) = A_s \left( \frac{k}{k_*} \right)^{n_s - 1},
+\end{equation}
+
+\noindent where $k_*$ is the pivot scale $0.002 \text{Mpc}^{-1}$ \footnote{sometimes also chosen as $0.005 \text{Mpc}^{-1}$ in other conventions}, $A_s$ the amplitude of the spectrum at the pivot scale, and $n_s$ the scalar spectral index. This scalar spectral index  represents the tilt of the power spectrum, with $n_s = 1$ corresponding to the \red{Harrison-Zeldovich} spectrum, physically meaning that the power is scale invariant. 
+
+21cmSPACE currently uses hard-coded values of $A_s = 2.01664 \times 10^{-9}$ and $n_s = 0.9675$, \red{with $n_s$ consistent with the Planck2013 best-fit model (although it is from the Planck+lensing column of table 2, not Planck+WP like the other cosmological parameters?)}. These values are considered by some to be part of what defines a cosmology; however, this is not unanimous.
+
+These transfer functions from each redshift are then used in \code{get\_IC\_N} to calculate the \red{overdensity field power spectra} $\delta_m$, $\delta_b$, and $\delta_c$ for each of total matter, baryons, and cold dark matter respectively. To do this, they are first passed through a smoothing window function defined by 
+
+\begin{equation}
+    W(k) = \text{exp}\left( -\frac{k^2 R_w ^2}{2} \right)
+\end{equation}
+
+\noindent where $R_w$ is a characteristic smoothing scale, chosen to be $R_w = 1.7 / \pi$ for the smoothing of $3 ~\text{MPc}$ pixels. \footnote{\red{how was this chosen?}} This window function serves the purpose of smoothing scales smaller than $R_w$ in Fourier space, which correspond to higher $k$ values. The quantities are then defined as follows:
+
+\begin{equation}
+    \begin{split}
+        \delta_m & = W(k) \left[ \left( \frac{\Omega_b}{\Omega_m} T_{\text{baryon}} \right) + \left( \frac{\Omega_m - \Omega_b}{\Omega_m} T_{\text{CDM}} \right) \right] k^2 \left( P_0 (k) \right)^{1/2} \\
+        \delta_b & = W(k) ~ T_{\text{baryon}} k^2 \left( P_0 (k) \right)^{1/2} \\
+        \delta_c & = W(k) ~ T_{\text{CDM}} k^2 \left( P_0 (k) \right)^{1/2}
+    \end{split}
+\end{equation}
+
+These quantities are then used to define the relevant power spectra. The mass power spectrum is somewhat simple to calculate: 
+
+\begin{equation}
+    P_m(k) = 2\pi^2\Delta_\zeta ^2 (k) \frac{\delta_m^2}{k^3}
+\end{equation}
+
+\noindent where $\Delta_\zeta ^2 (k) = 2.42 \times 10^{-9}$ is the primordial curvature perturbation power spectrum \red{cite https://arxiv.org/pdf/0803.0586} \footnote{should this also be changed with cosmology, since it relies on WMAP data?}. 
+
+The $v_{bc}$ power spectrum, however, is less straightforward. First, the velocity divergences must be calculated as in eq. \ref{eq:velocity_divergence}. This is \red{not possible to do analytically}; rather, in practice, the baryon velocity divergence is calculated using
+
+\begin{equation}
+    \theta_b = \frac{H(z_{rec})}{c} (z_{rec} + 1) \frac{\delta_{b, 1020} - \delta_{b, 970}}{50}
+\end{equation}
+
+\noindent with $z_{rec} = 1020$ the redshift at which the initial conditions are generated \red{(and its value chosen based on the output RECFAST)}, and the $1020$ and $970$ subscripts denoting the redshift at which $\delta$ is evaluated. The CDM velocity divergence is calculated similarly.
+
+The initial $v_{bc}$ is then calculated according to the scalar form of eq. \ref{eq:vbc_definition}
 
 In order to implement variable cosmological parameters, 
 
-\subsection{Incorporation of New Halo Mass Functions}
+\subsection{Incorporation of Cosmology into the Halo Mass Function}
 \subsection{Consistency Checks}
 
 \newpage
