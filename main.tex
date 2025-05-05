@@ -83,7 +83,7 @@
 \newcommand{\supervisorone}{Prof. Anastasia Fialkov}
 \newcommand{\supervisortwo}{Jiten Dhandha}
 \newcommand{\myabstract}{
-21-cm astronomy is a promising probe of early-universe astrophysics, particularly in the cosmic eras known as the Dark Ages, Cosmic Dawn, and Epoch of Reionization. Astrophysical processes occurring during these periods is highly sensitive to the underlying cosmology. As such, the 21-cm signal also provides insight into the measurement cosmological parameters. While 21-cm simulations such as \code{21cmSPACE} focus predominantly on modelling the astrophysical processes prevalent during the early universe, the ability to vary the underlying cosmology in a 21-cm simulation will enable the study of the propagation of cosmological parameters onto the 21-cm signal. This study details a step in this direction: the implementation of variable cosmological parameters onto the generation of initial conditions (the initial mass overdensities $\delta_m$ and relative velocity between baryons and cold dark matter $v_{\text{bc}}$) in \code{21cmSPACE}, and the effects of changing some of these parameters is discussed.
+21-cm astronomy is a promising probe of early-universe astrophysics, particularly in the cosmic eras known as the Dark Ages, Cosmic Dawn, and Epoch of Reionization. Astrophysical processes occurring during these periods is highly sensitive to the underlying cosmology. As such, the 21-cm signal also provides insight into the measurement cosmological parameters. While 21-cm simulations such as \code{21cmSPACE} focus predominantly on modelling the astrophysical processes prevalent during the early universe, the ability to vary the underlying cosmology in a 21-cm simulation will enable the study of the propagation of cosmological parameters onto the 21-cm signal. This study details a step in this direction: the implementation of variable cosmological parameters onto the generation of initial conditions (the initial mass overdensities $\delta_m$ and relative velocity between baryons and cold dark matter $v_{\text{bc}}$) in \code{21cmSPACE}, and the effects of changing some of these parameters is discussed. In particular, varying the critical mass density $\Omega_m$ is shown to significantly affect the timing of cosmological eras, resulting in distortions of the 21-cm global signal and the 21-cm power spectrum.
 }
 \newcommand{\cid}{kyhw2}
 
@@ -315,7 +315,7 @@ The power spectrum can then be defined by the equation
     \xi(\textbf{x}) = \int \frac{d^3 k}{(2 \pi)^3} P(\textbf{k}) e^{-i \textbf{k} \cdot \textbf{x}}.
 \end{equation}
 
-This definition of the power spectrum includes the necessary information to completely statistically characterise a Gaussian random field \footnote{https://arxiv.org/pdf/astro-ph/0103017}, which underlies inflationary models. In cosmological literature, though, it is the quantity 
+This definition of the power spectrum includes the necessary information to completely statistically characterise a Gaussian random field \citep{Coles_2001}, which underlies inflationary models. In cosmological literature, though, it is the quantity 
 
 \begin{equation}
     \Delta^2 (k) \equiv \frac{k^3}{2\pi^2} P(k)
@@ -407,7 +407,7 @@ To define $v_{bc}$, the velocity divergence must first be defined as
 
 The generation of initial conditions was done primarily in the file \code{21cmSPACE/grids\_and\_ic/make\_ic/get\_IC\_N.m}, which defines the function \code{get\_IC\_N}. The function takes the two inputs $N_{pix}$, which represents the side-length of the total simulated spatial volume in number of pixels, and a random seed. The function then outputs two 3-dimensional scalar fields representing the $\delta_m$ field and the $v_{\text{bc}}$ field, where the first array holds the unitless deviation from average density, and the second array holds the relative velocity between baryons and CDM in units of $\text{km} \text{s}^{-1}$. 
 
-\code{get\_IC\_N} also further imports three precomputed files, each for a different redshift from $\{40, 970, 1020\}$ containing \textit{transfer function} data output by \code{CAMB}. These transfer functions mathematically encode how primordial density fluctuations are affected by processes such as radiation pressure, horizon entry, particle free-streaming \citep{coles2001largescalestructuretheorystatistics}. As a function of wavenumber, the processed power spectrum $P(k)$ relates to the primordial power spectrum $P_0 (k)$ through the transfer function $T(k)$ by the relation
+\code{get\_IC\_N} also further imports three precomputed files, each for a different redshift from $\{40, 970, 1020\}$ containing \textit{transfer function} data output by \code{CAMB}. These transfer functions mathematically encode how primordial density fluctuations are affected by processes such as radiation pressure, horizon entry, particle free-streaming \citep{Coles_2001}. As a function of wavenumber, the processed power spectrum $P(k)$ relates to the primordial power spectrum $P_0 (k)$ through the transfer function $T(k)$ by the relation
 
 \begin{equation}
     P(k) = P_0 (k) T^2 (k).
@@ -432,7 +432,7 @@ These transfer functions from each redshift are then used in \code{get\_IC\_N} t
 \end{equation}
 
 \noindent where $R_w$ is a characteristic smoothing scale, chosen to be $R_w = 1.7 / \pi$ for the smoothing of $3 ~\text{MPc}$ pixels.
-\footnote{\red{how was this chosen?}}
+%\footnote{\red{how was this chosen?}}
 This window function serves the purpose of smoothing scales smaller than $R_w$ in Fourier space, which correspond to higher $k$ values. The quantities are then defined as follows:
 
 \begin{equation}
@@ -479,7 +479,7 @@ Finally, the $v_{bc}$ power spectrum is calculated explicitly:
 Now that the matter power spectrum and relative velocity power spectrum have been explicitly calculated, the true generation of initial conditions may begin. First, a Gaussian random field is initialized in configuration space. Then, its Fourier transform is taken -- since the power spectrum correlates in Fourier space, it may only be applied in Fourier space. Initializing in configuration space before taking the Fourier transform enforces Hermitian symmetry, which is essential for maintaining real (as opposed to complex) overdensity fields. Further, the Gaussianity of the overdensities is preserved due to the fact that the Gaussian distribution is an eigenfunction of the Fourier transform. 
 
 This method, though, requires some normalization to be performed. The Fourier space variables are multiplied by a normalization constant $1 / \sqrt{L_{\text{pixel}}}$ and divided by their magnitude, and combed through 
-\footnote{\red{this is what is done in \code{get\_IC\_N.generate\_k\_values}, but what is it doing physically? and why is there a discontinuity in the middle?}} Is this sigma8 normalization? 
+%\footnote{\red{this is what is done in \code{get\_IC\_N.generate\_k\_values}, but what is it doing physically? and why is there a discontinuity in the middle?}} Is this sigma8 normalization? 
 sheet-by-sheet to impose phase changes such that the complex random variables in the simulation box experience one full revolution of phase. After this is done in all three axes, the power spectra can at last be imposed, scaling the random field in Fourier space to ensure that the perturbations match the cosmological model. This scaling is done using the same random variable base for the scalar $\delta_m$, as well as the $v_{bc}$ along each of the three spatial dimensions separately.
 
 Finally, the Fourier space variables are inverse Fourier transformed back into configuration space, and the three $v_{bc}$ fields for each of the spatial dimensions are converted into a scalar field by taking the total magnitude of the three axis velocities. It is these configuration space boxes that are the final output of \code{get\_IC\_N}.
@@ -487,12 +487,12 @@ Finally, the Fourier space variables are inverse Fourier transformed back into c
 In order to implement variable cosmological parameters, \code{get\_IC\_N} was translated into Python. This decision was made for two reasons: firstly, the transfer functions used in the evolution of the power spectrum are output by CAMB, which is a code written mostly in Python. Secondly, the final implementation of variable cosmology in 21cmSPACE strives to use the Python-based \code{astropy} module's cosmology classes as an organizational tool for holding parameter values, as well as its object methods for performing standard cosmological calculations (such as calculating $h$ at a given redshift). 
 
 Since the conventions used between \code{CAMB} and \code{astropy} are not identical, a \code{set\_cosmology\_camb} wrapper was written for \code{CAMB}'s \code{pars.set\_cosmology} method. In particular, astropy's value for $\Omega_b, 0$ and $\Omega_c, 0$ differ from \code{CAMB}'s input by a factor of $h^2$; this wrapper multiplies by the relevant factors before passing the values to \code{CAMB}. 
-\footnote{There is also some issue with the Tcmb0's datatype, but documentation is hard to find for this.}
+%\footnote{There is also some issue with the Tcmb0's datatype from astropy needing removal of unit, but documentation is hard to find for this.}
 
 To receive information about cosmological parameters, the function \code{get\_IC\_N} was altered to take cosmology as an input parameter. Specifically, in addition to the two inputs of \code{Npix} and \code{seed}, \code{get\_IC\_N} takes an \code{astropy.cosmology} instance such as \code{FlatLambdaCDM} or \code{LambdaCDM} as a third parameter. 
 
 Practically, the cosmology enters \code{get\_IC\_N} in two ways. Most obviously, the transfer functions encoding effects such as inflation and horizon interaction are sensitive to the cosmological parameters. While these were previously precomputed and saved in the interest of computational efficiency, they must be recalculated for every cosmology, and therefore it is logistically sensible for the calling of CAMB to be directly incorporated as a subroutine within \code{get\_IC\_N}. The execution of CAMB, from instantiation using parameters to the output of the transfer functions for each of the three redshifts required, takes on the order of seconds on commercial hardware when using CAMB's default settings such as those governing the $k$ range probed and the resolution of $k$ sampling. While these settings can be changed to improve accuracy, which was originally done in the precomputed transfer functions, in practice this was found to make no difference in the final initial conditions. 
-\footnote{\red{show evidence?}}
+% \footnote{\red{show evidence?}}
 
 Those familiar with CAMB may be aware that CAMB has the built-in functionality to output the power spectra directly as shown in section \ref{}, thus avoiding the need to manually scale and process the power spectrum from its primordial form. However, the manual scaling of the power spectrum was implemented as a design choice because the CAMB output power spectrum does not include the smoothing required at high $k$ values. As well as this, manual scaling offers a level of control over the primordial power spectrum that sets up future work.
 
@@ -745,16 +745,23 @@ It is clear to see from the fractional difference plot in fig. \ref{fig:power_sp
 
 \section{Conclusions and Future Work}
 \subsection{Conclusions}
-The dependence of initial conditions on cosmological parameters and their effects on the 21-cm global signal and 
+The dependence of initial conditions on cosmological parameters has been shown to significantly propagate through evolution during the Dark Ages, Cosmic Dawn, and EoR, imprinting differences on both the 21-cm global signal and 21-cm power spectrum. 
+
+In the case of variation of $\Omega_m$ in cosmologies, the difference primarily manifests as a shifting of timing between astrophysical processes -- higher $\Omega_m$ cosmologies experience clumping earlier than lower $\Omega_m$ cosmologies. This physical difference is illustrated most significantly in shifting in timing of the Cosmic Dawn absorption trough of the 21-cm global signal, with higher $\Omega_m$ cosmologies experiencing earlier Cosmic Dawn, as well as in the 21-cm power spectrum where higher $\Omega_m$ generally exhibits higher power across all scales and redshifts, with earlier correlations at smaller scales.
 % \subsection{Project Achievements}
 \subsection{Future Work}
+The implementation of cosmology dependence on the initial conditions is a major but only first step in the final objective of having variable cosmology as a factor throughout the evolution of the 21-cm signal. Most notably, the halo mass function, which gives the number density of haloes at each mass, is sensitive to cosmological parameters as well. 
 
-% \section{Acknowledgements}
+Further, the initial conditions inherently rely on randomness in their instantiation, through the assumption that the initial fluctuations are a Gaussian random field \citep{Guth_Pi_1982, Brandenberger_1985}. This randomness propagates into the 21-cm power spectrum; therefore, the 21-cm evolution should be performed using various initial condition boxes with different Gaussian random draws, in order to gain clear insight into the statistical effects of the cosmologies without the distortions of randomness.
 
 
 
 \begin{acknowledgments}
-K.W. thanks...
+The author thanks Prof. Anastasia Fialkov and Jiten Dhandha for thorough supervision and helpful guidance throughout the project duration. 
+
+Work done in this project also relied heavily on previously-written, public Python packages including \code{NumPy}, \code{SciPy}, \code{Astropy}, \code{matplotlib}. As well as this, numerous closed-source codes were used, including \code{21cmSPACE}, \code{py21cmSPACE}, and \code{get\_power\_spectrum\_1d}. Some executions of these codes were performed on Cambridge University's CSD3 high performance computing cluster.
+
+Finally, programming and writing were significantly accelerated by generative AI tools, most notably Microsoft's Copilot and OpenAI's ChatGPT. 
 \end{acknowledgments}
 
 % \newpage
