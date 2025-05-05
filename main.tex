@@ -7,14 +7,16 @@
 \usepackage{tabularx}
 \usepackage{hhline}
 \usepackage{wrapfig}
+\usepackage{ragged2e}
 \usepackage{amsmath}
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{float}
 \usepackage{hyperref}
 \usepackage{xparse}
-\usepackage[backend=biber]{biblatex}
-\addbibresource{references.bib}
+% \usepackage[backend=biber]{biblatex}
+% \addbibresource{references.bib}
+\usepackage{natbib}
 \usepackage{minted}
 \usepackage{xcolor}
 \definecolor{LightGray}{gray}{0.9}
@@ -31,12 +33,35 @@
 \setlength{\parindent}{20pt}
 \renewcommand{\baselinestretch}{1.25}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % \begin{figure}
 %     \centering
 %     \includegraphics[width=0.9\columnwidth]{images/Kyle_BLvsCR.png}
 %     \caption{Recovered binary neutron star tidal parameters with and without binary Love relations, as compared to the common radius approximation.}
 %     \label{fig:BLvsCR}
 % \end{figure}
+
+% \begin{figure}[H]
+%      \centering
+%      \begin{subfigure}[b]{0.9\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{images/ic_grids/initial_condition_grid_Om1.png}
+%          \caption{Gravimeter}
+%          \label{fig:IC_Om1}
+%      \end{subfigure}
+%      \hfill
+%      \begin{subfigure}[b]{0.9\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{images/ic_grids/initial_condition_grid_Om5.png}
+%          \caption{Alignment cross-hairs}
+%          \label{fig:IC_Om5}
+%      \end{subfigure}
+%         \caption{}
+%         \label{fig:apparatus}
+% \end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % \begin{document}
 
@@ -58,7 +83,7 @@
 \newcommand{\supervisorone}{Prof. Anastasia Fialkov}
 \newcommand{\supervisortwo}{Jiten Dhandha}
 \newcommand{\myabstract}{
-Abstract
+21-cm astronomy is a promising probe of early-universe astrophysics, particularly in the cosmic eras known as the Dark Ages, Cosmic Dawn, and Epoch of Reionization. Astrophysical processes occurring during these periods is highly sensitive to the underlying cosmology. As such, the 21-cm signal also provides insight into the measurement cosmological parameters. While 21-cm simulations such as \code{21cmSPACE} focus predominantly on modelling the astrophysical processes prevalent during the early universe, the ability to vary the underlying cosmology in a 21-cm simulation will enable the study of the propagation of cosmological parameters onto the 21-cm signal. This study details a step in this direction: the implementation of variable cosmological parameters onto the generation of initial conditions (the initial mass overdensities $\delta_m$ and relative velocity between baryons and cold dark matter $v_{\text{bc}}$) in \code{21cmSPACE}, and the effects of changing some of these parameters is discussed.
 }
 \newcommand{\cid}{kyhw2}
 
@@ -76,11 +101,11 @@ Abstract
 \subsection{21cm Cosmology}
 Understanding the formation and evolution of cosmic structure remains one of the central goals of modern cosmology. While observations of the cosmic microwave background (CMB) and large-scale structure surveys have provided invaluable insights into the early and late-time universe, there exists a significant observational gap between the release of the CMB ($\sim$380,000 years after the Big Bang) and the emergence of the first luminous structures several hundred million years later. This intermediate period, encompassing the so-called Dark Ages, Cosmic Dawn, and the Epoch of Reionization (EoR), holds crucial information about the universe's thermal and ionization history, the formation of the first stars and galaxies, and the onset of feedback processes.
 
-21cm cosmology offers a unique and powerful tool to probe this otherwise inaccessible era. The signal arises from the hyperfine transition of neutral hydrogen (HI), which occurs when the relative spin orientation of the proton and electron flips from parallel to antiparallel, emitting or absorbing a photon with a rest-frame wavelength of 21 centimeters (corresponding to 1.42 GHz). Because neutral hydrogen was the most abundant element in the early universe, the 21cm line provides a pervasive and potentially highly informative tracer of matter distribution over cosmic time.
+21-cm cosmology offers a unique and powerful tool to probe this otherwise inaccessible era. The signal arises from the hyperfine transition of neutral hydrogen (HI), which occurs when the relative spin orientation of the proton and electron flips from parallel to antiparallel, emitting or absorbing a photon with a rest-frame wavelength of 21 centimetres (corresponding to 1.42 GHz). Because neutral hydrogen was the most abundant element in the early universe, the 21-cm line provides a pervasive and potentially highly informative tracer of matter distribution over cosmic time.
 
-As the universe expands, the 21cm signal is redshifted, allowing observations at different frequencies to correspond to different epochs. By mapping the sky across frequency channels, it is possible to construct a three-dimensional tomographic view of the intergalactic medium (IGM). This makes the 21cm line a particularly sensitive probe for the thermal history of the IGM, the timing and topology of reionization, the formation of the first stars and black holes, and potentially, physics beyond the standard cosmological model, such as dark matter interactions or exotic energy injection.
+As the universe expands, the 21-cm signal is redshifted, allowing observations at different frequencies to correspond to different epochs. By mapping the sky across frequency channels, it is, in principle, possible to construct a three-dimensional tomographic view of the intergalactic medium (IGM). This makes the 21-cm line a particularly sensitive probe for the thermal history of the IGM, the timing and topology of reionization, the formation of the first stars and black holes, and potentially, physics beyond the standard cosmological model, such as dark matter interactions or exotic energy injection.
 
-The brightness temperature of the 21cm signal, measured relative to the CMB, depends on the spin temperature of hydrogen, the neutral fraction, and the local density field. The differential brightness temperature can be written as \red{probably remove this equation from the introduction and move it to theory}
+The brightness temperature of the 21-cm signal, measured relative to the CMB, depends on the spin temperature of hydrogen, the neutral fraction, and the local density field. The differential brightness temperature can be written as \red{probably remove this equation from the introduction and move it to theory}
 
 \begin{equation}
     \delta T_b (\nu) = 27 \ x_{HI} \ (1 + \delta_b) \left(1 - \frac{T_{\text{CMB}}}{T_s} \right) \left(\frac{1 + z}{10} \frac{0.15}{\Omega_m h^2} \right)^{1/2} \left( \frac{\Omega_b h^2}{0.023} \right) \text{mK}
@@ -90,9 +115,9 @@ The brightness temperature of the 21cm signal, measured relative to the CMB, dep
 
 Detecting this signal presents substantial technical challenges. The cosmological 21cm signal is typically five orders of magnitude fainter than galactic and extragalactic foregrounds, including synchrotron emission from our Galaxy. Additionally, instrumental systematics, ionospheric effects, and radio frequency interference (RFI) must be mitigated with extreme precision.
 
-Despite these obstacles, a growing number of dedicated low-frequency radio interferometers—such as LOFAR, MWA, HERA, and the upcoming Square Kilometre Array (SKA)—are designed to detect and characterize the 21cm signal from the early universe. These instruments aim to measure the power spectrum of 21cm fluctuations, and eventually, perform direct imaging of the neutral IGM.
+Despite these obstacles, a growing number of dedicated low-frequency radio interferometers—such as LOFAR, MWA, HERA, and the upcoming Square Kilometre Array (SKA)—are designed to detect and characterize the 21-cm signal from the early universe. These instruments aim to measure the power spectrum of 21-cm fluctuations, and eventually, perform direct imaging of the neutral IGM.
 
-21cm cosmology is poised to become a cornerstone of observational cosmology, potentially offering a detailed timeline of the universe's first billion years and enabling precision tests of fundamental physics in a previously uncharted epoch.
+21-cm cosmology is poised to become a cornerstone of observational cosmology, potentially offering a detailed timeline of the universe's first billion years and enabling precision tests of fundamental physics in a previously uncharted epoch.
 
 \section{21cmSPACE}
 For any physical system, simulations are an invaluable asset for a multitude of reasons, including generating mock data from mathematical theory, which can then used for pipeline development and validation, as well as for foreground and instrumental modeling, which can then be used for experimental forecasting to inform instrument design. 
@@ -209,9 +234,9 @@ These parameters propagate through 21cmSPACE through two main avenues: the initi
 
 The underlying cosmology in 21cmSPACE can therefore be changed by altering these functions. As a result, the effects of these varied cosmological parameters will be propagated through the evolution of the 21-cm signal, and finally imprinted on the observables of the 21-cm global signal and the 21-cm power spectrum.
 
-In principle, this will enable exploration of the cosmological parameter space, relating each point in the five-dimensional space to a particular shape of the global signal and a particular shape of the power spectrum. Along with experimental data, the parameter space may then be constrained to narrow down possible locations for the true cosmology of the Universe. As well as this, the comparison of simulated signals with physical measurements will enable the verification or rejection of cosmological theories.
+\red{The functionality to incorporate cosmological parameters into the inputs of 21cmSPACE would be incredibly useful, and is the objective of a longer-term endeavour. The implementation of cosmology dependence into the generation and processing of initial conditions, as well as their propagation through 21-cm evolution, is a step in this direction.}
 
-\red{Do I need to show preliminary differences in the CAMB IC power spectra here, illustrating that the project is expected to make a measurable impact in simulated wavenumbers?}
+In principle, the full incorporation of cosmology into 21cmSPACE will enable exploration of the cosmological parameter space, relating each point in the space to a particular shape of the global signal and a particular shape of the power spectrum. Along with experimental data, the parameter space may then be constrained to narrow down possible locations for the true cosmology of the Universe. As well as this, the comparison of simulated signals with physical measurements will enable the verification or rejection of cosmological theories.
 
 
 \newpage
@@ -349,7 +374,7 @@ To define $v_{bc}$, the velocity divergence must first be defined as
 \end{split}
 \end{equation}
 
-\subsection{Press-Schechter Halo Mass Function}
+% \subsection{Press-Schechter Halo Mass Function}
 % \subsection{Impact on First Stars and the 21-cm Signal}
 % \subsection{Thermal and Ionization History, with uncertainties}
 
@@ -358,19 +383,21 @@ To define $v_{bc}$, the velocity divergence must first be defined as
 \newpage
 \section{Methodology}
 \subsection{Baseline 21cmSPACE Operation}
-21cmSPACE, originally written in MATLAB, takes as input pre-computed 3-dimensional initial condition grids: the matter overdensity field $\delta_m(\textbf{x})$ and the relative velocity field $v_{bc}(\textbf{x})$, and global values for the initial gas temperature and ionization fraction. These were previously hard-coded to follow the Planck 2013 \red{cite} cosmology, with parameters defined as the best estimates of the Planck collaboration's results \red{https://www.aanda.org/articles/aa/pdf/2014/11/aa21591-13.pdf table 2, Planck+WP best fit}, as shown in Table \ref{tab:Planck13_parameter_values}. 
+21cmSPACE, originally written in MATLAB, takes as input pre-computed 3-dimensional initial condition grids: the matter overdensity field $\delta_m(\textbf{x})$ and the relative velocity field $v_{bc}(\textbf{x})$, and global values for the initial gas temperature and ionization fraction. These were previously hard-coded to follow the Planck 2013 cosmology, with parameters defined as the best estimates of the Planck collaboration's results \citep{Planck2013results} , as shown in Table \ref{tab:Planck13_parameter_values}. 
+
+%values come from planck2013 parameters paper table 2, Planck+WP best fit
 
 
 \begin{table}[!h]
     \centering
     \begin{tabular}{|c|c|}
         \hline
-        Parameter \red{needs units} & Value\\ \hhline{|=|=|}
+        Parameter & Value\\ \hhline{|=|=|}
         $h$ & $0.6704$\\ \hline
         $\Omega_{\text{b}, 0}$ & $0.022032$\\ \hline
         $\Omega_{\text{dm}, 0}$ & $0.12038$\\ \hline
-        $\Omega_{\text{k}}, 0$ & \red{$-0.001$(https://www.aanda.org/articles/aa/pdf/2014/11/aa21591-13.pdf eq67b)}\\ \hline
-        $T_{\text{CMB},0}$ & \red{???} \\ \hline
+        $\Omega_{\text{k}, 0}$ & 0\\ \hline
+        $T_{\text{CMB},0} ~ / ~ \text{K}$ & 2.725 \\ \hline
     \end{tabular}
     \caption{Planck 2013 parameter values}
     \label{tab:Planck13_parameter_values}
@@ -380,7 +407,7 @@ To define $v_{bc}$, the velocity divergence must first be defined as
 
 The generation of initial conditions was done primarily in the file \code{21cmSPACE/grids\_and\_ic/make\_ic/get\_IC\_N.m}, which defines the function \code{get\_IC\_N}. The function takes the two inputs $N_{pix}$, which represents the side-length of the total simulated spatial volume in number of pixels, and a random seed. The function then outputs two 3-dimensional scalar fields representing the $\delta_m$ field and the $v_{\text{bc}}$ field, where the first array holds the unitless deviation from average density, and the second array holds the relative velocity between baryons and CDM in units of $\text{km} \text{s}^{-1}$. 
 
-\code{get\_IC\_N} also further imports three precomputed files, each for a different redshift from $\{40, 970, 1020\}$ containing \textit{transfer function} \footnote{https://arxiv.org/pdf/astro-ph/0103017} data output by CAMB. These transfer functions mathematically encode how primordial density fluctuations are affected by processes such as radiation pressure, horizon entry, particle free-streaming \red{cite}. As a function of wavenumber, the processed power spectrum $P(k)$ relates to the primordial power spectrum $P_0 (k)$ through the transfer function $T(k)$ by the relation
+\code{get\_IC\_N} also further imports three precomputed files, each for a different redshift from $\{40, 970, 1020\}$ containing \textit{transfer function} data output by \code{CAMB}. These transfer functions mathematically encode how primordial density fluctuations are affected by processes such as radiation pressure, horizon entry, particle free-streaming \citep{coles2001largescalestructuretheorystatistics}. As a function of wavenumber, the processed power spectrum $P(k)$ relates to the primordial power spectrum $P_0 (k)$ through the transfer function $T(k)$ by the relation
 
 \begin{equation}
     P(k) = P_0 (k) T^2 (k).
@@ -392,17 +419,21 @@ The generation of initial conditions was done primarily in the file \code{21cmSP
     P_0 (k) = A_s \left( \frac{k}{k_*} \right)^{n_s - 1},
 \end{equation}
 
-\noindent where $k_*$ is the pivot scale $0.002 \text{Mpc}^{-1}$ \footnote{sometimes also chosen as $0.005 \text{Mpc}^{-1}$ in other conventions}, $A_s$ the amplitude of the spectrum at the pivot scale, and $n_s$ the scalar spectral index. This scalar spectral index  represents the tilt of the power spectrum, with $n_s = 1$ corresponding to the \red{Harrison-Zeldovich} spectrum, physically meaning that the power is scale invariant. 
+\noindent where $k_*$ is the pivot scale $0.002 \text{Mpc}^{-1}$,
+%\footnote{sometimes also chosen as $0.005 \text{Mpc}^{-1}$ in other conventions}
+$A_s$ the amplitude of the spectrum at the pivot scale, and $n_s$ the scalar spectral index. This scalar spectral index  represents the tilt of the power spectrum, with $n_s = 1$ corresponding to the Harrison-Zeldovich spectrum \citep{Harrison_1970, Zeldovich_1972}, physically meaning that the power is scale invariant. 21cmSPACE currently uses hard-coded values of $A_s = 2.01664 \times 10^{-9}$ \footnote{\red{source?}} and $n_s = 0.9675$, with $n_s$ consistent with the Planck2013 best-fit model \citep{Planck2013results}. 
+% These values are considered by some to be part of what defines a cosmology; however, this is not unanimous.
+% ns is from the Planck+lensing column of table 2, not Planck+WP like the other cosmological parameters?
 
-21cmSPACE currently uses hard-coded values of $A_s = 2.01664 \times 10^{-9}$ and $n_s = 0.9675$, \red{with $n_s$ consistent with the Planck2013 best-fit model (although it is from the Planck+lensing column of table 2, not Planck+WP like the other cosmological parameters?)}. These values are considered by some to be part of what defines a cosmology; however, this is not unanimous.
-
-These transfer functions from each redshift are then used in \code{get\_IC\_N} to calculate the \red{overdensity field power spectra (these are in between power spectra and transfer functions -- what are they called?)} $\delta_m$, $\delta_b$, and $\delta_c$ for each of total matter, baryons, and cold dark matter respectively. To do this, they are first passed through a smoothing window function defined by 
+These transfer functions from each redshift are then used in \code{get\_IC\_N} to calculate the overdensity field fluctuations $\delta_m$, $\delta_b$, and $\delta_c$ for each of total matter, baryons, and cold dark matter respectively. To do this, they are first passed through a smoothing window function defined by 
 
 \begin{equation}
     W(k) = \text{exp}\left( -\frac{k^2 R_w ^2}{2} \right)
 \end{equation}
 
-\noindent where $R_w$ is a characteristic smoothing scale, chosen to be $R_w = 1.7 / \pi$ for the smoothing of $3 ~\text{MPc}$ pixels. \footnote{\red{how was this chosen?}} This window function serves the purpose of smoothing scales smaller than $R_w$ in Fourier space, which correspond to higher $k$ values. The quantities are then defined as follows:
+\noindent where $R_w$ is a characteristic smoothing scale, chosen to be $R_w = 1.7 / \pi$ for the smoothing of $3 ~\text{MPc}$ pixels.
+\footnote{\red{how was this chosen?}}
+This window function serves the purpose of smoothing scales smaller than $R_w$ in Fourier space, which correspond to higher $k$ values. The quantities are then defined as follows:
 
 \begin{equation}
     \begin{split}
@@ -418,24 +449,28 @@ These quantities are then used to define the relevant power spectra. The mass po
     P_m(k) = 2\pi^2\Delta_\zeta ^2 (k) \frac{\delta_m^2}{k^3}
 \end{equation}
 
-\noindent where $\Delta_\zeta ^2 (k) = 2.42 \times 10^{-9}$ is the primordial curvature perturbation power spectrum \red{cite https://arxiv.org/pdf/0803.0586} \footnote{should this also be changed with cosmology, since it relies on WMAP data?}. 
+\noindent where $\Delta_\zeta ^2 (k) = 2.42 \times 10^{-9}$ is the primordial curvature perturbation power spectrum \citep{Dunkley_2009}. 
+%should this also be changed with cosmology, since it relies on WMAP data?
 
-The $v_{bc}$ power spectrum, however, is less straightforward. First, the velocity divergences must be calculated as in eq. \ref{eq:velocity_divergence}. This is \red{impractical to do analytically}; rather, in practice, the baryon velocity divergence is calculated using
+The $v_{bc}$ power spectrum, however, is less straightforward. First, the velocity divergences must be calculated as in eq. \ref{eq:velocity_divergence}. This is impractical to do analytically; rather, in practice, the baryon velocity divergence is calculated using
 
 \begin{equation}
     \theta_b = \frac{H(z_{rec})}{c} (z_{rec} + 1) \frac{\delta_{b, 1020} - \delta_{b, 970}}{50}
     \label{eq:velocity_divergence_practical_calculation}
 \end{equation}
 
-\noindent with $z_{rec} = 1020$ the redshift at which the initial conditions are generated \red{(and its value chosen as the redshift at which recombination occurs)}, and the $1020$ and $970$ subscripts denoting the redshift at which $\delta$ is evaluated. The CDM velocity divergence is calculated similarly.
+\noindent with $z_{rec} = 1020$ the redshift of recombination at which the initial conditions are generated, and the $1020$ and $970$ subscripts denoting the redshift at which $\delta$ is evaluated. The CDM velocity divergence is calculated similarly.
 
-The initial velocity \red{transfer function (what is this called, and what symbol should i use? and why is there no square?)} $I_{\text{vbc}}$ is then calculated according to the scalar form of eq. \ref{eq:vbc_definition}, appropriately scaling by the redshift:
+The initial velocity 
+%\red{transfer function (what is this called, and what symbol should i use? and why is there no square?)}
+$I_{\text{vbc}}$ is then calculated according to the scalar form of eq. \ref{eq:vbc_definition}, appropriately scaling by the redshift:
 
 \begin{equation}
-    I_{\text{vbc}} = \frac{\theta_b - \theta_c}{\red{i} k (z_{rec} + 1)}.
+    I_{\text{vbc}} = \frac{\theta_b - \theta_c}{i k (z_{rec} + 1)}.
 \end{equation}
+% the i in the denominator is not multiplied at this stage.
 
-\noindent Finally, the $v_{bc}$ power spectrum is calculated explicitly:
+Finally, the $v_{bc}$ power spectrum is calculated explicitly:
 
 \begin{equation}
     P_{\text{vbc}} = 2 \pi^2 \Delta_\zeta ^2 (k) \frac{I_{\text{vbc}}}{k^3}
@@ -443,19 +478,23 @@ The initial velocity \red{transfer function (what is this called, and what symbo
 
 Now that the matter power spectrum and relative velocity power spectrum have been explicitly calculated, the true generation of initial conditions may begin. First, a Gaussian random field is initialized in configuration space. Then, its Fourier transform is taken -- since the power spectrum correlates in Fourier space, it may only be applied in Fourier space. Initializing in configuration space before taking the Fourier transform enforces Hermitian symmetry, which is essential for maintaining real (as opposed to complex) overdensity fields. Further, the Gaussianity of the overdensities is preserved due to the fact that the Gaussian distribution is an eigenfunction of the Fourier transform. 
 
-This method, though, requires some normalization to be performed. The Fourier space variables are multiplied by a normalization constant $1 / \sqrt{L_{\text{pixel}}}$ and divided by their magnitude, and combed through \footnote{\red{this is what is done in \code{get\_IC\_N.generate\_k\_values},\red{ but what is it doing physically? and why is there a discontinuity in the middle?}}} sheet-by-sheet to impose phase changes such that the complex random variables in the simulation box experience one full revolution of phase. After this is done in all three axes, the power spectra can at last be imposed, scaling the random field in Fourier space to ensure that the perturbations match the cosmological model. This scaling is done using the same random variable base for the scalar $\delta_m$, as well as the $v_{bc}$ along each of the three spatial dimensions separately.
+This method, though, requires some normalization to be performed. The Fourier space variables are multiplied by a normalization constant $1 / \sqrt{L_{\text{pixel}}}$ and divided by their magnitude, and combed through 
+\footnote{\red{this is what is done in \code{get\_IC\_N.generate\_k\_values}, but what is it doing physically? and why is there a discontinuity in the middle?}} Is this sigma8 normalization? 
+sheet-by-sheet to impose phase changes such that the complex random variables in the simulation box experience one full revolution of phase. After this is done in all three axes, the power spectra can at last be imposed, scaling the random field in Fourier space to ensure that the perturbations match the cosmological model. This scaling is done using the same random variable base for the scalar $\delta_m$, as well as the $v_{bc}$ along each of the three spatial dimensions separately.
 
 Finally, the Fourier space variables are inverse Fourier transformed back into configuration space, and the three $v_{bc}$ fields for each of the spatial dimensions are converted into a scalar field by taking the total magnitude of the three axis velocities. It is these configuration space boxes that are the final output of \code{get\_IC\_N}.
 
 In order to implement variable cosmological parameters, \code{get\_IC\_N} was translated into Python. This decision was made for two reasons: firstly, the transfer functions used in the evolution of the power spectrum are output by CAMB, which is a code written mostly in Python. Secondly, the final implementation of variable cosmology in 21cmSPACE strives to use the Python-based \code{astropy} module's cosmology classes as an organizational tool for holding parameter values, as well as its object methods for performing standard cosmological calculations (such as calculating $h$ at a given redshift). 
 
-Since the conventions used between \code{CAMB} and \code{astropy} are not identical, a \code{set\_cosmology\_camb} wrapper was written for \code{CAMB}'s \code{pars.set\_cosmology} method. In particular, astropy's value for $\Omega_b, 0$ and $\Omega_c, 0$ differ from \code{CAMB}'s input by a factor of $h^2$; this wrapper multiplies by the relevant factors before passing the values to \code{CAMB}.\footnote{There is also some issue with the Tcmb0's datatype, but documentation is hard to find for this.}
+Since the conventions used between \code{CAMB} and \code{astropy} are not identical, a \code{set\_cosmology\_camb} wrapper was written for \code{CAMB}'s \code{pars.set\_cosmology} method. In particular, astropy's value for $\Omega_b, 0$ and $\Omega_c, 0$ differ from \code{CAMB}'s input by a factor of $h^2$; this wrapper multiplies by the relevant factors before passing the values to \code{CAMB}. 
+\footnote{There is also some issue with the Tcmb0's datatype, but documentation is hard to find for this.}
 
 To receive information about cosmological parameters, the function \code{get\_IC\_N} was altered to take cosmology as an input parameter. Specifically, in addition to the two inputs of \code{Npix} and \code{seed}, \code{get\_IC\_N} takes an \code{astropy.cosmology} instance such as \code{FlatLambdaCDM} or \code{LambdaCDM} as a third parameter. 
 
-Practically, the cosmology enters \code{get\_IC\_N} in two ways. Most obviously, the transfer functions encoding effects such as inflation and horizon interaction are sensitive to the cosmological parameters. While these were previously precomputed and saved in the interest of computational efficiency, they must be recalculated for every cosmology, and therefore it is logistically sensible for the calling of CAMB to be directly incorporated as a subroutine within \code{get\_IC\_N}. The execution of CAMB, from instantiation using parameters to the output of the transfer functions for each of the three redshifts required, takes on the order of seconds on commercial hardware when using CAMB's default settings such as those governing the $k$ range probed and the resolution of $k$ sampling. While these settings can be changed to improve accuracy, which was originally done in the precomputed transfer functions, in practice this was found to make no difference in the final initial conditions\footnote{\red{show evidence?}}.
+Practically, the cosmology enters \code{get\_IC\_N} in two ways. Most obviously, the transfer functions encoding effects such as inflation and horizon interaction are sensitive to the cosmological parameters. While these were previously precomputed and saved in the interest of computational efficiency, they must be recalculated for every cosmology, and therefore it is logistically sensible for the calling of CAMB to be directly incorporated as a subroutine within \code{get\_IC\_N}. The execution of CAMB, from instantiation using parameters to the output of the transfer functions for each of the three redshifts required, takes on the order of seconds on commercial hardware when using CAMB's default settings such as those governing the $k$ range probed and the resolution of $k$ sampling. While these settings can be changed to improve accuracy, which was originally done in the precomputed transfer functions, in practice this was found to make no difference in the final initial conditions. 
+\footnote{\red{show evidence?}}
 
-Those familiar with CAMB may be aware that CAMB has the built-in functionality to output the power spectra directly as shown in section \ref{}, thus avoiding the need to manually scale and process the power spectrum from its primordial form. However, the manual scaling of the power spectrum was implemented as a design choice because the CAMB output power spectrum does not include the smoothing required at high $k$ values \red{cite?}. As well as this, manual scaling offers a level of control over the primordial power spectrum that sets up future work.
+Those familiar with CAMB may be aware that CAMB has the built-in functionality to output the power spectra directly as shown in section \ref{}, thus avoiding the need to manually scale and process the power spectrum from its primordial form. However, the manual scaling of the power spectrum was implemented as a design choice because the CAMB output power spectrum does not include the smoothing required at high $k$ values. As well as this, manual scaling offers a level of control over the primordial power spectrum that sets up future work.
 
 As well as this, the calculation of velocity divergence requires the value of $H$ at a specific redshift. This was originally a function \code{get\_H\_z} defined in another MATLAB file in the same directory, implementing the FRW equation
 
@@ -463,34 +502,38 @@ As well as this, the calculation of velocity divergence requires the value of $H
     (H(z))^2 = H_0^2 (\Omega_m (1 + z)^3 + \Omega_\Lambda + \red{\Omega_R} (1+z)^4)
 \end{equation}
 
-\noindent with the radiation pressure $\Omega_R$ hard-coded to $8.5522 \times 10^{-5}$ \red{where is this from?}. To keep consistent with the input cosmology, this \code{get\_H\_z} method is now instead replaced with the \code{astropy.cosmology} instance's \code{H} method.
+\noindent with the radiation pressure $\Omega_R$ hard-coded to $8.5522 \times 10^{-5}$ \footnote{\red{where is this from?}}. To keep consistent with the input cosmology, this \code{get\_H\_z} method is now instead replaced with the \code{astropy.cosmology} instance's \code{H} method.
 
-Since the new code is all written in the same language, a given random seed should cause all calculations to be deterministically performed. Therefore, any discrepancy in the initial condition grids must be due to a difference in the propagation of the cosmological parameters. This is illustrated in fig. \ref{fig:initial_condition_grid_WMAP9}, fig. \ref{fig:initial_condition_grid_Planck18}, and fig. \ref{fig:difference_in_initial_grid_WMAP9_Planck18}, which show a slice of initial condition boxes generated using the same random seed: the upper plots show that the initial conditions are, by eye, very similar (due to the deterministic nature of the random draws with a fixed seed). The lower plot, however, shows the difference in initial condition boxes, with deviations of up to $5 \%$.
+Since the new code is all written in the same language, a given random seed should cause all calculations to be deterministically performed. Therefore, any discrepancy in the initial condition grids must be due to a difference in the propagation of the cosmological parameters. This is illustrated in fig. \ref{fig:IC_WMAP9_Planck18}, which show a slice of initial condition boxes generated using the same random seed: the upper plots show that the initial conditions are, by eye, very similar (due to the deterministic nature of the random draws with a fixed seed). The lower plot, however, shows the difference in initial condition boxes, with deviations of up to $5 \%$.
+
+\begin{figure}[H]
+     \centering
+     \begin{subfigure}[b]{0.9\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/ic_grids/initial_condition_grid_WMAP9.png}
+         \caption{Gravimeter}
+         \label{fig:IC_WMAP9}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.9\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/ic_grids/initial_condition_grid_Planck18.png}
+         \caption{Alignment cross-hairs}
+         \label{fig:IC_Planck18}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.9\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/ic_grids/difference_in_initial_grid_WMAP9_Planck18.png}
+         \caption{Alignment cross-hairs}
+         \label{fig:IC_difference_WMAP9_Planck18}
+     \end{subfigure}
+        \caption{}
+        \label{fig:IC_WMAP9_Planck18}
+\end{figure}
 
 \newpage
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\columnwidth]{images/ic_grids/initial_condition_grid_WMAP9.png}
-    \caption{CAPTION}
-    \label{fig:initial_condition_grid_WMAP9}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\columnwidth]{images/ic_grids/initial_condition_grid_Planck18.png}
-    \caption{CAPTION}
-    \label{fig:initial_condition_grid_Planck18}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\columnwidth]{images/ic_grids/difference_in_initial_grid_WMAP9_Planck18.png}
-    \caption{CAPTION}
-    \label{fig:difference_in_initial_grid_WMAP9_Planck18}
-\end{figure}
-
-\newpage
-\subsection{Incorporation of Cosmology into the Halo Mass Function}
+% \subsection{Incorporation of Cosmology into the Halo Mass Function}
 \subsection{Consistency Checks}
 Although the rewriting of code maintained the same mathematical algorithm, translating code from one language into another often introduces inconsistencies due to the nature of hardware interaction, or variations in implicitly-called library package subroutines. It is therefore important to perform consistency checks at every stage, in order to maintain confidence that the simulation is reflective of the underlying physics.
 
@@ -514,9 +557,9 @@ It is therefore important to iterate the algorithm in both MATLAB and Python mul
 \end{figure}
 
 \newpage
-As is illustrated \red{the formatting needs to be cleared up; it is hard to see.} in the fractional error plots, the deviation between the legacy and new scripts is negligible; furthermore, all error bars overlap with $0 \%$ error, signifying that the legacy and new scripts, despite written in different languages and having different subroutines for the initialisation of Gaussian random fields, perform the same calculations and, more importantly, preserve the physics behind the computation.
+As is illustrated in the fractional error plots, the deviation between the legacy and new scripts is negligible; furthermore, all error bars overlap with $0 \%$ error, signifying that the legacy and new scripts, despite written in different languages and having different subroutines for the initialisation of Gaussian random fields, perform the same calculations and, more importantly, preserve the physics behind the computation.
 
-The incorporation of \code{CAMB} into each execution of \code{get\_IC\_N} is also a potential source of deviation. As \code{CAMB} is an independently maintained code package, it is possible that \code{CAMB} has undergone changes in its parameters, calculation, or post-processing over the \red{decade} since the original legacy precomputed transfer functions used in \code{get\_IC\_N} were written to file. Therefore, it is useful to check that \code{get\_IC\_N}'s output, when using the legacy code with hard-coded Planck 2013 parameters, is consistent with the new code when directly calling \code{CAMB}, also using Planck 2013 parameters. The comparisons are shown in fig. \ref{fig:compare_generators_power_spectrum_delta_m} and \ref{fig:compare_generators_power_spectrum_vbc}.
+The incorporation of \code{CAMB} into each execution of \code{get\_IC\_N} is also a potential source of deviation. As \code{CAMB} is an independently maintained code package, it is possible that \code{CAMB} has undergone changes in its parameters, calculation, or post-processing over the decade since the original legacy precomputed transfer functions used in \code{get\_IC\_N} were written to file. Therefore, it is useful to check that \code{get\_IC\_N}'s output, when using the legacy code with hard-coded Planck 2013 parameters, is consistent with the new code when directly calling \code{CAMB}, also using Planck 2013 parameters. The comparisons are shown in fig. \ref{fig:compare_generators_power_spectrum_delta_m} and \ref{fig:compare_generators_power_spectrum_vbc}.
 
 \newpage
 \begin{figure}[H]
@@ -546,9 +589,9 @@ With the infrastructure in place, it is also important to check that different c
 \end{figure}
 
 \newpage
-\section{Results}
+\section{Results and Discussion}
 \subsection{Simulation Suite}
-With the infrastructure for cosmology-dependent initial conditions successfully implemented, 21cmSPACE was executed while varying Planck 2018's parameters one at a time. Their parameter values are summarized in tab. \ref{tab:IC_parameters}.
+With the infrastructure for cosmology-dependent initial conditions successfully implemented, 21cmSPACE was executed using WMAP9 best-fit parameters and Planck 2018 best-fit parameters in the generation of initial grids. As well as this, 21cmSPACE was also run using initial conditions generated with custom cosmologies. In principle, it is possible to vary any of the parameters as outlined in tab. \ref{tab:cosmological_parameters}; to show  varying the value of $\Omega_m$. Their parameter values are summarized in tab. \ref{tab:IC_parameters}. The names of the custom cosmologies are defined so that the suffix is $10$ times the value of the parameter used.
 
 \begin{table}[H]
 \centering
@@ -556,93 +599,171 @@ With the infrastructure for cosmology-dependent initial conditions successfully 
 \hline
 Cosmology & $h$ & $\Omega_m$ & $\Omega_b$ & $\Omega_{dm}$ & $\Omega_{de}$ & $T_{\text{CMB}}$ / K \\
 \hhline{|=|=|=|=|=|=|=|}
-WMAP9 & 0.6932 & 0.2865 & 0.04628 & 0.24022 & 0.71341 & 2.725 \\
-Planck18 & 0.6766 & 0.30966 & 0.04897 & 0.26069 & 0.68885 & 2.7255 \\
-Om1 & 0.6766 & 0.1 & 0.04897 & 0.05103 & 0.89991 & 2.7255 \\
-Om2 & 0.6766 & 0.2 & 0.04897 & 0.15103 & 0.79991 & 2.7255 \\
-Om3 & 0.6766 & 0.3 & 0.04897 & 0.25103 & 0.69991 & 2.7255 \\
-Om4 & 0.6766 & 0.4 & 0.04897 & 0.35103 & 0.59991 & 2.7255 \\
-Om5 & 0.6766 & 0.5 & 0.04897 & 0.45103 & 0.49991 & 2.7255 \\
-\hline
+WMAP9 & 0.6932 & 0.2865 & 0.04628 & 0.24022 & 0.71341 & 2.725 \\ \hline
+Planck18 & 0.6766 & 0.30966 & 0.04897 & 0.26069 & 0.68885 & 2.7255 \\ \hline
+Om1 & 0.6766 & 0.1 & 0.04897 & 0.05103 & 0.89991 & 2.7255 \\ \hline
+Om2 & 0.6766 & 0.2 & 0.04897 & 0.15103 & 0.79991 & 2.7255 \\ \hline
+Om3 & 0.6766 & 0.3 & 0.04897 & 0.25103 & 0.69991 & 2.7255 \\ \hline
+Om4 & 0.6766 & 0.4 & 0.04897 & 0.35103 & 0.59991 & 2.7255 \\ \hline
+Om5 & 0.6766 & 0.5 & 0.04897 & 0.45103 & 0.49991 & 2.7255 \\ \hline
 \end{tabular}
 \caption{Cosmological parameters used in the simulations.}
 \label{tab:IC_parameters}
 \end{table}
 
-\subsection{21cm Power Spectrum}
-Using these parameter values, 21cmSPACE was executed in its entirety, and the results plotted. Fig. \ref{fig:power_spectrum_difference_Planck18_WMAP9} shows the effect of the two different sets of cosmological parameters on the 21-cm power spectrum, with \ref{fig:power_spectrum_difference_default_WMAP9} and \ref{fig:power_spectrum_difference_default_Planck18} the differences between the new cosmology and legacy code, before the incorporation of variable cosmology. 
 
-\newpage
+
+Sample plots of the initial conditions are shown in fig. \ref{fig:IC_custom}. Some differences are visually obvious: the correlation in both $\delta_m$ and $v_{\text{bc}}$ are both suppressed on smaller length scales in Om1 when compared to Om5. This behaviour is expected, since higher density matter results in matter generally being closer together, and hence being able to correlate more finely. 
+
+This is consistent with the power spectra shown in fig. \ref{fig:averaged_IC_power_spectra_custom}: the power spectra in both $\delta_m$ and $v_{\text{bc}}$ generally monotonically increase with higher $\Omega_m$, at least within the $k$ domain of interest. One thing to note is that the power spectrum in $v_{\text{bc}}$ also experiences some horizontal shifting towards higher $k$ (corresponding to smaller length scales) with higher $\Omega_m$, which continues to be consistent with the previous physical reasoning.
+
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\columnwidth]{images/simulation_results/power_spectrum_difference_Planck18_WMAP9.png}
-    \caption{CAPTION}
-    \label{fig:power_spectrum_difference_Planck18_WMAP9}
+     \centering
+     \begin{subfigure}[b]{0.9\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/ic_grids/initial_condition_grid_Om1.png}
+         \caption{A slice of the initial condition boxes for custom cosmology Om1, with $\delta_m$ on the left and $v_{\text{bc}}$ on the right.}
+         \label{fig:IC_Om1}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.9\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/ic_grids/initial_condition_grid_Om5.png}
+         \caption{A slice of the initial condition boxes for custom cosmology Om5, with $\delta_m$ on the left and $v_{\text{bc}}$ on the right.}
+         \label{fig:IC_Om5}
+     \end{subfigure}
+        \caption{Sample slices of initial condition boxes for the custom cosmologies Om1 and Om5, shown in \ref{fig:IC_Om1} and \ref{fig:IC_Om5} respectively. The prevalence of smaller-scale correlation is clearly visible in both $\delta_m$ and $v_{\text{bc}}$ grids for the Om5 case, compared to Om1.}
+        \label{fig:IC_custom}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\columnwidth]{images/simulation_results/power_spectrum_difference_default_WMAP9.png}
-    \caption{CAPTION}
-    \label{fig:power_spectrum_difference_default_WMAP9}
+    \includegraphics[width=0.9\columnwidth]{images/ic_power_spectra/compare_cosmologies_averaged_power_spectra_custom.png}
+    \caption{Power spectra calculated by generating initial condition boxes for each cosmology, then taking the power spectrum.}
+    \label{fig:averaged_IC_power_spectra_custom}
 \end{figure}
+
+\subsection{The 21-cm Global Signal}
+
+A plot of global signal is shown in fig. \ref{fig:global_signal_all_cosmologies}, with all cosmologies included. The general shape of the global signal curves is similar as expected, since the underlying evolutionary physics is identical. To quantify the exact impact of cosmology dependence in the initial conditions, (redshift, temperature) coordinates of each extremum of the 21-cm global signal is given in tab. \ref{tab:global_signal_extrema}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\columnwidth]{images/simulation_results/power_spectrum_difference_default_Planck18.png}
-    \caption{CAPTION}
-    \label{fig:power_spectrum_difference_default_Planck18}
+    \includegraphics[width=0.9\columnwidth]{images/simulation_results/global_signal_all_cosmologies.png}
+    \caption{The 21-cm global signal as output by 21cmSPACE. Each curve corresponds to a different cosmology, with parameters as summarized in tab. \ref{tab:IC_parameters}.}
+    \label{fig:global_signal_all_cosmologies}
 \end{figure}
 
-\subsection{Global 21cm Signal}
-Analogously to the 21-cm power spectrum, fig. \ref{fig:global_signal_difference_Planck18_WMAP9} shows the effect of the two different sets of cosmological parameters on the 21-cm global signal, with \ref{fig:global_signal_difference_default_WMAP9} and \ref{fig:global_signal_difference_default_Planck18} the differences between the new cosmology and legacy code, before the incorporation of variable cosmology. 
 
-\newpage
+The variation of $\Omega_m$ induces an obvious effect in the output of the 21-cm global signal, as shown in fig. \ref{fig:global_signal_all_cosmologies}. Most notably, the centering of the absorption trough is significantly shifted towards higher redshift for higher values of $\Omega_m$. As well as this, the depth of the absorption trough is shallower for higher values of $\Omega_m$, and the amplitude of the emission bump is also smaller for higher $\Omega_m$. The Planck 2018 best-fit cosmology, which uses a value of $\Omega_m = 0.2865$, produces a curve very similar to that of Om3 using $\Omega_m = 0.3$, which serves as a convenient consistency check. 
+
+
+\begin{table}
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        Cosmology name & beginning of dark ages & beginning of cosmic dawn & beginning of heating & beginning of reionization \\ 
+        \hhline{|=|=|=|=|=|}
+        Planck18 & (49, -21.35241) & (30, -5.46864) & (18, -141.66562) & (9, 11.63577) \\ \hline
+        Om1 & (49, -21.32675) & (29, -4.19783) & (16, -143.35666) & (8, 11.42862) \\ \hline
+        Om2 & (49, -21.33814) & (29, -4.76439) & (17, -142.8142) & (9, 10.50801) \\ \hline
+        Om3 & (49, -21.35213) & (30, -5.45955) & (18, -141.58407) & (9, 11.63895) \\ \hline
+        Om4 & (49, -21.36696) & (31, -6.19322) & (18, -141.43753) & (10, 11.88919) \\ \hline
+        Om5 & (49, -21.38207) & (32, -6.97091) & (19, -141.70151) & (11, 12.93463) \\ \hline
+    \end{tabular}
+    \caption{(redshift, temperature) pairs of the extrema present in the 21-cm global signal for each cosmology. The column are ordered chronologically (largest to smallest redshift), and the column headers indicate the physical change behind each extremum.}
+    \label{tab:global_signal_extrema}
+\end{table}
+
+To show clearly the redshifts at which the difference in global signal is highest, their fractional differences are plotted in fig. \ref{fig:global_signal_difference_Om1_Om5}. For visual clarity, only the cosmologies Om1 and Om5, using the most extreme values of $\Omega_m = 0.1$ and $\Omega_m = 0.5$ respectively, were plotted for comparison.
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\columnwidth]{images/simulation_results/global_signal_difference_Planck18_WMAP9.png}
-    \caption{CAPTION}
-    \label{fig:global_signal_difference_Planck18_WMAP9}
+    \includegraphics[width=0.9\columnwidth]{images/simulation_results/global_signal_difference_Om1_Om5.png}
+    \caption{A sample plot}
+    \label{fig:global_signal_difference_Om1_Om5}
 \end{figure}
+
+Since the global signal is an imprint of the thermal and ionization history of the IGM during Cosmic Dawn and the EoR, it is highly sensitive to the timing of star formation and heating processes. Varying the matter density $\Omega_m$ has the effect of dictating when structure formation primarily occurs. When the value of $\Omega_m$ is low, as in the Om1 case, the universe is less dense; therefore, the density fluctuations take more time to grow, delaying the collapse of the first haloes and therefore the formation of the first stars. This delay causes Ly$\alpha$ coupling to also be delayed, at lower redshifts when the gas has further cooled and the CMB temperature is lower. Therefore, the absorption trough in the global signal, which arises due to $T_s$ dropping much below $T_\text{CMB}$, is deeper and centred at later time (lower $z$). On the other hand, a high $\Omega_m$ universe, for example in the case of Om5, collapses structure earlier and more efficiently. Hence, stars form earlier and the cosmic gas is heated by starlight earlier (higher $z$). This leads to earlier coupling and X-ray heating: the absorption trough for $\Omega_m = 0.5$ is at higher redshift and is shallower, since early X-ray photons begin heating the cold IGM sooner, while $T_\text{CMB}$ is still higher. 
+
+In all cases, when X-ray heating becomes effective, the global brightness temperature rises. Since a higher $\Omega_m$ causes a higher star formation rate at each time, a higher $\Omega_m$ cosmology causes the IGM to be heated more rapidly. Therefore, the trough is narrower (as seen by larger spacing between the curves during falling temperatures, compared to rising temperatures). Similarly, reionization, which is driven by UV radiation from galaxies, begins at different times: in the high $\Omega_m$ cases, the higher density of galaxies at early times ionize the IGM faster, ending the 21-cm signal slightly earlier. On the other hand, lower $\Omega_m$ cases show delayed reionization, shifting the signal beyond that of the simulation domain of 21cmSPACE (later than $z = 6$). Physically, higher matter content should accelerate the buildup of the ionizing background, while lower density postpones it. 
+
+\subsection{The 21-cm Power Spectrum}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\columnwidth]{images/simulation_results/global_signal_difference_default_WMAP9.png}
+    \includegraphics[width=0.9\columnwidth]{images/simulation_results/power_spectrum_fixed_z.png}
     \caption{CAPTION}
-    \label{fig:global_signal_difference_default_WMAP9}
+    \label{fig:power_spectrum_fixed_z}
 \end{figure}
+
+The effect of varied $\Omega_m$ on the power spectrum, however, is less simple. Fig. \ref{fig:power_spectrum_fixed_z} shows slices of the 21-cm power spectra at specific values of $z$, as a function of $k$. The Planck 2018 cosmology appears between the two extreme custom cosmologies, as expected, since its density is intermediate.  Again, only the curves from the extreme cosmologies of Om1 and Om5 are plotted in fig. \ref{fig:power_spectrum_fixed_z_difference}, with their fractional difference. 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\columnwidth]{images/simulation_results/global_signal_difference_default_Planck18.png}
+    \includegraphics[width=0.9\columnwidth]{images/simulation_results/power_spectrum_difference_fixed_z_Om1_Om5.png}
     \caption{CAPTION}
-    \label{fig:global_signal_difference_default_Planck18}
+    \label{fig:power_spectrum_fixed_z_difference}
 \end{figure}
 
-\newpage
-\section{Discussion}
-\red{to be done after incorporating more results}
-% \subsection{Implications for Cosmology with 21cm}
-\subsection{Accuracy of Implementation}
-\subsection{Comparison with Prior Work}
+At $z = 40$ (dashed curves), little to no star formation has occurred in any cosmology (as can be seen in the lack of deviation between curves in fig. \ref{fig:global_signal_all_cosmologies} at $z = 40$). The power spectra are thus reflective almost exclusively of the initial conditions themselves, closely resembling the curves in fig. \ref{}. The high $\Omega_m$ cosmology (oranged dashed) has significantly higher power on small scales (high $k$) than the low $\Omega_m$ case (blue dashed), since the higher matter density enables more correlation at these smaller length scales. 
+
+By $z = 20$ (solid lines), the impact of various astrophysical processes is far more significant, and the differences between cosmologies are a result of both the differences in initial conditions and the differences in star formation rates. At this later redshift, all models are in the midst of Cosmic Dawn: the first generations of stars have formed and emitted Ly$\alpha$ and X-rays. This induces patchy heating and coupling, as illustrated by the shallower or even negative gradient of the power spectra on small to mid-length scales ($k \sim 0.1 - 1 ~\text{MPc}^{-1}$). This patchy heating is a result of halo formation, which occurs at earlier times in higher $\Omega_m$ cosmologies, hence the higher power in Om5 compared to Om1. The shapes of the curves also shed light on the length scales of these haloes: in the low $\Omega_m$ case, the power spectrum peaks around $k \sim 0.3 \text{MPc}^{-1}$, indicating heated regions on the scale of a few Mpc; instead, the high $\Omega_m$ case shows high power all the way until $k \gtrsim 1$, indicating more structure at sub-Mpc scales. 
+
+% On large scales ($k \gtrsim 0.1$), however, the low $\Omega_m$ cosmology has more power than the high $\Omega_m$ case. This is possibly because the evolution is simply further along in 
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{images/simulation_results/power_spectrum_fixed_k.png}
+    \caption{CAPTION}
+    \label{fig:power_spectrum_fixed_k}
+\end{figure}
+
+Fig. \ref{fig:power_spectrum_fixed_k} instead shows a perpendicular slice of the 21-cm power spectra, at fixed values of $k$ varying over $z$. Each 21-cm power spectrum exhibits peaks, corresponding most notably to the Cosmic Dawn and the EoR. As is consistent with the 21-cm global signal, varying $\Omega_m$ alters the timing and width of these peaks by changing the process of structure formation. Analogously with previous sections, fig. \ref{fig:power_spectrum_fixed_k_difference} shows the curves plotted for only Om1 and Om5, along with their fractional difference.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{images/simulation_results/power_spectrum_difference_fixed_k_Om1_Om5.png}
+    \caption{CAPTION}
+    \label{fig:power_spectrum_fixed_k_difference}
+\end{figure}
+
+It is clear to see from the fractional difference plot in fig. \ref{fig:power_spectrum_fixed_k_difference} that at both $k = 0.1 ~\text{MPc}^{-1}$ and $k = 1 ~\text{MPc}^{-1}$, the differences are most pronounced at the two redshifts, centered between $20 \lesssim z \lesssim 30$ and around $z \sim 10$. These redshifts correspond to the beginning of X-ray heating, and the beginning of reionization respectively. As can be seen in the global signal plot fig. \ref{fig:global_signal_difference_Om1_Om5}, these coincide with the gaps left by the lag between the two signals. As is expected, the difference is far larger at large $k$ than at small $k$ (more different at small scales than large scales), since both X-ray heating and reionization are results of small scale galactic sources. The fact that power is generally higher at all redshifts for high $\Omega_m$, both for low and high $k$, is also consistent with fig. \ref{fig:power_spectrum_fixed_z_difference}.
+
+
+% \newpage
+% \section{Discussion}
+% \red{to be done after incorporating more results}
+% % \subsection{Implications for Cosmology with 21cm}
+% \subsection{Accuracy of Implementation}
+% \subsection{Comparison with Prior Work}
 \subsection{Uncertainties and Error Bars}
-\subsection{Relevance for Upcoming Experiments}
 
-\section{Conclusion and Future Work}
-% \subsection{Conclusions}
+
+% \subsection{Relevance for Upcoming Experiments}
+
+\section{Conclusions and Future Work}
+\subsection{Conclusions}
+The dependence of initial conditions on cosmological parameters and their effects on the 21-cm global signal and 
 % \subsection{Project Achievements}
-% \subsection{Future Work}
+\subsection{Future Work}
 
-\section{Acknowledgements}
+% \section{Acknowledgements}
 
 
 
-% \begin{acknowledgments}
-% K.W. thanks...
-% \end{acknowledgments}
+\begin{acknowledgments}
+K.W. thanks...
+\end{acknowledgments}
 
-\newpage
+% \newpage
+% \nocite{*}
+% \printbibliography[title={References}]
+
+% \addcontentsline{toc}{section}{References}
 \nocite{*}
-\printbibliography[title={References}]
+\bibliographystyle{mnras}
+\bibliography{references}
 
 \end{document}
