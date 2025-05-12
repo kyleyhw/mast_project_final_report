@@ -1,5 +1,6 @@
 \documentclass[floats,floatfix,showpacs,amssymb,prd,superscriptaddress,nofootinbib]{revtex4-2} % documentation at https://journals.aps.org/revtex/revtex-faq#u2
-\bibliographystyle{apsrev}
+% \bibliographystyle{apsrev}
+\bibliographystyle{mnras}
 
 % \documentclass{article}
 \usepackage[utf8]{inputenc}
@@ -17,6 +18,8 @@
 % \usepackage[backend=biber]{biblatex}
 % \addbibresource{references.bib}
 \usepackage{natbib}
+\bibpunct{(}{)}{;}{a}{}{,}
+% \setlength{\bibsep}{0pt plus 0.3ex}
 \usepackage{minted}
 \usepackage{xcolor}
 \definecolor{LightGray}{gray}{0.9}
@@ -27,6 +30,7 @@
 % \newcommand{\PL}[1]{\textsf{\color{green!80!black}{\textsuperscript{PL}#1}}}
 \newcommand{\code}{\texttt}
 \newcommand{\red}{\textcolor{red}}
+\newcommand{\blue}{\textcolor{blue}}
 \newcommand{\lt}{\ensuremath <}
 \newcommand{\gt}{\ensuremath >}
 
@@ -105,10 +109,11 @@ Understanding the formation and evolution of cosmic structure remains one of the
 
 As the universe expands, the 21-cm signal is redshifted, allowing observations at different frequencies to correspond to different epochs. By mapping the sky across frequency channels, it is, in principle, possible to construct a three-dimensional tomographic view of the intergalactic medium (IGM). This makes the 21-cm line a particularly sensitive probe for the thermal history of the IGM, the timing and topology of reionization, the formation of the first stars and black holes, and potentially, physics beyond the standard cosmological model, such as dark matter interactions or exotic energy injection.
 
-The brightness temperature of the 21-cm signal, measured relative to the CMB, depends on the spin temperature of hydrogen, the neutral fraction, and the local density field. The differential brightness temperature can be written as \red{probably remove this equation from the introduction and move it to theory}
+The brightness temperature of the 21-cm signal, measured relative to the CMB, depends on the spin temperature of hydrogen, the neutral fraction, and the local density field. The differential brightness temperature can be written as \citep{Pritchard_Loeb_2012}
 
 \begin{equation}
     \delta T_b (\nu) = 27 \ x_{HI} \ (1 + \delta_b) \left(1 - \frac{T_{\text{CMB}}}{T_s} \right) \left(\frac{1 + z}{10} \frac{0.15}{\Omega_m h^2} \right)^{1/2} \left( \frac{\Omega_b h^2}{0.023} \right) \text{mK}
+    \label{eq:brightness_temperature}
 \end{equation}
 
 \noindent where $x_{HI}$ is the neutral hydrogen fraction, $\delta_b$ is the baryon overdensity, $T_s$ is the spin temperature, $T_{\text{CMB}}$ is the CMB temperature at redshift $z$, and $\Omega_m$, $\Omega_b$ are the matter and baryon density parameters respectively.
@@ -122,9 +127,11 @@ Despite these obstacles, a growing number of dedicated low-frequency radio inter
 \section{21cmSPACE}
 For any physical system, simulations are an invaluable asset for a multitude of reasons, including generating mock data from mathematical theory, which can then used for pipeline development and validation, as well as for foreground and instrumental modeling, which can then be used for experimental forecasting to inform instrument design. 
 
-However, evolving the early universe on a machine is no easy task. Therefore, there does not exist one optimal way to simulate the period of time between recombination and reionization, but rather a multitude of different methods each with their own advantages and disadvantages. These methods lie on a spectrum with a trade off between accuracy and runtime. On one end lies numerical simulations, which hold accuracy as its foremost priority. This is achieved through explicit evolution of structure formation using hydrodynamic theory \red{cite thomas?}, which can either be freshly written with the intent of simulating the 21-cm signal from nativity, or taken from a generic library upon which processes such as radiative transfer and chemical evolution can then be attached for the specific purpose of evolving the 21-cm observables. This approach, due to its theoretical ability to include a comprehensive suite of physical effects, advertises the best possible control over the processes at each evolution step. However, numerical simulations come with the heavy downside of computational cost. \red{example?} While it is true that computer performance is exponentially increasing alongside decreasing costs, the need and expectation for improvements in simulation accuracy, size, and resolution have continued to render purely numerical simulations too expensive both in computational power and time to perform large-scale explorations of parameter spaces.
+However, evolving the early universe on a machine is no easy task. Therefore, there does not exist one optimal way to simulate the period of time between recombination and reionization, but rather a multitude of different methods each with their own advantages and disadvantages. These methods lie on a spectrum with a trade off between accuracy and runtime. On one end lies numerical simulations, which hold accuracy as its foremost priority. This is achieved through explicit evolution of structure formation using hydrodynamic theory \citep{gessey-jones_2024}, which can either be freshly written with the intent of simulating the 21-cm signal from nativity, or taken from a generic library upon which processes such as radiative transfer and chemical evolution can then be attached for the specific purpose of evolving the 21-cm observables. This approach, due to its theoretical ability to include a comprehensive suite of physical effects, advertises the best possible control over the processes at each evolution step. However, numerical simulations come with the heavy downside of computational cost. 
+% \red{example?} 
+While it is true that computer performance is exponentially increasing alongside decreasing costs, the need and expectation for improvements in simulation accuracy, size, and resolution have continued to render purely numerical simulations too expensive both in computational power and time to perform large-scale explorations of parameter spaces.
 
-On the other end of the spectrum are analytical simulations, which, in contrast to numerical simulations, do not explicitly evolve spatial volumes through time. Instead, they solve mathematical equations, which, using the plethora of numerical solution libraries available, can take less than a second using commercial hardware \red{cite?}. However, this comes at the heavy trade-off of losing significant physical detail, with analytical equations having only the capability to model fields through averaged quantities, requiring significant approximations. Still, these calculations are of incredible value since these approximations are often subdominant compared to the inherently large observational error of the field. Despite their practical merit, though, the shortcomings of analytical simulations with regards to the lack of explicit evolution often prohibits output of full 21-cm signal maps or 21-cm power spectra.
+On the other end of the spectrum are analytical simulations, which, in contrast to numerical simulations, do not explicitly evolve spatial volumes through time. Instead, they solve mathematical equations, which, using the plethora of numerical solution libraries available, can take less than a second using commercial hardware \citep{gessey-jones_2024}. However, this comes at the heavy trade-off of losing significant physical detail, with analytical equations having only the capability to model fields through averaged quantities, requiring significant approximations. Still, these calculations are of incredible value since these approximations are often subdominant compared to the inherently large observational error of the field. Despite their practical merit, though, the shortcomings of analytical simulations with regards to the lack of explicit evolution often prohibits output of full 21-cm signal maps or 21-cm power spectra.
 
 Through the advantages and disadvantages of both numerical and analytical models, the need for a third class of simulations is hopefully clear: semi-numerical simulations. As the name suggests, semi-numerical simulations numerically resolve and evolve a spatial expanse, but rather than incorporating full hydrodynamic calculations of all processes at every step and every point in space, semi-numerical simulations invoke analytic calculations to deal with approximated quantities. Semi-numerical simulations therefore offer a compromise between accuracy and low computational cost. It is to this class of semi-numerical simulations that 21cmSPACE belongs.
 
@@ -133,28 +140,38 @@ Through the advantages and disadvantages of both numerical and analytical models
 \subsection{Design principles}
 21cmSPACE (21-cm Semi-numerical Predictions Across Cosmic Epochs) evolves large-scale structure using analytic or perturbative solutions, while key astrophysical processes are included via parametric, sub-grid models and numerical integration where necessary. The core aim of 21cmSPACE is to propagate the 21-cm brightness temperature field forward in time, in order to compute observable quantities such as the global (sky-averaged) 21-cm signal and its power spectrum. To achieve this, the code self-consistently tracks the evolution of all relevant fields -- e.g., the hydrogen spin temperature $T_S$, the background radiation temperature $T_{\text{CMB}}$, the hydrogen neutral fraction $x_{\text{HI}}$, as well as derived quantities like star formation rates and radiation intensities.
 
-By design, 21cmSPACE divides the problem according to scale: large-scale intergalactic fields (such as density, velocity, radiation backgrounds) are evolved on a coarsely resolved simulation grid, while small-scale phenomena (halo collapse, star formation, feedback) are handled by sub-grid prescriptions. \red{include illustration as in thomas thesis?} This separation of scales is the key to computational efficiency, without needing to sacrifice essential physical processes.
+By design, 21cmSPACE divides the problem according to scale: large-scale intergalactic fields (such as density, velocity, radiation backgrounds) are evolved on a coarsely resolved simulation grid, while small-scale phenomena (halo collapse, star formation, feedback) are handled by sub-grid prescriptions. 
+%\red{include illustration as in thomas thesis?} 
+This separation of scales is the key to computational efficiency, without needing to sacrifice essential physical processes.
 
-Several design philosophies underlie 21cmSPACE. First, it emphasises flexibility in exploring astrophysical scenarios -- a wide array of input parameters \red{include table like in thomas thesis?} control star formation efficiencies, feedback strengths, spectral emissivities, etc., enabling the user to test different models of early-Universe astrophysics. For example, the efficiencies of Pop II  and Pop III star formation ($f_{\textasteriskcentered,II}$, $f_{\textasteriskcentered,III}$) and the delay time between Pop III and Pop II episodes ($t_{\text{delay}}$) are all tunable inputs. Likewise, the relative X-ray luminosity of high-$z$ X-ray binaries ($f_X$) and any additional radio background strength ($f_r$) can be specified. Second, the code is structured for performance: any components of the calculation that do not depend on the specific astrophysical parameters are precomputed once and stored for reuse. This includes, for instance, cosmological tables, linear perturbation growth factors, and radiation window functions (used for fast radiative transfer, discussed later). Third, 21cmSPACE assumes a fixed cosmological model during a run (by default the Planck 2013 $\Lambda$CDM parameters) \red{and is optimized under that assumption. In principle the cosmology can be changed by updating internal lookup tables and regenerating precomputed grids, but the code is primarily designed to vary astrophysical inputs rather than cosmological ones, since uncertainties in high-$z$ astrophysics are much larger than current cosmology uncertainties}. Overall, the architecture of 21cmSPACE prioritizes physical fidelity (by including all major known 21-cm relevant processes) while maintaining speed through analytical treatments and precomputation. This makes it well-suited to produce rapid predictions of 21-cm observables across cosmic dawn and reionization for a range of scenarios.
+Several design philosophies underlie 21cmSPACE. First, it emphasises flexibility in exploring astrophysical scenarios -- a wide array of input parameters
+% \red{include table like in thomas thesis?} 
+control star formation efficiencies, feedback strengths, spectral emissivities, etc., enabling the user to test different models of early-Universe astrophysics. For example, the efficiencies of Pop II  and Pop III star formation ($f_{\textasteriskcentered,II}$, $f_{\textasteriskcentered,III}$) and the delay time between Pop III and Pop II episodes ($t_{\text{delay}}$) are all tunable inputs. Likewise, the relative X-ray luminosity of high-$z$ X-ray binaries ($f_X$) and any additional radio background strength ($f_r$) can be specified. Second, the code is structured for performance: any components of the calculation that do not depend on the specific astrophysical parameters are precomputed once and stored for reuse. This includes, for instance, cosmological tables, linear perturbation growth factors, and radiation window functions (used for fast radiative transfer, discussed later). Third, 21cmSPACE assumes a fixed cosmological model during a run (by default the Planck 2013 $\Lambda$CDM parameters) and is optimized under that assumption. 
+% In principle the cosmology can be changed by updating internal lookup tables and regenerating precomputed grids, but the code is primarily designed to vary astrophysical inputs rather than cosmological ones, since uncertainties in high-$z$ astrophysics are much larger than current cosmology uncertainties. 
+Overall, the architecture of 21cmSPACE prioritizes physical fidelity (by including all major known 21-cm relevant processes) while maintaining speed through analytical treatments and precomputation. This makes it well-suited to produce rapid predictions of 21-cm observables across cosmic dawn and reionization for a range of scenarios.
 
 \subsection{Temporal, spatial, and cosmological framework}
 
-Before any simulation, the time, space, and cosmology domains must be configured. 21cmSPACE uses a fixed temporal stepping scheme in redshift space, spanning redshift $z\approx50$ down to $z=6$. The simulation begins at $z=50$, a time when structure formation is in its infancy and linear theory is valid, and ends at $z=6$, by which point reionization is essentially complete and the cosmological 21-cm signal is vanishing. The time steps are not uniform: from $z=50$ to $15$ the code advances in unit redshift increments $\Delta z=1$, and then switches to finer steps of $\Delta z=0.1$ from $z=15$ to $6$. This refinement at lower redshifts is to resolve rapid changes during reionization, while larger steps at high redshift suffice when the evolution is slow. Starting at $z=50$ is deliberate – it ensures the initial conditions can be taken directly from linear perturbation theory (with negligible nonlinear structure or star formation by that point). Accordingly, 21cmSPACE initialises each simulation with density, velocity, temperature, and ionisation fields drawn from standard linear codes: matter overdensity and baryon–dark matter relative velocity fields are generated from the linear power spectra (e.g., using CAMB outputs), and initial gas temperature and ionised fraction come from primordial recombination calculations (e.g. RECFAST). These initial conditions at $z=50$ establish the proper starting state of the intergalactic medium (IGM) before the first stars.
+Before any simulation, the time, space, and cosmology domains must be configured. 21cmSPACE uses a fixed temporal stepping scheme in redshift space, spanning redshift $z\approx50$ down to $z=6$. The simulation begins at $z=50$, a time when structure formation is in its infancy and linear theory is valid, and ends at $z=6$, by which point reionization is essentially complete and the cosmological 21-cm signal is vanishing. The time steps are not uniform: from $z=50$ to $15$ the code advances in unit redshift increments $\Delta z=1$, and then switches to finer steps of $\Delta z=0.1$ from $z=15$ to $6$. This refinement at lower redshifts is to resolve rapid changes during reionization, while larger steps at high redshift suffice when the evolution is slow. Starting at $z=50$ is deliberate – it ensures the initial conditions can be taken directly from linear perturbation theory (with negligible nonlinear structure or star formation by that point). Accordingly, 21cmSPACE initialises each simulation with density, velocity, temperature, and ionisation fields drawn from standard linear codes: matter overdensity and baryon–dark matter relative velocity fields are generated from the linear power spectra (e.g., using \code{CAMB} outputs), and initial gas temperature and ionised fraction come from primordial recombination calculations (e.g. \code{RECFAST}). These initial conditions at $z=50$ establish the proper starting state of the intergalactic medium (IGM) before the first stars.
 
 In space, 21cmSPACE uses a three-dimensional Cartesian grid of cells to discretise the simulation volume. The cell size and number are chosen to balance two competing needs: capturing a large volume for statistical representativeness, and maintaining sufficient resolution to model the relevant physical scales. Throughout the project work, a grid of $128^3$ cubical cells was used, with each cell being 3 comoving Mpc (cMpc) on each side. This yields a simulation box of side length $128\times3 = 384$ cMpc and volume $(384~\text{cMpc})^3$. Such a volume is large enough to provide meaningful predictions for global signals and power spectra (covering wavenumbers $k \sim 0.05$–1.0 cMpc$^{-1}$, matching the range probed by current interferometers like HERA). At the same time, a $3~\text{cMpc}$ cell size is fine enough to resolve features like the characteristic scale of baryon–dark matter streaming motions ($\sim 10~\text{cMpc}$ coherence length), and yet coarse enough that individual cell regions remain roughly in the linear regime until $z\sim6$. (In fact, if the cells were much smaller, dense regions would collapse and deviate from linear evolution earlier, violating assumptions in the code’s analytic updates.) The chosen 3 cMpc resolution thus ensures the sub-grid astrophysical models (for star formation, radiative sources, etc.) remain valid on the cell scale up to the end of the simulation. It is worth noting that 21cmSPACE is not limited to $128^3$ – as of 2023, the code supports arbitrary grid sizes $N_{\rm cell}$, allowing much larger volumes (e.g. to cover the full SKA-Low field of view) if computational resources permit.
 
-\red{As mentioned, the simulation assumes a $\Lambda$CDM cosmology (Planck 2013 parameters by default) for computing expansion history and linear perturbations. Within each time step, cosmic expansion is accounted for in all equations (e.g. redshifting of radiation, Hubble cooling of gas). The code updates the background CMB temperature $T_{\text{CMB}}(z)$ according to $T_{\text{CMB}} = 2.725(1+z)$ K (the CMB is taken as the default radio background) unless an additional radio background is specified. While alternative cosmologies could be input by manually editing the cosmological parameter table and recomputing certain grids, the architecture is optimized for a fixed cosmology, leveraging the fact that astrophysical unknowns dominate over cosmological ones for the 21-cm signal. In summary, the simulation grid and timeline are configured to reliably capture the full 21-cm relevant epoch (~50 $\gt$ z $\gt$ 6) with adequate resolution and physical initial conditions, providing the stage on which the astrophysical simulation unfolds.}
+The simulation assumes a $\Lambda$CDM cosmology for computing expansion history and linear perturbations. cosmic expansion is accounted for in all equations (e.g. redshifting of radiation, Hubble cooling of gas). The code updates the background CMB temperature $T_{\text{CMB}}(z)$ according to $T_{\text{CMB}} = 2.725(1+z)$ K (the CMB is taken as the default radio background) unless an additional radio background is specified.
+
+In summary, the simulation grid and timeline are configured to reliably capture the full 21-cm relevant epoch (~50 $\gt$ z $\gt$ 6) with adequate resolution and physical initial conditions, providing the stage on which the astrophysical simulation unfolds.
 
 \subsection{Main Simulation Loop and Sequence of Operations}
 
-Once initialized, 21cmSPACE enters its main simulation loop, iterating over each time step (redshift decrement) from $z=50$ down to $z=6$. At each step, the code updates all relevant fields in a prescribed sequence. The following outlines the major steps executed in one simulation cycle (Gessey-Jones):
+Once initialized, 21cmSPACE enters its main simulation loop, iterating over each time step (redshift decrement) from $z=50$ down to $z=6$. At each step, the code updates all relevant fields in a prescribed sequence. The following outlines the major steps executed in one simulation cycle \citep{gessey-jones_2024}:
 
 \begin{enumerate}
-    \item Update large-scale cosmological fields: The cosmological density fluctuation $\delta(\mathbf{x})$ in each cell and the baryon–dark matter relative velocity $v_{\text{bc}}(\mathbf{x})$ are advanced from the previous redshift to the new redshift. While density fluctuations eventually grow non-linear in overdense cells, in practice 21cmSPACE applies linear growth (scaling by the linear growth factor) at each small redshift step, which is a good approximation on the chosen grid scale until late times. Similarly, the streaming velocity decays with time according to linear theory and is updated analytically (Gessey-Jones). These updates account for the cosmological expansion and structure growth between time steps.
+    \item Update large-scale cosmological fields: The cosmological density fluctuation $\delta(\mathbf{x})$ in each cell and the baryon–dark matter relative velocity $v_{\text{bc}}(\mathbf{x})$ are advanced from the previous redshift to the new redshift. While density fluctuations eventually grow non-linear in overdense cells, in practice 21cmSPACE applies linear growth (scaling by the linear growth factor) at each small redshift step, which is a good approximation on the chosen grid scale until late times. Similarly, the streaming velocity decays with time according to linear theory and is updated analytically \citep{gessey-jones_2024}. These updates account for the cosmological expansion and structure growth between time steps.
 
-    \item Calculate halo abundance in each cell: Using the updated density (and residual streaming velocity), the code computes the halo mass function locally in each cell. 21cmSPACE employs an analytic Press–Schechter-like formalism (specifically a hybrid of the Press–Schechter and Sheth–Tormen prescriptions, following the method of \red{Barkana \& Loeb}) that has been modified to include the effects of the local overdensity and streaming velocity on halo formation (Gessey-Jones). In essence, overdense regions and regions with low relative velocity form more halos, while underdense or high-$v_{\text{bc}}$ regions form fewer. This yields a spatially varying halo mass function across the grid (each cell gets a distribution or count of halos of different masses). The method is calibrated against N-body simulations and is more accurate at high redshift than a simple global Press–Schechter recipe (Gessey-Jones).
+    \item Calculate halo abundance in each cell: Using the updated density (and residual streaming velocity), the code computes the halo mass function locally in each cell. 21cmSPACE employs an analytic Press–Schechter-like formalism (specifically a hybrid of the Press–Schechter \citep{Press_Schechter_1974} and Sheth–Tormen \citep{Sheth_Tormen_1999} prescriptions, following the method of \citet{Barkana_Loeb_2001}) that has been modified to include the effects of the local overdensity and streaming velocity on halo formation \citep{gessey-jones_2024}. In essence, overdense regions and regions with low relative velocity form more halos, while underdense or high-$v_{\text{bc}}$ regions form fewer. This yields a spatially varying halo mass function across the grid (each cell gets a distribution or count of halos of different masses). The method is calibrated against N-body simulations and is more accurate at high redshift than a simple global Press–Schechter recipe \citep{gessey-jones_2024}.
 
-    \item Compute star formation rates (Pop III and Pop II): Given the halo population in a cell, 21cmSPACE next determines how many stars form in those halos. It uses a sub-grid star formation prescription adapted from \red{Magg et al. (2018)} to produce both Population III (metal-free) and Population II (normal metal-enriched) star formation in tandem (Gessey-Jones). In summary, when a halo first reaches the minimum mass to allow cooling and star formation, it is assumed to host a burst of Pop III star formation with an efficiency $f_{\textasteriskcentered,\text{III}}$ (a fraction of the halo’s baryons turn into Pop III stars). After this initial burst, the halo undergoes a recovery period of duration $t_{\text{delay}}$ (to account for feedback from Pop III supernovae blowing out gas). Once this delay time has passed, the halo can then sustain continuous Pop II star formation with efficiency $f_{\textasteriskcentered,\text{II}}$ going forward.Thus, each halo transitions from a Pop III-producing phase to a Pop II-producing phase. The parameters $f_{\textasteriskcentered,\text{III}}$, $f_{\textasteriskcentered,\text{II}}$, and $t_{\text{delay}}$ are inputs to the code that can be adjusted to explore different astrophysical scenarios (for instance, to test how a more or less efficient first-star formation would affect the 21-cm signal) (Gessey-Jones). In the implementation, a set of fitting formulas (based on high-resolution “merger-tree” simulations by \red{A-SLOTH}) is used to compute the star formation rate in each cell from the halo mass distribution, taking into account these efficiencies and the timing of halo formation (Gessey-Jones). The outcome of this step is a cell-averaged star formation rate density (SFRD) for Pop III and Pop II in every cell at the current time.
+    \item Compute star formation rates (Pop III and Pop II): Given the halo population in a cell, 21cmSPACE next determines how many stars form in those halos. It uses a sub-grid star formation prescription adapted from \citet{Magg_2022} to produce both Population III (metal-free) and Population II (normal metal-enriched) star formation in tandem \citep{gessey-jones_2024}. In summary, when a halo first reaches the minimum mass to allow cooling and star formation, it is assumed to host a burst of Pop III star formation with an efficiency $f_{\textasteriskcentered,\text{III}}$ (a fraction of the halo’s baryons turn into Pop III stars). After this initial burst, the halo undergoes a recovery period of duration $t_{\text{delay}}$ (to account for feedback from Pop III supernovae blowing out gas). Once this delay time has passed, the halo can then sustain continuous Pop II star formation with efficiency $f_{\textasteriskcentered,\text{II}}$ going forward.Thus, each halo transitions from a Pop III-producing phase to a Pop II-producing phase. The parameters $f_{\textasteriskcentered,\text{III}}$, $f_{\textasteriskcentered,\text{II}}$, and $t_{\text{delay}}$ are inputs to the code that can be adjusted to explore different astrophysical scenarios (for instance, to test how a more or less efficient first-star formation would affect the 21-cm signal) \citep{gessey-jones_2024}. 
+    
+    %In the implementation, a set of fitting formulas (based on high-resolution “merger-tree” simulations by \red{A-SLOTH}) is used to compute the star formation rate in each cell from the halo mass distribution, taking into account these efficiencies and the timing of halo formation (Gessey-Jones). The outcome of this step is a cell-averaged star formation rate density (SFRD) for Pop III and Pop II in every cell at the current time.
 
     \item Apply star formation feedback effects: As part of the star formation module, 21cmSPACE incorporates several key feedback mechanisms that can suppress star formation in low-mass halos. These include:
     \begin{itemize}
@@ -165,7 +182,7 @@ Once initialized, 21cmSPACE enters its main simulation loop, iterating over each
         \item Photoheating feedback: Once reionization begins, ionizing photons heat the IGM and can evaporate gas out of small halos, preventing them from forming stars. This mainly affects the later stages (Pop II in low-mass halos during reionization).
     \end{itemize}
 
-    In 21cmSPACE, these feedbacks are represented by raising the local star-formation threshold mass $M_{\text{crit}}$ above a baseline value (set by a virial temperature or circular velocity criterion) in cells where the LW intensity, streaming velocity, or ionizing background are significant. The code includes formulas for how each feedback boosts $M_{\text{crit}}$ based on physical models or simulations (Gessey-Jones). By increasing $M_{\text{crit}}$, the star formation in that cell (especially Pop III) is suppressed accordingly. Additionally, 21cmSPACE offers an optional suppression of Pop II star formation efficiency in halos between the molecular-cooling threshold and the atomic-cooling threshold. This phenomenological tweak gradually reduces $f_{,\text{II}}$ in small halos that are just above $M_{\text{crit}}$, reflecting the idea that prior star formation in the halo can deplete or heat some of the gas (Gessey-Jones). When activated, this causes the Pop II star formation rate (SFR) to ramp up from zero at $M_{\text{crit}}$ to the nominal $f_{,\text{II}}$ by the time a halo reaches the atomic cooling mass scale. In the default scenarios studied, this extra suppression was not crucial and can be turned off. Another optional feature is to introduce stochasticity in star formation: instead of using the average SFR in each cell, the code can randomly sample the number of halos and their star formation outcomes (Poisson sampling) to mimic shot noise when halos are very few (Gessey-Jones). This stochastic mode captures additional fluctuations (important at very early times $z\gtrsim25$), but it makes the simulation nondeterministic and was turned off in favor of reproducibility and easier statistical analysis (Gessey-Jones). After applying all feedback effects, the result of steps 2–4 is a finalized Pop III and Pop II SFR for each cell at the current time step.
+    In 21cmSPACE, these feedbacks are represented by raising the local star-formation threshold mass $M_{\text{crit}}$ above a baseline value (set by a virial temperature or circular velocity criterion) in cells where the LW intensity, streaming velocity, or ionizing background are significant. The code includes formulas for how each feedback boosts $M_{\text{crit}}$ based on physical models or simulations \citep{gessey-jones_2024}. By increasing $M_{\text{crit}}$, the star formation in that cell (especially Pop III) is suppressed accordingly. Additionally, 21cmSPACE offers an optional suppression of Pop II star formation efficiency in halos between the molecular-cooling threshold and the atomic-cooling threshold. This phenomenological tweak gradually reduces $f_{,\text{II}}$ in small halos that are just above $M_{\text{crit}}$, reflecting the idea that prior star formation in the halo can deplete or heat some of the gas \citep{gessey-jones_2024}. When activated, this causes the Pop II star formation rate (SFR) to ramp up from zero at $M_{\text{crit}}$ to the nominal $f_{,\text{II}}$ by the time a halo reaches the atomic cooling mass scale. In the default scenarios studied, this extra suppression was not crucial and can be turned off. Another optional feature is to introduce stochasticity in star formation: instead of using the average SFR in each cell, the code can randomly sample the number of halos and their star formation outcomes (Poisson sampling) to mimic shot noise when halos are very few \citep{gessey-jones_2024}. This stochastic mode captures additional fluctuations (important at very early times $z\gtrsim25$), but it makes the simulation nondeterministic and was turned off in favor of reproducibility and easier statistical analysis \citep{gessey-jones_2024}. After applying all feedback effects, the result of steps 2–4 is a finalized Pop III and Pop II SFR for each cell at the current time step.
 
     \item Convert star formation to radiative emissivities: The newly computed star formation rates are then converted into emissivities of various radiation species. 21cmSPACE tracks several radiation fields that are critical for 21-cm physics:
     \begin{itemize}
@@ -175,9 +192,9 @@ Once initialized, 21cmSPACE enters its main simulation loop, iterating over each
 
         \item Ionizing UV photons: Above 13.6 eV, these ionize hydrogen and drive reionization (discussed separately below).
 
-        \item X-ray photons: These can travel far through the neutral IGM, heating it and also producing some secondary ionizations. \red{Fialkov et al.}
+        \item X-ray photons: These can travel far through the neutral IGM, heating it and also producing some secondary ionizations.
 
-        \item Cosmic ray particles: High-energy particles (if included) that can propagate and heat the IGM.
+        \item Cosmic ray particles (if included): High-energy particles that can propagate and heat the IGM.
 
         \item Radio emission: Any additional radio background (e.g., from early radio galaxies or dark matter decay) that would effectively raise $T_{\text{CMB}}$.
     \end{itemize}
@@ -187,30 +204,30 @@ Once initialized, 21cmSPACE enters its main simulation loop, iterating over each
         L_X = (3\times10^{40} \text{erg s}^{-1} M_\odot^{-1}\text{yr}) f_{\text{x}} \text{SFR}
     \end{equation}
     
-    where $f_X$ is the X-ray emission efficiency parameter (Gessey-Jones). A similar relation (with potentially a different $f_X$) can be used for Pop III halos. The spectra of emitted X-rays can be chosen (21cmSPACE allows using a template Pop II X-ray binary spectrum, a power-law, or a Pop III spectrum from detailed models) (Gessey-Jones). Lyman-band photons from stars are computed by assuming stellar population spectra: Pop II stars use a standard stellar population spectrum (e.g., from \red{Leitherer et al.}), while Pop III stellar spectra are derived from the Pop III initial mass function in the model (Gessey-Jones). In essence, the code multiplies the star formation rate by an appropriate luminosity or photon production yield to get the emissivity (photons per second per comoving volume) for each radiation field of interest in each cell.
+    where $f_X$ is the X-ray emission efficiency parameter \citep{gessey-jones_2024}. A similar relation (with potentially a different $f_X$) can be used for Pop III halos. The spectra of emitted X-rays can be chosen (21cmSPACE allows using a template Pop II X-ray binary spectrum, a power-law, or a Pop III spectrum from detailed models) \citep{gessey-jones_2024}. Lyman-band photons from stars are computed by assuming stellar population spectra: Pop II stars use a standard stellar population spectrum \citep{Leitherer_1999}, while Pop III stellar spectra are derived from the Pop III initial mass function in the model \citep{gessey-jones_2024}. In essence, the code multiplies the star formation rate by an appropriate luminosity or photon production yield to get the emissivity (photons per second per comoving volume) for each radiation field of interest in each cell.
 
-    \item Propagate radiation fields through space: Once the emissivity (sources) are known, 21cmSPACE computes the radiation intensity filling each cell by propagating photons from all sources. A key simplification enabling fast computation is the use of a Fourier-space convolution (window function) method for radiative transfer (Gessey-Jones). Instead of tracing rays for millions of sources, the code uses precomputed spherical window functions that describe the average intensity profile around a source for each type of radiation. For photons that travel without absorption (like LW or Ly$\alpha$ beyond a certain wavelength), the window function is essentially a spherical top-hat: a photon travels until redshifted out of the band. For photons that undergo absorption (X-rays being absorbed by neutral gas, Ly$\alpha$ between Ly$\alpha$ and Ly$\beta$ undergoing scatterings), the window functions incorporate those effects (e.g. an exponential attenuation with distance for X-rays due to absorption cross-sections, or a diffusion kernel for Ly$\alpha$ scatterings). By convolving the emissivity field with these window functions, the code obtains the radiation energy density or intensity field in every cell. This convolution is done efficiently via Fast Fourier Transforms, treating the window function as a filter. The radiative transfer also accounts for redshift (cosmological) attenuation and light-cone effects (photon travel time across the simulation volume), ensuring that the finite speed of light and cosmic expansion are included (Gessey-Jones). The outcome is that for each cell we now have, for example, the local Ly$\alpha$ intensity $J_{\alpha}(\mathbf{x})$, the LW intensity, the X-ray flux spectrum $J_X(\mathbf{x},E)$, etc., at the current time. These fields are crucial for the next step. (Ionizing UV radiation is handled a bit differently via an excursion-set approach in the reionization step below, because ionizing photons create sharp ionized/non-ionized regions rather than a smoothly decaying intensity field.)
+    \item Propagate radiation fields through space: Once the emissivity sources are known, 21cmSPACE computes the radiation intensity filling each cell by propagating photons from all sources. A key simplification enabling fast computation is the use of a Fourier-space convolution (window function) method for radiative transfer \citep{gessey-jones_2024}. Instead of tracing rays for millions of sources, the code uses precomputed spherical window functions that describe the average intensity profile around a source for each type of radiation. For photons that travel without absorption (like LW or Ly$\alpha$ beyond a certain wavelength), the window function is essentially a spherical top-hat: a photon travels until redshifted out of the band. For photons that undergo absorption (X-rays being absorbed by neutral gas, Ly$\alpha$ between Ly$\alpha$ and Ly$\beta$ undergoing scatterings), the window functions incorporate those effects (e.g. an exponential attenuation with distance for X-rays due to absorption cross-sections, or a diffusion kernel for Ly$\alpha$ scatterings). By convolving the emissivity field with these window functions, the code obtains the radiation energy density or intensity field in every cell. This convolution is done efficiently via Fast Fourier Transforms, treating the window function as a filter. The radiative transfer also accounts for redshift (cosmological) attenuation and light-cone effects (photon travel time across the simulation volume), ensuring that the finite speed of light and cosmic expansion are included \citep{gessey-jones_2024}. The outcome is that for each cell we now have, for example, the local Ly$\alpha$ intensity $J_{\alpha}(\mathbf{x})$, the LW intensity, the X-ray flux spectrum $J_X(\mathbf{x},E)$, etc., at the current time. These fields are crucial for the next step. (Ionizing UV radiation is handled a bit differently via an excursion-set approach in the reionization step below, because ionizing photons create sharp ionized/non-ionized regions rather than a smoothly decaying intensity field.)
 
-    \item Update gas temperature and ionization: Given the radiation fields and other local quantities, 21cmSPACE then advances the state of the intergalactic gas in each cell. This is done by solving a set of coupled differential equations that govern the heating/cooling of the gas and the growth of ionization. The code uses a numerical integrator (Runge–Kutta method) to solve these equations simultaneously at each time step (Gessey-Jones). One equation is the thermal evolution equation, which equates the change in gas kinetic temperature $T_K$ to various heating and cooling terms. Heating terms include X-ray heating (from the X-ray intensity computed earlier), Compton heating by CMB photons, Ly$\alpha$ heating, cosmic ray heating (if enabled), etc., all summed into a total heating rate per baryon for the cell (Gessey-Jones). Cooling terms include adiabatic cooling due to the expansion of the Universe and additional cooling from the increased number of particles if the gas is being ionized (since energy gets distributed into new free electrons). There is also a small heating term from structure formation (shock heating from collapse, which 21cmSPACE approximates based on the change in baryon density). At the same time, an equation for the evolution of the ionized fraction $x_e$ is solved. For ionization, 21cmSPACE adopts an excursion-set formalism to determine which regions become fully ionized by UV radiation (this handles reionization), coupled with a differential equation for partial ionization by X-rays and other minor sources (Gessey-Jones). In practice, the code first checks the collapse fraction (fraction of mass in halos) in a region against a threshold condition (governed by an ionizing efficiency parameter $\zeta$) using an excursion-set approach similar to Mesinger et al. – if a cell (or a larger region containing that cell, scanned over various scales) has $\zeta f_{\text{coll}}$ above a certain threshold, it is declared fully ionized by stellar UV photons. Those cells are set to $x_{\mathrm{HI}} = 0$. Cells that do not meet the criterion are not fully ionized by UV, but they can still have partial ionization from X-rays or cosmic rays. 21cmSPACE models those partially ionized cells as a two-phase medium: a fraction of the cell is treated as fully ionized (H II) and the remainder as mostly neutral with a small ionized fraction $x_{e,\text{oth}}$ due to X-rays etc. (Gessey-Jones). The effectively neutral fraction in a cell is then $x_{\mathrm{HI}} = 1 - \zeta f_{\text{coll}} - x_{e,\text{oth}}$ (ensuring that when UV ionizations $\zeta f_{\text{coll}}$ and other ionizations $x_{e,\text{oth}}$ sum to 1, the cell is fully ionized). The parameter $x_{e,\text{oth}}$ is computed from the X-ray ionization rate and any other non-UV contributions in the cell. By solving the temperature equation and updating ionization in this way, 21cmSPACE advances the spin temperature $T_S$ toward the kinetic temperature (accounting for Ly$\alpha$ coupling strength) and updates the neutral fraction, completing the evolution of the 21-cm brightness temperature field for that time step.
+    \item Update gas temperature and ionization: Given the radiation fields and other local quantities, 21cmSPACE then advances the state of the intergalactic gas in each cell. This is done by solving a set of coupled differential equations that govern the heating/cooling of the gas and the growth of ionization. The code uses a numerical integrator (Runge–Kutta method) to solve these equations simultaneously at each time step \citep{gessey-jones_2024}. One equation is the thermal evolution equation, which equates the change in gas kinetic temperature $T_K$ to various heating and cooling terms. Heating terms include X-ray heating (from the X-ray intensity computed earlier), Compton heating by CMB photons, Ly$\alpha$ heating, cosmic ray heating (if enabled), etc., all summed into a total heating rate per baryon for the cell \citep{gessey-jones_2024}. Cooling terms include adiabatic cooling due to the expansion of the Universe and additional cooling from the increased number of particles if the gas is being ionized (since energy gets distributed into new free electrons). There is also a small heating term from structure formation (shock heating from collapse, which 21cmSPACE approximates based on the change in baryon density). At the same time, an equation for the evolution of the ionized fraction $x_e$ is solved. For ionization, 21cmSPACE adopts an excursion-set formalism to determine which regions become fully ionized by UV radiation (this handles reionization), coupled with a differential equation for partial ionization by X-rays and other minor sources \citep{gessey-jones_2024}. In practice, the code first checks the collapse fraction (fraction of mass in halos) in a region against a threshold condition (governed by an ionizing efficiency parameter $\zeta$) using an excursion-set approach similar to \citet{Mesinger_2010} – if a cell (or a larger region containing that cell, scanned over various scales) has $\zeta f_{\text{coll}}$ above a certain threshold, it is declared fully ionized by stellar UV photons. Those cells are set to $x_{\mathrm{HI}} = 0$. Cells that do not meet the criterion are not fully ionized by UV, but they can still have partial ionization from X-rays or cosmic rays. 21cmSPACE models those partially ionized cells as a two-phase medium: a fraction of the cell is treated as fully ionized (H II) and the remainder as mostly neutral with a small ionized fraction $x_{e,\text{oth}}$ due to X-rays etc. \citep{gessey-jones_2024}. The effectively neutral fraction in a cell is then $x_{\mathrm{HI}} = 1 - \zeta f_{\text{coll}} - x_{e,\text{oth}}$ (ensuring that when UV ionizations $\zeta f_{\text{coll}}$ and other ionizations $x_{e,\text{oth}}$ sum to 1, the cell is fully ionized). The parameter $x_{e,\text{oth}}$ is computed from the X-ray ionization rate and any other non-UV contributions in the cell. By solving the temperature equation and updating ionization in this way, 21cmSPACE advances the spin temperature $T_S$ toward the kinetic temperature (accounting for Ly$\alpha$ coupling strength) and updates the neutral fraction, completing the evolution of the 21-cm brightness temperature field for that time step.
 
-    \item Record outputs and reiteration: After updating the fields, any quantities that are needed later or for output are stored. For example, 21cmSPACE will save the current values of $T_{\text{CMB}}$ (effective background radiation temperature), the star formation rates, the ionization fraction, etc., as well as intermediate fields it might need for post-processing (Gessey-Jones). The simulation then moves to the next redshift step and repeats the loop (steps 1–8) for that new time. This process continues until the final redshift ($z=6$) is reached.
+    \item Record outputs and reiteration: After updating the fields, any quantities that are needed later or for output are stored. For example, 21cmSPACE will save the current values of $T_{\text{CMB}}$ (effective background radiation temperature), the star formation rates, the ionization fraction, etc., as well as intermediate fields it might need for post-processing \citep{gessey-jones_2024}. The simulation then moves to the next redshift step and repeats the loop (steps 1–8) for that new time. This process continues until the final redshift ($z=6$) is reached.
 \end{enumerate}
 
 Through this loop, 21cmSPACE self-consistently evolves the cosmic gas and radiation fields from the initial conditions to the end of reionization. The result is a time-series of 3D fields (density, $T_K$, $T_S$, $x_{\mathrm{HI}}$, etc.) or equivalently the 21-cm brightness temperature field $\delta T_{21}(\mathbf{x}, z)$ at each redshift. These rich data contain the information needed to derive observable signatures of the 21-cm signal.
 
-It should be noted that 21cmSPACE is optimized by precomputing any components of the calculations that do not depend on the particular astrophysical parameters of a run. For instance, the cosmological initial power spectra or the window functions for radiative transfer can be generated once and reused for many simulations. These are stored on disk and loaded as needed, saving runtime (Gessey-Jones). The code also allows for checkpointing: a simulation can be paused and resumed, which is useful if one wants to stop at an intermediate redshift and perhaps explore a branch of parameter space from there (Gessey-Jones). In normal operation, however, it runs straight through the loop described above.
+It should be noted that 21cmSPACE is optimized by precomputing any components of the calculations that do not depend on the particular astrophysical parameters of a run. For instance, the cosmological initial power spectra or the window functions for radiative transfer can be generated once and reused for many simulations. These are stored on disk and loaded as needed, saving runtime \citep{gessey-jones_2024}. The code also allows for checkpointing: a simulation can be paused and resumed, which is useful if one wants to stop at an intermediate redshift and perhaps explore a branch of parameter space from there \citep{gessey-jones_2024}. In normal operation, however, it runs straight through the loop described above.
 
 \subsection{Post-Processing and Outputs}
 
-After the main simulation loop concludes at $z=6$, 21cmSPACE enters a post-processing stage to produce high-level outputs for analysis. The two primary outputs are the global 21-cm signal and the 21-cm power spectrum, but the code can also derive other quantities of interest. First, the code compiles the results of all time steps to construct the full 21-cm brightness temperature field as a function of redshift. This involves combining the evolved spin temperature, density, and ionization fraction to calculate the differential brightness temperature $\delta T_{21}(\mathbf{x}, z)$ in each cell at each epoch. If any additional effects need to be applied (for example, line-of-sight peculiar velocity gradients cause what are known as redshift-space distortions in the observed 21-cm field), those are accounted for at this stage to ensure the final signal is in the form an observer would see (Gessey-Jones). In particular, 21cmSPACE can adjust the 21-cm field for redshift-space distortions before computing summary statistics. 
+After the main simulation loop concludes at $z=6$, 21cmSPACE enters a post-processing stage to produce high-level outputs for analysis. The two primary outputs are the global 21-cm signal and the 21-cm power spectrum, but the code can also derive other quantities of interest. First, the code compiles the results of all time steps to construct the full 21-cm brightness temperature field as a function of redshift. This involves combining the evolved spin temperature, density, and ionization fraction to calculate the differential brightness temperature $\delta T_{21}(\mathbf{x}, z)$ in each cell at each epoch. If any additional effects need to be applied (for example, line-of-sight peculiar velocity gradients cause what are known as redshift-space distortions in the observed 21-cm field), those are accounted for at this stage to ensure the final signal is in the form an observer would see \citep{gessey-jones_2024}. In particular, 21cmSPACE can adjust the 21-cm field for redshift-space distortions before computing summary statistics. 
 
-From this spatio-temporal data, the sky-averaged (global) 21-cm signal is obtained by averaging the 21-cm brightness over the entire simulation volume at each redshift. The result is a curve of the mean 21-cm brightness temperature as a function of redshift (or cosmic time). This global signal is a key target for experiments like EDGES and others, and it encapsulates the overall thermal and ionization history of the cosmic gas. 21cmSPACE’s global signal prediction includes the impact of all the modeled physics (e.g. it will show the deep absorption feature when the IGM is cold and strongly coupled to $T_S$, and then a rise toward emission as X-ray heating dominates, etc., followed by a decline to zero as reionization completes). The 21-cm power spectrum is computed by taking the Fourier transform of the 3D 21-cm fluctuation field at various redshifts and calculating the variance as a function of scale (wavenumber $k$). Specifically, 21cmSPACE will typically compute the dimensionless power spectrum $\Delta^2_{21}(k)$ from the simulation volume at a given redshift, which can be compared to interferometric observations (e.g. from HERA or the SKA). Because the simulation volume is finite, the code can reliably compute modes in a certain $k$ range (for the $128^3$ volume of side 384 cMpc, roughly $k \sim 0.05$ to $1.0~\text{cMpc}^{-1}$, covering the range where current 21-cm instruments are most sensitive) (Gessey-Jones). The inclusion of redshift-space distortion effects in the previous step ensures that the power spectrum is computed in a way that corresponds to observations (Gessey-Jones). The power spectrum captures the scale-dependent fluctuations induced by, for example, patchy reionization (which boosts large-scale power when large ionized bubbles form) or the clustering of early galaxies. In addition to these, 21cmSPACE can output other diagnostic information. For instance, it can evaluate the contribution of early sources to the present-day unresolved X-ray background in a manner consistent with the simulation (by integrating the X-ray emissivity over redshift) (Gessey-Jones). It also tracks the progress of reionization (e.g. the volume-averaged ionized fraction as a function of $z$) and could output the size distribution of ionized regions if needed for analysis. The code is flexible in storing any intermediate fields; in practice one could extract, say, the evolution of the LW intensity or the heating rate in the simulation for further study. However, the thesis work primarily focuses on the global signal and power spectrum as the summary observables. Finally, the results are typically interpreted in the context of astrophysical parameters. Because 21cmSPACE runs quickly compared to fully numerical simulations, it can be run for many different parameter combinations (e.g. different $f_{*,\text{III}}$, $f_X$, initial mass function assumptions, etc.) to see how the 21-cm outputs change. This makes it a powerful tool for comparing with data or forecasting the constraints that observations could place on the first stars. The comprehensive design of 21cmSPACE – incorporating time evolution, three-dimensional space, and detailed cosmological and astrophysical processes – enables it to serve as the engine behind theoretical studies of the 21-cm signal across cosmic epochs (Gessey-Jones8). Its outputs, such as the global signal and power spectrum, are the bridge to observations, allowing researchers to test models of the first stars and galaxies against the forthcoming 21-cm measurements in a computationally tractable yet physically robust way.
+From this spatio-temporal data, the sky-averaged (global) 21-cm signal is obtained by averaging the 21-cm brightness over the entire simulation volume at each redshift. The result is a curve of the mean 21-cm brightness temperature as a function of redshift (or cosmic time). This global signal is a key target for experiments like EDGES and others, and it encapsulates the overall thermal and ionization history of the cosmic gas. 21cmSPACE’s global signal prediction includes the impact of all the modeled physics (e.g. it will show the deep absorption feature when the IGM is cold and strongly coupled to $T_S$, and then a rise toward emission as X-ray heating dominates, etc., followed by a decline to zero as reionization completes). The 21-cm power spectrum is computed by taking the Fourier transform of the 3D 21-cm fluctuation field at various redshifts and calculating the variance as a function of scale (wavenumber $k$). Specifically, 21cmSPACE will typically compute the dimensionless power spectrum $\Delta^2 (k)$ from the simulation volume at a given redshift, which can be compared to interferometric observations (e.g. from HERA or the SKA). Because the simulation volume is finite, the code can reliably compute modes in a certain $k$ range (for the $128^3$ volume of side 384 cMpc, roughly $k \sim 0.05$ to $1.0~\text{cMpc}^{-1}$, covering the range where current 21-cm instruments are most sensitive) \citep{gessey-jones_2024}. The inclusion of redshift-space distortion effects in the previous step ensures that the power spectrum is computed in a way that corresponds to observations \citep{gessey-jones_2024}. The power spectrum captures the scale-dependent fluctuations induced by, for example, patchy reionization (which boosts large-scale power when large ionized bubbles form) or the clustering of early galaxies. In addition to these, 21cmSPACE can output other diagnostic information. For instance, it can evaluate the contribution of early sources to the present-day unresolved X-ray background in a manner consistent with the simulation (by integrating the X-ray emissivity over redshift) \citep{gessey-jones_2024}. It also tracks the progress of reionization (e.g. the volume-averaged ionized fraction as a function of $z$) and could output the size distribution of ionized regions if needed for analysis. The code is flexible in storing any intermediate fields; in practice one could extract, say, the evolution of the LW intensity or the heating rate in the simulation for further study. However, 21cmSPACE primarily focuses on the global signal and power spectrum as the summary observables. Finally, the results are typically interpreted in the context of astrophysical parameters. Because 21cmSPACE runs quickly compared to fully numerical simulations, it can be run for many different parameter combinations (e.g. different $f_{*,\text{III}}$, $f_X$, initial mass function assumptions, etc.) to see how the 21-cm outputs change. This makes it a powerful tool for comparing with data or forecasting the constraints that observations could place on the first stars. The comprehensive design of 21cmSPACE – incorporating time evolution, three-dimensional space, and detailed cosmological and astrophysical processes – enables it to serve as the engine behind theoretical studies of the 21-cm signal across cosmic epochs (Gessey-Jones8). Its outputs, such as the global signal and power spectrum, are the bridge to observations, allowing researchers to test models of the first stars and galaxies against the forthcoming 21-cm measurements in a computationally tractable yet physically robust way.
 
 %%
 
 \subsection{Project motivation and impact}
 
-21cmSPACE, while being a powerful tool for simulation of the 21-cm signal, still holds some limitations. Particularly, as outlined in the \red{previous section}, despite there offering the option to include or exclude effects from a plethora of physical evolutionary processes, the instantiation of the simulation from its initial conditions remains confined to the use of its default Planck 2013 \red{best-guess} cosmology, and propagation thereof. This is an extremely strong assumption potentially affecting \red{most} of the physical processes throughout the evolution of the 21-cm signal through, as a prominent example, the growth rate of the universe. 
+21cmSPACE, while being a powerful tool for simulation of the 21-cm signal, still holds some limitations. Particularly, as outlined in the previous section, despite there offering the option to include or exclude effects from a plethora of physical evolutionary processes, the instantiation of the simulation from its initial conditions remains confined to the use of its default Planck 2013 best fit cosmology, and propagation thereof. This is an extremely strong assumption affecting many of the physical processes throughout the evolution of the 21-cm signal.
 
 However, there is great value to be gained from the ability to evolve the 21-cm signal for variable cosmologies. As the amount of experimental data measuring various observable imprints of the 21-cm signal continues to increase, so too does the potential to use 21-cm data as a probe for constraining cosmological parameters. Specifically, the 21-cm signal depends on five cosmological parameters, as summarized in Table \ref{tab:cosmological_parameters}.
 
@@ -230,11 +247,11 @@ However, there is great value to be gained from the ability to evolve the 21-cm 
     \label{tab:cosmological_parameters}
 \end{table}
 
-These parameters propagate through 21cmSPACE through two main avenues: the initial conditions, which is an umbrella term comprising of the cosmological density fluctuation $\delta(\textbf{x})$ and the baryon-dark matter relative velocity $v_{\text{bc}}(\textbf{x})$, as well as the halo mass function $dn/dM$.
+% These parameters propagate through 21cmSPACE through two main avenues: the initial conditions, which is an umbrella term comprising of the cosmological density fluctuation $\delta(\textbf{x})$ and the baryon-dark matter relative velocity $v_{\text{bc}}(\textbf{x})$, as well as the halo mass function $dn/dM$. The underlying cosmology in 21cmSPACE can therefore be changed by altering these functions. As a result, the effects of these varied cosmological parameters will be propagated through the evolution of the 21-cm signal, and finally imprinted on the observables of the 21-cm global signal and the 21-cm power spectrum.
 
-The underlying cosmology in 21cmSPACE can therefore be changed by altering these functions. As a result, the effects of these varied cosmological parameters will be propagated through the evolution of the 21-cm signal, and finally imprinted on the observables of the 21-cm global signal and the 21-cm power spectrum.
+The functionality to incorporate cosmological parameters into the inputs of 21cmSPACE would be incredibly useful, and is the objective of a longer-term endeavour. A natural beginning towards this objective is the incorporation of cosmology dependence into the generation of initial conditions. These initial conditions are extremely sensitive to the underlying cosmology of the Universe, and their cosmology dependence is found to propagate significantly through the evolution of the 21-cm signal. The completion of this goal is a major step towards the full incorporation of cosmology dependence into the full simulation of the 21-cm signal.
 
-\red{The functionality to incorporate cosmological parameters into the inputs of 21cmSPACE would be incredibly useful, and is the objective of a longer-term endeavour. The implementation of cosmology dependence into the generation and processing of initial conditions, as well as their propagation through 21-cm evolution, is a step in this direction.}
+% The implementation of cosmology dependence into the generation and processing of initial conditions, as well as their propagation through 21-cm evolution, is a major step in this direction.
 
 In principle, the full incorporation of cosmology into 21cmSPACE will enable exploration of the cosmological parameter space, relating each point in the space to a particular shape of the global signal and a particular shape of the power spectrum. Along with experimental data, the parameter space may then be constrained to narrow down possible locations for the true cosmology of the Universe. As well as this, the comparison of simulated signals with physical measurements will enable the verification or rejection of cosmological theories.
 
@@ -243,7 +260,7 @@ In principle, the full incorporation of cosmology into 21cmSPACE will enable exp
 \section{Theoretical Background}
 \subsection{21-cm Signal Fundamentals}
 \subsubsection{The hyperfine transition}
-\red{cite Liu \& Shaw 2019} The 21-cm signal is the result of the hyperfine transition of atomic hydrogen, which, as both the most abundant and most basic element, is comprised of a single electron combined with a single proton. Due to the slight energy discrepancy between the spin-aligned state of this electron-proton pair and the spin-antialigned state, during this transition, atomic hydrogen can either emit or absorb a photon of wavelength 21 centimeters. The spin temperature $T_s$ is useful for studying the 21-cm emission line, and is given by 
+The 21-cm signal is the result of the hyperfine transition of atomic hydrogen, which, as both the most abundant and most basic element, is comprised of a single electron combined with a single proton. Due to the slight energy discrepancy between the spin-aligned state of this electron-proton pair and the spin-antialigned state, during this transition, atomic hydrogen can either emit or absorb a photon of wavelength 21 centimeters. The spin temperature $T_s$ is useful for studying the 21-cm emission line, and is given by \citep{Liu_Shaw_2020}
 
 \begin{equation}
     \frac{n_1}{n_0} = 3 ~ \text{exp} \left( -\frac{h ~ \nu_{21}}{k_b ~ T_s} \right)
@@ -251,47 +268,68 @@ In principle, the full incorporation of cosmology into 21cmSPACE will enable exp
 
 \noindent where $n_1/n_0$ is the number of hydrogen atoms in the excited hyperfine (aligned) state over the number of hydrogen atoms in the ground hyperfine (anti-aligned) state, $h$ is Planck's constant, $k_b$ is Boltzmann's constant, and $\nu_{21} \approx 1420.406 ~\text{MHz}$ is the frequency of the 21-cm emission line in the rest frame. 
 
-It is important to note that the spin temperature is not directly observed; rather, it is the difference between the Cosmic Microwave Background (CMB) temperature $T_{\text{CMB}}$ and the 21-cm spin temperature which is measured. Areas in which the 21-cm spin temperature is higher than the CMB temperature result in excess emission compared to what is expected from CMB emissions; on the contrary, when $T_s \lt T_{\text{CMB}}$, a photon deficit is measured instead.
+It is important to note that the spin temperature is not directly observed; rather, it is the difference between the Cosmic Microwave Background (CMB) temperature $T_{\text{CMB}}$ and the 21-cm spin temperature which is measured. Areas in which the 21-cm spin temperature is higher than the CMB temperature result in excess emission compared to what is expected from CMB emissions; on the contrary, when $T_s \lt T_{\text{CMB}}$, a photon deficit is measured instead \citep{Liu_Shaw_2020}.
 
-The most important quantity when studying the 21-cm emission line is its brightness temberature $T_b$, which is defined in terms of $T_s$ by 
+The most important quantity when studying the 21-cm emission line is its brightness temberature $T_b$, which is defined in terms of $T_s$ by \citep{Furlanetto_2006}
 
 \begin{equation}
     T_b (\hat{\textbf{r}}, \nu) = \left[1 - \text{exp}(-\tau_{21}(\hat{\textbf{r}}, z)) \right] \frac{T_s(\hat{\textbf{r}}, z) - T_{\text{CMB}} (z)}{1 + z}
 \end{equation}
 
-\noindent where $\hat{\textbf{r}}$ is a radial unit vector from the observer in the direction of observation, the doppler-shifted frequency of the observed signal $\nu$ is given by 
+\noindent where $\hat{\textbf{r}}$ is a radial unit vector from the observer in the direction of observation, the doppler-shifted frequency of the observed signal $\nu$ is given by \citep{Liu_Shaw_2020}
 
 \begin{equation}
     1 + z = \frac{\nu_{21}}{\nu}
 \end{equation}
 
-\noindent and $\tau_{21}$ is the 21-cm optical depth (i.e., how much 21-cm light is absorbed or scattered) of the interstellar medium, defined as
+\noindent and $\tau_{21}$ is the 21-cm optical depth (i.e., how much 21-cm light is absorbed or scattered) of the interstellar medium, defined as \citep{Liu_Shaw_2020}
 
 \begin{equation}
     \tau_{21} (\hat{\textbf{r}}, z) = \frac{3 \hbar c^3 A_{10}}{16 k_b \nu^2_{21}} \frac{x_{\mathrm{HI}} n_\mathrm{H}}{(1 + z) (dv_{\parallel} / dr_{\parallel}) T_s}
+    \label{eq:optical_depth}
 \end{equation}
 
 \noindent with $v_\parallel$ the proper velocity along the line of sight $r_\parallel$, $x_{\mathrm{HI}}$ and $n_{\mathrm{H}}$ are the fraction and number density of neutral hydrogen atoms respectively, $\hbar$ is Planck's constant divided by $2\pi$, $c$ is the speed of light, and $A_{10} = 2.85 \times 10^{-15} \text{s}^{-1}$ is the spontaneous emission coefficient of the hyperfine transition, quantifying the probability that an atom in the aligned state will spontaneously decay into the anti-aligned state. 
 
 \subsection{Cosmic history}
 \subsubsection{Dark Ages (No Starlight, $\mathbf{z \sim 1100-30}$)}
-After recombination (the decoupling of CMB photons at $z \approx 1100$), the universe entered the Dark Ages, before any stars or galaxies existed. During this era, neutral hydrogen filled the intergalactic medium (IGM) and the 21 cm spin temperature ($T_s$) was governed by collisions with the cooling gas. Initially, Compton scattering off residual electrons kept the gas (and thus $T_s$) thermally coupled to the CMB down to $z\sim300$. Once this coupling broke, the gas cooled adiabatically faster than the CMB (${T_{\rm gas}}\propto(1+z)^2$). With collisions still effective at high densities, $T_s$ followed the gas temperature, dropping below the CMB temperature $T_{\text{CMB}}$ and producing a 21 cm absorption signal against the CMB. By $z\sim30$, however, the expanding gas became too diffuse for collisions to maintain coupling, so $T_s$ drifted back toward $T_{\text{CMB}}$, causing the 21 cm signal to vanish (zero contrast). Throughout the Dark Ages, in the absence of astrophysical sources, the 21 cm fluctuations directly trace primordial density perturbations in the neutral hydrogen (assuming HI traces the underlying matter). This makes the Dark Ages 21 cm signal a pristine probe of fundamental cosmology (e.g. the matter power spectrum on small scales), potentially constraining inflationary parameters or dark matter properties (Loeb \& Zaldarriaga 2004; Masui \& Pen 2010; Muñoz et al. 2015). In principle, observations of 21 cm from these ultra-high redshifts could shed light on new physics beyond the CMB (Scott \& Rees 1990; Furlanetto et al. 2019). In practice, detecting the Dark Ages signal is extraordinarily challenging: the relevant frequencies $\nu \lesssim 50$ MHz are heavily contaminated by bright Galactic foregrounds and blocked by the ionosphere on Earth. As a result, this epoch remains unexplored observationally, reserved for futuristic instruments (perhaps a lunar radio array) capable of overcoming these hurdles (Tegmark \& Zaldarriaga 2009).
+After recombination (the decoupling of CMB photons at $z \approx 1100$), the universe entered the Dark Ages, before any stars or galaxies existed. During this era, neutral hydrogen filled the intergalactic medium (IGM) and the 21 cm spin temperature ($T_s$) was governed by collisions with the cooling gas. Initially, Compton scattering off residual electrons kept the gas (and thus $T_s$) thermally coupled to the CMB down to $z\sim300$. Once this coupling broke, the gas cooled adiabatically faster than the CMB (${T_{\rm gas}}\propto(1+z)^2$). With collisions still effective at high densities, $T_s$ followed the gas temperature, dropping below the CMB temperature $T_{\text{CMB}}$ and producing a 21 cm absorption signal against the CMB. By $z\sim30$, however, the expanding gas became too diffuse for collisions to maintain coupling, so $T_s$ drifted back toward $T_{\text{CMB}}$, causing the 21 cm signal to vanish (zero contrast). Throughout the Dark Ages, in the absence of astrophysical sources, the 21 cm fluctuations directly trace primordial density perturbations in the neutral hydrogen (assuming HI traces the underlying matter). This makes the Dark Ages 21 cm signal a pristine probe of fundamental cosmology (e.g. the matter power spectrum on small scales), potentially constraining inflationary parameters or dark matter properties.
+% (Loeb \& Zaldarriaga 2004; Masui \& Pen 2010; Muñoz et al. 2015)
+In principle, observations of 21 cm from these ultra-high redshifts could shed light on new physics beyond the CMB.
+% (Scott \& Rees 1990; Furlanetto et al. 2019)
+In practice, detecting the Dark Ages signal is extraordinarily challenging: the relevant frequencies $\nu \lesssim 50$ MHz are heavily contaminated by bright Galactic foregrounds and blocked by the ionosphere on Earth. As a result, this epoch remains unexplored observationally, reserved for futuristic instruments (perhaps a lunar radio array) capable of overcoming these hurdles (Tegmark \& Zaldarriaga 2009).
 \subsubsection{Cosmic Dawn (First Light, $\mathbf{z \sim 30-15}$)}
-The Cosmic Dawn began once the first generation of stars and galaxies formed (likely in halos of mass $\gtrsim10^5$–$10^6,M_\odot$). Lyman-$\alpha$ photons from these early luminous sources triggered the Wouthuysen-Field effect (Wouthuysen 1952; Field 1958) \red{explain?}: Ly$\alpha$ absorption and re-emission cycles flip the hydrogen spin, coupling $T_s$ to the kinetic temperature of the cold IGM gas. As soon as a pervasive Ly$\alpha$ background developed, $T_s$ was driven below $T_{\text{CMB}}$ again, inducing a deep 21 cm absorption signal. This expected global absorption trough is the first prominent feature of the 21 cm history (Madau et al. 1997; Pritchard \& Loeb 2012). Its depth and timing are sensitive to the onset of star formation and the Ly$\alpha$ production efficiency of the earliest galaxies. As cosmic dawn progresses, new radiative processes come into play: X-rays from the first X-ray binaries, mini-quasars, or hot interstellar gas begin to heat the IGM. These high-energy photons penetrate the IGM and photo-ionize atoms, depositing energy as heat via fast photo-electrons colliding with the gas. Gradually, X-ray heating raises the gas temperature. When the gas (and hence $T_s$) is heated above the CMB temperature, the 21 cm signal transitions from absorption to emission. The precise redshift at which this turning point occurs depends on the total X-ray luminosity of early sources and the hardness of their spectra (Fialkov et al. 2014; Mirocha et al. 2017). Throughout cosmic dawn, the 21 cm brightness is highly inhomogeneous: regions near early galaxies see strong Ly$\alpha$ flux and early heating, while faraway regions remain colder and unheated. This patchiness encodes rich astrophysical information. Measuring the 21 cm signal (globally or via its power spectrum) during cosmic dawn would allow us to infer properties of the first sources \red{– for example, the minimum halo mass able to host star formation, the stellar initial mass function, and the X-ray production efficiency (Pober et al. 2013a; Mesinger et al. 2014; Fialkov et al. 2017)}. In essence, 21 cm observations during cosmic dawn directly probe the birth of the first stars and galaxies, opening a window on astrophysics at high redshift that was previously accessible only through theory.
+The Cosmic Dawn began once the first generation of stars and galaxies formed (likely in halos of mass $\gtrsim10^5$–$10^6,M_\odot$). Lyman-$\alpha$ photons from these early luminous sources triggered the Wouthuysen-Field effect \citep{Wouthuysen_1952, Field_1958}: Ly$\alpha$ absorption and re-emission cycles flip the hydrogen spin, coupling $T_s$ to the kinetic temperature of the cold IGM gas. As soon as a pervasive Ly$\alpha$ background developed, $T_s$ was driven below $T_{\text{CMB}}$ again, inducing a deep 21 cm absorption signal. This expected global absorption trough is the first prominent feature of the 21 cm history. %(Madau et al. 1997; Pritchard \& Loeb 2012)
+Its depth and timing are sensitive to the onset of star formation and the Ly$\alpha$ production efficiency of the earliest galaxies. As cosmic dawn progresses, new radiative processes come into play: X-rays from the first X-ray binaries, mini-quasars, or hot interstellar gas begin to heat the IGM. These high-energy photons penetrate the IGM and photo-ionize atoms, depositing energy as heat via fast photo-electrons colliding with the gas. Gradually, X-ray heating raises the gas temperature. When the gas (and hence $T_s$) is heated above the CMB temperature, the 21 cm signal transitions from absorption to emission. The precise redshift at which this turning point occurs depends on the total X-ray luminosity of early sources and the hardness of their spectra (Fialkov et al. 2014; Mirocha et al. 2017). Throughout cosmic dawn, the 21 cm brightness is highly inhomogeneous: regions near early galaxies see strong Ly$\alpha$ flux and early heating, while faraway regions remain colder and unheated. This patchiness encodes rich astrophysical information. Measuring the 21 cm signal (globally or via its power spectrum) during cosmic dawn would allow us to infer properties of the first sources: for example, the minimum halo mass able to host star formation, the stellar initial mass function, and the X-ray production efficiency.
+% (Pober et al. 2013a; Mesinger et al. 2014; Fialkov et al. 2017)
+In essence, 21 cm observations during cosmic dawn directly probe the birth of the first stars and galaxies, opening a window on astrophysics at high redshift that was previously accessible only through theory.
 
 \subsubsection{Epoch of Reionization (IGM Transformation, $\mathbf{z \sim 15-6}$)}
-As star formation accelerated, the Epoch of Reionization (EoR) unfolded, overlapping with the late stages of cosmic dawn. UV photons from young galaxies (and possibly quasars) gradually ionized the surrounding hydrogen gas, carving out growing ionized (H II) regions in the neutral IGM. Initially these ionized bubbles were small and isolated, but over time they expanded and merged. The volume-averaged neutral fraction of the universe dropped from essentially unity to a few percent by the end of reionization. The 21 cm signal during the EoR became highly patchy. In neutral regions that were already heated ($T_s \gg T_{\text{CMB}}$), the 21 cm line appeared in emission. In contrast, within ionized zones (or where gas was fully ionized), the 21 cm signal was absent entirely. Thus, 21 cm observations of the EoR can spatially map the distribution of neutral and ionized regions across the universe. The characteristic size and growth of these 21 cm “bright” (neutral) and “dark” (ionized) patches inform us about the nature of reionization sources and the timeline of this phase transition (McQuinn et al. 2007; Friedrich et al. 2011). For instance, a rapid reionization would result in large, mergeable ionized regions appearing over a short interval, whereas a more extended reionization would produce a mix of bubble sizes over a longer period. Current observations (e.g. Gunn-Peterson troughs in $z\sim6$ quasar spectra and CMB polarization measurements) indicate reionization completed by $z\approx6$–7 (Fan et al. 2006; Planck Collaboration 2016a). The 21 cm signal provides a direct probe of this process, in contrast to these indirect tracers. By measuring the 21 cm power spectrum or imaging the neutral hydrogen distribution, one can constrain the evolving ionizing photon budget and ionization topology – \red{for example, determining the efficiency of galaxies in ionizing the IGM and the clumpiness of gas that absorbs these photons (Robertson et al. 2010; Greig \& Mesinger 2017)}. In summary, the EoR 21 cm signal links cosmological structure formation with early galactic astrophysics, illuminating how the universe’s diffuse gas was transformed from fully neutral to (almost) fully ionized.
+As star formation accelerated, the Epoch of Reionization (EoR) unfolded, overlapping with the late stages of cosmic dawn. UV photons from young galaxies (and possibly quasars) gradually ionized the surrounding hydrogen gas, carving out growing ionized (HII) regions in the neutral IGM. Initially these ionized bubbles were small and isolated, but over time they expanded and merged. The volume-averaged neutral fraction of the universe dropped from essentially unity to a few percent by the end of reionization. The 21 cm signal during the EoR became highly patchy. In neutral regions that were already heated ($T_s \gg T_{\text{CMB}}$), the 21 cm line appeared in emission. In contrast, within ionized zones (or where gas was fully ionized), the 21 cm signal was absent entirely. Thus, 21 cm observations of the EoR can spatially map the distribution of neutral and ionized regions across the universe. The characteristic size and growth of these 21 cm “bright” (neutral) and “dark” (ionized) patches inform us about the nature of reionization sources and the timeline of this phase transition (McQuinn et al. 2007; Friedrich et al. 2011). For instance, a rapid reionization would result in large, mergeable ionized regions appearing over a short interval, whereas a more extended reionization would produce a mix of bubble sizes over a longer period. Current observations (e.g. Gunn-Peterson troughs in $z\sim6$ quasar spectra and CMB polarization measurements) indicate reionization completed by $z\approx6$–7 (Fan et al. 2006; Planck Collaboration 2016a). The 21 cm signal provides a direct probe of this process, in contrast to these indirect tracers. By measuring the 21 cm power spectrum or imaging the neutral hydrogen distribution, one can constrain the evolving ionizing photon budget and ionization topology – for example, determining the efficiency of galaxies in ionizing the IGM and the clumpiness of gas that absorbs these photons. 
+% (Robertson et al. 2010; Greig \& Mesinger 2017)
+In summary, the EoR 21 cm signal links cosmological structure formation with early galactic astrophysics, illuminating how the universe’s diffuse gas was transformed from fully neutral to (almost) fully ionized.
 
 \subsubsection{Post-Reionization Epoch (After $z \sim 6$)}
-Once reionization completed, the vast majority of the IGM remained ionized up to the present day. Only a small residual fraction of hydrogen stayed neutral: on the order of $x_{\rm HI} \sim 10^{-2}$ (a few percent of all hydrogen). This remaining neutral gas resides in dense, self-shielded regions such as the interiors of galaxies and pockets of the circumgalactic medium that survived the ionizing UV background. Cosmological simulations indicate that HI is preferentially found in halos with masses roughly $10^{10}$–$10^{13} M_\odot$; in lower-mass halos ionizing radiation cannot be fully countered, while in higher-mass clusters gas is stripped out of galaxies. Because the neutral gas is confined to compact objects by this epoch, the 21 cm signal is no longer a continuous background pervading the cosmos, but rather originates from discrete hydrogen-rich systems (the atomic gas in galaxies and protogalaxies). Nonetheless, the 21 cm line remains a valuable tracer of large-scale structure and cosmology after reionization. At very low redshifts ($z<0.1$), traditional surveys like HIPASS and ALFALFA have directly detected extragalactic objects in 21 cm emission (Barnes et al. 2001; Jones et al. 2018), measuring the HI mass function in the local universe. At intermediate redshifts up to $z\sim1$, the 21 cm signal from individual galaxies becomes too faint to detect individually in bulk. Instead, researchers employ 21 cm intensity mapping, which measures the aggregate HI emission from many unresolved galaxies across large cosmic volumes (Chang et al. 2010; Battye et al. 2013). Intensity mapping treats the 21 cm sky as a diffuse background (much like CMB or radio continuum surveys), capturing fluctuations in the HI brightness on large scales without needing to resolve each galaxy. This technique has already achieved first success: by cross-correlating 21 cm maps with optical galaxy surveys, studies have statistically detected cosmic HI at $z\sim0.8$ (Chang et al. 2010; Masui et al. 2013). These measurements confirm that neutral hydrogen traces the same large-scale structure as galaxies and can be used to probe cosmology in the post-reionization era. For example, 21 cm intensity maps can be used to measure baryon acoustic oscillations (BAO) in the matter distribution as a function of redshift, providing a handle on the expansion history and dark energy (Ansari et al. 2018; Anderson et al. 2018). They can also improve constraints on quantities like the growth rate of structure and the sum of neutrino masses by mapping the matter distribution over immense comoving volumes (Villaescusa-Navarro et al. 2018; Obuljen et al. 2018). In short, even after the universe became fully ionized, the 21 cm line continues to serve as a potent tool: it transitions from a probe of early-universe astrophysics to a tracer of large-scale structure and cosmological evolution in the later universe.
+Once reionization completed, the vast majority of the IGM remained ionized up to the present day. Only a small residual fraction of hydrogen stayed neutral: on the order of $x_{\rm HI} \sim 10^{-2}$ (a few percent of all hydrogen) \citep{Villaescusa-Navarro_2018}. This remaining neutral gas resides in dense, self-shielded regions such as the interiors of galaxies and pockets of the circumgalactic medium that survived the ionizing UV background. Cosmological simulations indicate that HI is preferentially found in halos with masses roughly $10^{10}$–$10^{13} M_\odot$; in lower-mass halos ionizing radiation cannot be fully countered, while in higher-mass clusters gas is stripped out of galaxies. Because the neutral gas is confined to compact objects by this epoch, the 21 cm signal is no longer a continuous background pervading the cosmos, but rather originates from discrete hydrogen-rich systems (the atomic gas in galaxies and protogalaxies). Nonetheless, the 21 cm line remains a valuable tracer of large-scale structure and cosmology after reionization. At very low redshifts ($z<0.1$), traditional surveys like HIPASS and ALFALFA have directly detected extragalactic objects in 21 cm emission 
+%(Barnes et al. 2001; Jones et al. 2018)
+, measuring the HI mass function in the local universe. At intermediate redshifts up to $z\sim1$, the 21 cm signal from individual galaxies becomes too faint to detect individually in bulk. Instead, researchers employ 21 cm intensity mapping, which measures the aggregate HI emission from many unresolved galaxies across large cosmic volumes
+%(Chang et al. 2010; Battye et al. 2013)
+. Intensity mapping treats the 21 cm sky as a diffuse background (much like CMB or radio continuum surveys), capturing fluctuations in the HI brightness on large scales without needing to resolve each galaxy. This technique has already achieved first success: by cross-correlating 21 cm maps with optical galaxy surveys, studies have statistically detected cosmic HI at $z\sim0.8$ 
+%(Chang et al. 2010; Masui et al. 2013)
+. These measurements confirm that neutral hydrogen traces the same large-scale structure as galaxies and can be used to probe cosmology in the post-reionization era. For example, 21 cm intensity maps can be used to measure baryon acoustic oscillations (BAO) in the matter distribution as a function of redshift, providing a handle on the expansion history and dark energy 
+%(Ansari et al. 2018; Anderson et al. 2018)
+. They can also improve constraints on quantities like the growth rate of structure and the sum of neutrino masses by mapping the matter distribution over immense comoving volumes %(Villaescusa-Navarro et al. 2018; Obuljen et al. 2018)
+. In short, even after the universe became fully ionized, the 21 cm line continues to serve as a potent tool: it transitions from a probe of early-universe astrophysics to a tracer of large-scale structure and cosmological evolution in the later universe.
 
 \red{include a graphic of the 21cm global signal, with shading, similar to Jiten's first year report.}
 
 \subsection{21-cm Observables}
 
-In astronomy, imaging a signal over a solid angle of sky is often seen as the holy grail of an experimental field. Unfortunately, in the case of 21-cm astronomy, this is inaccessible for a number of physical reasons. First and foremost, the 21-cm signal is extremely faint, with signals from the Epoch of Reionization often on the order of $1 \text{mK}$ to $10 \text{mK}$ \red{cite Furlanetto et al. 2006, Morales \& Wyithe 2010}. In contrast, a single radio-antenna system at  $\sim 150 \text{MHz}$ (\red{within the 50 to 250 MHz frequency band of HERA}) receives hundreds to thousands of kelvin of Galactic synchrotron emission and receiver noise. Because of this low signal-to-noise (SNR) ratio, there is not enough sensitivity to produce a high-fidelity image. In addition to this, recent experiments in 21-cm astronomy have heavily favored interferometric approaches over single-dish approaches, due to the advantage that variable and vastly long baselines are essential in providing high angular resolution, as well as the statistical simplicity \red{(bias free)} in data correlation. However, interferometers inherently miss the total power unless single-dish auto-correlations are included, which is impractical in current experiments due to dominant receiver systematics. \red{cite}
+In astronomy, imaging a signal over a solid angle of sky is often seen as the holy grail of an experimental field. Unfortunately, in the case of 21-cm astronomy, this is inaccessible for a number of physical reasons. First and foremost, the 21-cm signal is extremely faint, with signals from the Epoch of Reionization often on the order of $1 \text{mK}$ to $10 \text{mK}$.
+% \red{cite Furlanetto et al. 2006, Morales \& Wyithe 2010}
+In contrast, a single radio-antenna system at  $\sim 150 \text{MHz}$ (within the 50 to 250 MHz frequency band of HERA \citep{DeBoer_2017}) receives hundreds to thousands of kelvin of Galactic synchrotron emission and receiver noise. Because of this low signal-to-noise (SNR) ratio, there is not enough sensitivity to produce a high-fidelity image. In addition to this, recent experiments in 21-cm astronomy have heavily favoured interferometric approaches over single-dish approaches, due to the advantage that variable and vastly long baselines are essential in providing high angular resolution, as well as the statistical simplicity in data correlation -- specifically, the lack of bias in estimation. However, interferometers inherently miss the total power unless single-dish auto-correlations are included, which is impractical in current experiments due to dominant receiver systematics. \red{cite}
 
-Therefore, experiments in the field of 21-cm astronomy rely on statistical observations to inform the history of the universe. The most important of these is arguably the \textit{power spectrum}, whose measurement is the main focus for many current experiments (\red{cite HERA, etc?}). To define the power spectrum, first consider the three-dimensional Fourier transform from physical space to Fourier space, defined by
+Therefore, experiments in the field of 21-cm astronomy rely on statistical observations to inform the history of the universe. The most important of these is arguably the \textit{power spectrum}, whose measurement is the main focus for many current experiments \citep{DeBoer_2017}. To define the power spectrum, first consider the three-dimensional Fourier transform from physical space to Fourier space, defined by
 
 \begin{equation}
     \tilde{T} (\textbf{k}) \equiv \int^\infty _{-\infty} d^3 r e^{-i\textbf{k} \cdot \textbf{r}} T(\textbf{r})
@@ -344,11 +382,30 @@ While the power spectrum holds information about spatial fluctuations, it is als
 \noindent As the notation suggests, this is an averaged quantity; specifically, it is the average power of the 21-cm signal across all sky angles, as a function of frequency.
 
 
-\subsection{Linear Cosmological Perturbations}
-\red{https://arxiv.org/pdf/astro-ph/0103017}
+% \subsection{Linear Cosmological Perturbations}
+% \red{https://arxiv.org/pdf/astro-ph/0103017}
 \subsection{Initial conditions}
 \subsubsection{Mass overdensities}
+The current inflationary model of the Universe assumes that there existed some primordial power spectrum, imprinted at some arbitrarily early time \citep{Coles_2001}. The primordial power spectrum is defined by 
+
+\begin{equation}
+    P_0 (k) = A_s \left( \frac{k}{k_*} \right)^{n_s - 1},
+    \label{eq:primordial_power_spectrum}
+\end{equation}
+
+\noindent where $k_*$ is the pivot scale $0.002 \text{Mpc}^{-1}$,
+%\footnote{sometimes also chosen as $0.005 \text{Mpc}^{-1}$ in other conventions}
+$A_s$ the amplitude of the spectrum at the pivot scale, and $n_s$ the scalar spectral index. This scalar spectral index represents the tilt of the power spectrum, with $n_s = 1$ corresponding to the Harrison-Zeldovich spectrum \citep{Harrison_1970, Zeldovich_1972}, physically meaning that the power is scale invariant.
+
+This primordial power spectrum is related to the power spectrum at each time through a \textit{transfer function} \citep{Bardeen_1986}. These phenomenological transfer functions mathematically encode how primordial density fluctuations are affected by processes such as radiation pressure, horizon entry, particle free-streaming \citep{Coles_2001}. Closed-form examples of fitting functions used as transfer functions can be found in, for example, \citet{Bardeen_1986, Eisenstein_Hu_1998}. As a function of wavenumber, the processed power spectrum $P(k)$ relates to the primordial power spectrum $P_0 (k)$ through the transfer function $T(k)$ by the relation
+
+\begin{equation}
+    P(k) = P_0 (k) T^2 (k).
+    \label{eq:processed_power_spectrum}
+\end{equation}
+
 \subsubsection{Streaming velocity effect}
+The streaming velocity effect is the result the flows of baryons relative to the velocity of potential wells created by dark matter \citep{Tseliakhovich_Hirata_2010}. This effect is found to have non-negligible effects on structure formation: specifically, it suppresses the formation of haloes at small scales, which imprints on the 21-cm matter power spectrum as a decrease in power near the Jeans length \citep{Tseliakhovich_Hirata_2010}. 
 
 To define $v_{bc}$, the velocity divergence must first be defined as 
 
@@ -357,14 +414,16 @@ To define $v_{bc}$, the velocity divergence must first be defined as
     \label{eq:velocity_divergence}
 \end{equation}
 
-\noindent where $a$ is the dimensionless cosmological scale factor of the universe. \red{what is this divergence physically?} Then, the relative velocity is
+\noindent where $a$ is the dimensionless cosmological scale factor of the universe. 
+%\red{what is this divergence physically?} 
+Then, the relative velocity is
 
 \begin{equation}
     \textbf{v}_{bc} = \frac{\hat{k}}{ik} \left[ \theta_b (\textbf{k}) - \theta_c (\textbf{k}) \right]
     \label{eq:vbc_definition}
 \end{equation}
 
-\noindent where the subscripts $b$ and $c$ denote the $\theta$ for baryons and CDM respectively. The power spectrum of $v_{bc}$ is given by 
+\noindent where the subscripts $b$ and $c$ denote the $\theta$ for baryons and CDM respectively. The power spectrum of $v_{bc}$ is finally given by 
 
 \begin{equation}
 \begin{split}
@@ -373,6 +432,8 @@ To define $v_{bc}$, the velocity divergence must first be defined as
         & = \int \frac{dk}{k} \Delta_{\text{vbc}}^2 (k)
 \end{split}
 \end{equation}
+
+\noindent where $\Delta_\zeta ^2 (k) = 2.42 \times 10^{-9}$ is the primordial curvature perturbation power spectrum \citep{Dunkley_2009}.
 
 % \subsection{Press-Schechter Halo Mass Function}
 % \subsection{Impact on First Stars and the 21-cm Signal}
@@ -405,23 +466,9 @@ To define $v_{bc}$, the velocity divergence must first be defined as
 
 \subsection{Initial Conditions Generation}
 
-The generation of initial conditions was done primarily in the file \code{21cmSPACE/grids\_and\_ic/make\_ic/get\_IC\_N.m}, which defines the function \code{get\_IC\_N}. The function takes the two inputs $N_{pix}$, which represents the side-length of the total simulated spatial volume in number of pixels, and a random seed. The function then outputs two 3-dimensional scalar fields representing the $\delta_m$ field and the $v_{\text{bc}}$ field, where the first array holds the unitless deviation from average density, and the second array holds the relative velocity between baryons and CDM in units of $\text{km} \text{s}^{-1}$. 
+The generation of initial conditions is done primarily in the file \code{21cmSPACE/grids\_and\_ic/make\_ic/get\_IC\_N.m}, which defines the function \code{get\_IC\_N}. The function takes the two inputs: $N_{pix}$, which represents the side-length of the total simulated spatial volume in number of pixels, and a random seed. The function then outputs two 3-dimensional scalar fields representing the $\delta_m$ field and the $v_{\text{bc}}$ field, where the first array holds the unitless deviation from average density, and the second array holds the relative velocity between baryons and CDM in units of $\text{km} \text{s}^{-1}$. 
 
-\code{get\_IC\_N} also further imports three precomputed files, each for a different redshift from $\{40, 970, 1020\}$ containing \textit{transfer function} data output by \code{CAMB}. These transfer functions mathematically encode how primordial density fluctuations are affected by processes such as radiation pressure, horizon entry, particle free-streaming \citep{Coles_2001}. As a function of wavenumber, the processed power spectrum $P(k)$ relates to the primordial power spectrum $P_0 (k)$ through the transfer function $T(k)$ by the relation
-
-\begin{equation}
-    P(k) = P_0 (k) T^2 (k).
-\end{equation}
-
-\noindent The primordial power spectrum itself is defined by 
-
-\begin{equation}
-    P_0 (k) = A_s \left( \frac{k}{k_*} \right)^{n_s - 1},
-\end{equation}
-
-\noindent where $k_*$ is the pivot scale $0.002 \text{Mpc}^{-1}$,
-%\footnote{sometimes also chosen as $0.005 \text{Mpc}^{-1}$ in other conventions}
-$A_s$ the amplitude of the spectrum at the pivot scale, and $n_s$ the scalar spectral index. This scalar spectral index  represents the tilt of the power spectrum, with $n_s = 1$ corresponding to the Harrison-Zeldovich spectrum \citep{Harrison_1970, Zeldovich_1972}, physically meaning that the power is scale invariant. 21cmSPACE currently uses hard-coded values of $A_s = 2.01664 \times 10^{-9}$ \footnote{\red{source?}} and $n_s = 0.9675$, with $n_s$ consistent with the Planck2013 best-fit model \citep{Planck2013results}. 
+\code{get\_IC\_N} also further imports three precomputed files, each for a different redshift from $\{40, 970, 1020\}$ containing transfer function data output by \code{CAMB}. In order to define the primordial power spectrum to be multiplied with these transfer functions as in eq. \ref{eq:primordial_power_spectrum} and eq. \ref{eq:processed_power_spectrum}, 21cmSPACE uses hard-coded values of $A_s = 2.01664 \times 10^{-9}$ \footnote{\red{source?}} and $n_s = 0.9675$, with $n_s$ consistent with the Planck2013 best fit model \citep{Planck2013results}. 
 % These values are considered by some to be part of what defines a cosmology; however, this is not unanimous.
 % ns is from the Planck+lensing column of table 2, not Planck+WP like the other cosmological parameters?
 
@@ -449,7 +496,7 @@ These quantities are then used to define the relevant power spectra. The mass po
     P_m(k) = 2\pi^2\Delta_\zeta ^2 (k) \frac{\delta_m^2}{k^3}
 \end{equation}
 
-\noindent where $\Delta_\zeta ^2 (k) = 2.42 \times 10^{-9}$ is the primordial curvature perturbation power spectrum \citep{Dunkley_2009}. 
+\noindent where $\Delta_\zeta ^2 (k) = 2.42 \times 10^{-9}$ is again the primordial curvature perturbation power spectrum \citep{Dunkley_2009}. 
 %should this also be changed with cosmology, since it relies on WMAP data?
 
 The $v_{bc}$ power spectrum, however, is less straightforward. First, the velocity divergences must be calculated as in eq. \ref{eq:velocity_divergence}. This is impractical to do analytically; rather, in practice, the baryon velocity divergence is calculated using
@@ -461,12 +508,12 @@ The $v_{bc}$ power spectrum, however, is less straightforward. First, the veloci
 
 \noindent with $z_{rec} = 1020$ the redshift of recombination at which the initial conditions are generated, and the $1020$ and $970$ subscripts denoting the redshift at which $\delta$ is evaluated. The CDM velocity divergence is calculated similarly.
 
-The initial velocity 
+The relative velocity 
 %\red{transfer function (what is this called, and what symbol should i use? and why is there no square?)}
-$I_{\text{vbc}}$ is then calculated according to the scalar form of eq. \ref{eq:vbc_definition}, appropriately scaling by the redshift:
+$v_\text{bc}$ is then calculated according to the scalar form of eq. \ref{eq:vbc_definition}, appropriately scaling by the redshift:
 
 \begin{equation}
-    I_{\text{vbc}} = \frac{\theta_b - \theta_c}{i k (z_{rec} + 1)}.
+    v_\text{bc} = \frac{\theta_b - \theta_c}{i k (z_{rec} + 1)}.
 \end{equation}
 % the i in the denominator is not multiplied at this stage.
 
@@ -484,25 +531,30 @@ sheet-by-sheet to impose phase changes such that the complex random variables in
 
 Finally, the Fourier space variables are inverse Fourier transformed back into configuration space, and the three $v_{bc}$ fields for each of the spatial dimensions are converted into a scalar field by taking the total magnitude of the three axis velocities. It is these configuration space boxes that are the final output of \code{get\_IC\_N}.
 
-In order to implement variable cosmological parameters, \code{get\_IC\_N} was translated into Python. This decision was made for two reasons: firstly, the transfer functions used in the evolution of the power spectrum are output by CAMB, which is a code written mostly in Python. Secondly, the final implementation of variable cosmology in 21cmSPACE strives to use the Python-based \code{astropy} module's cosmology classes as an organizational tool for holding parameter values, as well as its object methods for performing standard cosmological calculations (such as calculating $h$ at a given redshift). 
+In order to implement variable cosmological parameters, \code{get\_IC\_N} was translated into Python. This decision was made for two reasons: firstly, the transfer functions used in the evolution of the power spectrum are output by \code{CAMB}, which is a code written mostly in Python. Secondly, the final implementation of variable cosmology in 21cmSPACE strives to use the Python-based \code{astropy} module's cosmology classes as an organizational tool for holding parameter values, as well as its object methods for performing standard cosmological calculations (such as calculating $h$ at a given redshift). 
 
-Since the conventions used between \code{CAMB} and \code{astropy} are not identical, a \code{set\_cosmology\_camb} wrapper was written for \code{CAMB}'s \code{pars.set\_cosmology} method. In particular, astropy's value for $\Omega_b, 0$ and $\Omega_c, 0$ differ from \code{CAMB}'s input by a factor of $h^2$; this wrapper multiplies by the relevant factors before passing the values to \code{CAMB}. 
-%\footnote{There is also some issue with the Tcmb0's datatype from astropy needing removal of unit, but documentation is hard to find for this.}
+% Since the conventions used between \code{CAMB} and \code{astropy} are not identical, a \code{set\_cosmology\_camb} wrapper was written for \code{CAMB}'s \code{pars.set\_cosmology} method. In particular, astropy's value for $\Omega_b, 0$ and $\Omega_c, 0$ differ from \code{CAMB}'s input by a factor of $h^2$; this wrapper multiplies by the relevant factors before passing the values to \code{CAMB}. 
+% %\footnote{There is also some issue with the Tcmb0's datatype from astropy needing removal of unit, but documentation is hard to find for this.}
 
-To receive information about cosmological parameters, the function \code{get\_IC\_N} was altered to take cosmology as an input parameter. Specifically, in addition to the two inputs of \code{Npix} and \code{seed}, \code{get\_IC\_N} takes an \code{astropy.cosmology} instance such as \code{FlatLambdaCDM} or \code{LambdaCDM} as a third parameter. 
+To receive information about cosmological parameters, the function \code{get\_IC\_N} was altered to take cosmology as an input parameter. Specifically, in addition to the two inputs of $N_{pix}$ and random seed, \code{get\_IC\_N} takes a cosmology as a third parameter. This cosmology itself is defined by the five parameters in tab. \ref{tab:cosmological_parameters}.
+%an \code{astropy.cosmology} instance such as \code{FlatLambdaCDM} or \code{LambdaCDM} as a third parameter. 
 
-Practically, the cosmology enters \code{get\_IC\_N} in two ways. Most obviously, the transfer functions encoding effects such as inflation and horizon interaction are sensitive to the cosmological parameters. While these were previously precomputed and saved in the interest of computational efficiency, they must be recalculated for every cosmology, and therefore it is logistically sensible for the calling of CAMB to be directly incorporated as a subroutine within \code{get\_IC\_N}. The execution of CAMB, from instantiation using parameters to the output of the transfer functions for each of the three redshifts required, takes on the order of seconds on commercial hardware when using CAMB's default settings such as those governing the $k$ range probed and the resolution of $k$ sampling. While these settings can be changed to improve accuracy, which was originally done in the precomputed transfer functions, in practice this was found to make no difference in the final initial conditions. 
+Practically, the cosmology enters \code{get\_IC\_N} in two ways. Most obviously, the transfer functions encoding effects such as inflation and horizon interaction are sensitive to the cosmological parameters. While these were previously precomputed and saved in the interest of computational efficiency, they must be recalculated for every cosmology, and therefore it is logistically sensible for the calling of \code{CAMB} to be directly incorporated as a subroutine within \code{get\_IC\_N}. The execution of \code{CAMB}, from instantiation using parameters to the output of the transfer functions for each of the three redshifts required, takes on the order of seconds on commercial hardware when using \code{CAMB}'s default settings such as those governing the $k$ range probed and the resolution of $k$ sampling. While these settings can be changed to improve accuracy, which was originally done in the precomputed transfer functions, in practice this was found to make no difference in the final initial conditions. 
 % \footnote{\red{show evidence?}}
 
-Those familiar with CAMB may be aware that CAMB has the built-in functionality to output the power spectra directly as shown in section \ref{}, thus avoiding the need to manually scale and process the power spectrum from its primordial form. However, the manual scaling of the power spectrum was implemented as a design choice because the CAMB output power spectrum does not include the smoothing required at high $k$ values. As well as this, manual scaling offers a level of control over the primordial power spectrum that sets up future work.
+Those familiar with \code{CAMB} may be aware that \code{CAMB} has the built-in functionality to output the power spectra directly
+%as shown in section \ref{}
+, thus avoiding the need to manually scale and process the power spectrum from its primordial form. However, the manual scaling of the power spectrum was implemented as a design choice because the \code{CAMB} output power spectrum does not include the smoothing required at high $k$ values. As well as this, manual scaling offers a level of control over the primordial power spectrum that sets up future work.
 
-As well as this, the calculation of velocity divergence requires the value of $H$ at a specific redshift. This was originally a function \code{get\_H\_z} defined in another MATLAB file in the same directory, implementing the FRW equation
+As well as this, the calculation of velocity divergence requires the value of $H$ at a specific redshift. This was previously done by implementing the FRW equation
 
 \begin{equation}
-    (H(z))^2 = H_0^2 (\Omega_m (1 + z)^3 + \Omega_\Lambda + \red{\Omega_R} (1+z)^4)
+    (H(z))^2 = H_0^2 (\Omega_m (1 + z)^3 + \Omega_\Lambda + \Omega_R (1+z)^4)
 \end{equation}
 
-\noindent with the radiation pressure $\Omega_R$ hard-coded to $8.5522 \times 10^{-5}$ \footnote{\red{where is this from?}}. To keep consistent with the input cosmology, this \code{get\_H\_z} method is now instead replaced with the \code{astropy.cosmology} instance's \code{H} method.
+\noindent with hard-coded critical densities $\Omega_m$ and $\Omega_\Lambda$, and the radiation pressure $\Omega_R$ hard-coded to $8.5522 \times 10^{-5}$ \footnote{\red{where is this from?}}. To keep consistent with the input cosmology, this \code{get\_H\_z} method is now instead updated to use critical density values as provided by the given cosmology.
+
+% replaced with the \code{astropy.cosmology} instance's \code{H} method.
 
 Since the new code is all written in the same language, a given random seed should cause all calculations to be deterministically performed. Therefore, any discrepancy in the initial condition grids must be due to a difference in the propagation of the cosmological parameters. This is illustrated in fig. \ref{fig:IC_WMAP9_Planck18}, which show a slice of initial condition boxes generated using the same random seed: the upper plots show that the initial conditions are, by eye, very similar (due to the deterministic nature of the random draws with a fixed seed). The lower plot, however, shows the difference in initial condition boxes, with deviations of up to $5 \%$.
 
@@ -511,24 +563,24 @@ Since the new code is all written in the same language, a given random seed shou
      \begin{subfigure}[b]{0.9\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/ic_grids/initial_condition_grid_WMAP9.png}
-         \caption{Gravimeter}
+         \caption{A slice of the initial condition boxes for cosmology WMAP9, with $\delta_m$ on the left and $v_{\text{bc}}$ on the right.}
          \label{fig:IC_WMAP9}
      \end{subfigure}
      \hfill
      \begin{subfigure}[b]{0.9\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/ic_grids/initial_condition_grid_Planck18.png}
-         \caption{Alignment cross-hairs}
+         \caption{A slice of the initial condition boxes for cosmology Planck 2018, with $\delta_m$ on the left and $v_{\text{bc}}$ on the right.}
          \label{fig:IC_Planck18}
      \end{subfigure}
      \hfill
      \begin{subfigure}[b]{0.9\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/ic_grids/difference_in_initial_grid_WMAP9_Planck18.png}
-         \caption{Alignment cross-hairs}
+         \caption{The differences between initial condition grids generated using WMAP9 and Planck 2018 with $\delta_m$ on the left and $v_{\text{bc}}$ on the right, calculated by subtracting the respective Planck 2018 slices in fig. \ref{fig:IC_Planck18} from the WMAP9 slices in \ref{fig:IC_WMAP9}.}
          \label{fig:IC_difference_WMAP9_Planck18}
      \end{subfigure}
-        \caption{}
+        \caption{\ref{fig:IC_WMAP9} and fig. \ref{fig:IC_Planck18} show slices of initial condition boxes for the cosmologies using WMAP9 and Planck 2018 best fit parameters respectively. These \ref{fig:IC_difference_WMAP9_Planck18} shows the effect}
         \label{fig:IC_WMAP9_Planck18}
 \end{figure}
 
@@ -537,15 +589,20 @@ Since the new code is all written in the same language, a given random seed shou
 \subsection{Consistency Checks}
 Although the rewriting of code maintained the same mathematical algorithm, translating code from one language into another often introduces inconsistencies due to the nature of hardware interaction, or variations in implicitly-called library package subroutines. It is therefore important to perform consistency checks at every stage, in order to maintain confidence that the simulation is reflective of the underlying physics.
 
-Due to the statistical nature of measurements, however, the stochacity in the initialization of the random Gaussian field propagates through the imposition of the power spectrum, imprinting inherent randomness onto the final result. To complicate matters further, the generation of random Gaussian fields is non-identical between MATLAB and Python, even when using the same random seed. \red{Why? Saswata and Furen pointed this out in group meeting -- usually it should be the same, but specifically in 3D or in random Gaussian field it is different. Where is the divergence?} 
+Due to the statistical nature of measurements, however, the stochacity in the initialization of the random Gaussian field propagates through the imposition of the power spectrum, imprinting inherent randomness onto the final result. To complicate matters further, the generation of random Gaussian fields is non-identical between MATLAB and Python, even when using the same random seed. 
+% \red{Why? Saswata and Furen pointed this out in group meeting -- usually it should be the same, but specifically in 3D or in random Gaussian field it is different.} 
 
 It is therefore important to iterate the algorithm in both MATLAB and Python multiple times, and statistically compare the power spectra that these initial condition boxes produce. Specifically, after generating the initial condition boxes, the power spectrum can be computed independently from its generation. Taking each power spectrum from individual initial condition boxes, their average value at each $k$ sample may be calculated as a best estimate of the power at that wavenumber; similarly, the standard deviation of the power value at each $k$ sample may be used as an estimate of the uncertainty in the power, as a result of propogation of randomness from the initial Gaussian field. In principle, averaging an infinite number of iterations will return the original power spectrum which should perfectly agree with each other. However, in practice, each algorithm has an associated computational cost, limiting the number of samples; yet, as shown in fig. \ref{fig:compare_generators_power_spectrum_noCAMB_delta_m} and fig. \ref{fig:compare_generators_power_spectrum_noCAMB_vbc}, only as few as $10$ runs is needed to clearly illustrate the agreement of the two code scripts with each other. The plots also include the fractional error, calculated by taking the absolute difference between the two methods, and then dividing by the legacy method's best estimate.
+
+As is shown in the fractional error plots, the deviation between the legacy and new scripts is negligible; furthermore, all error bars overlap with $0 \%$ error, signifying that the legacy and new scripts, despite written in different languages and having different subroutines for the initialisation of Gaussian random fields, perform the same calculations and, more importantly, preserve the physics behind the computation.
+
+The incorporation of \code{CAMB} into each execution of \code{get\_IC\_N} is also a potential source of deviation. As \code{CAMB} is an independently maintained code package, it is possible that \code{CAMB} has undergone changes in its parameters, calculation, or post-processing over the decade since the original legacy precomputed transfer functions used in \code{get\_IC\_N} were written to file. Therefore, it is useful to check that \code{get\_IC\_N}'s output, when using the legacy code with hard-coded Planck 2013 parameters, is consistent with the new code when directly calling \code{CAMB}, also using Planck 2013 parameters. The comparisons are shown in fig. \ref{fig:compare_generators_power_spectrum_delta_m} and \ref{fig:compare_generators_power_spectrum_vbc}.
 
 \newpage
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\columnwidth]{images/ic_power_spectra/compare_generators_averaged_power_spectra_with_residual_noCAMB_delta_m.png}
-    \caption{The upper axes show a comparison of power spectra between legacy and new initial condition generation scripts, \textbf{before} the incorporation of CAMB. Best estimates are calculated using the average of power at each $k$ sample over $10$ iterations to smooth out effects from randomness in the initial Gaussian draws, and error bars are calculated by taking the standard deviation of the same quantity. The lower axes show the fractional error between the two scripts, treating the legacy script as truth.}
+    \caption{The upper axes show a comparison of power spectra between legacy and new initial condition generation scripts, \textbf{before} the incorporation of \code{CAMB}. Best estimates are calculated using the average of power at each $k$ sample over $10$ iterations to smooth out effects from randomness in the initial Gaussian draws, and error bars are calculated by taking the standard deviation of the same quantity. The lower axes show the fractional error between the two scripts, treating the legacy script as truth.}
     \label{fig:compare_generators_power_spectrum_noCAMB_delta_m}
 \end{figure}
 
@@ -557,15 +614,10 @@ It is therefore important to iterate the algorithm in both MATLAB and Python mul
 \end{figure}
 
 \newpage
-As is illustrated in the fractional error plots, the deviation between the legacy and new scripts is negligible; furthermore, all error bars overlap with $0 \%$ error, signifying that the legacy and new scripts, despite written in different languages and having different subroutines for the initialisation of Gaussian random fields, perform the same calculations and, more importantly, preserve the physics behind the computation.
-
-The incorporation of \code{CAMB} into each execution of \code{get\_IC\_N} is also a potential source of deviation. As \code{CAMB} is an independently maintained code package, it is possible that \code{CAMB} has undergone changes in its parameters, calculation, or post-processing over the decade since the original legacy precomputed transfer functions used in \code{get\_IC\_N} were written to file. Therefore, it is useful to check that \code{get\_IC\_N}'s output, when using the legacy code with hard-coded Planck 2013 parameters, is consistent with the new code when directly calling \code{CAMB}, also using Planck 2013 parameters. The comparisons are shown in fig. \ref{fig:compare_generators_power_spectrum_delta_m} and \ref{fig:compare_generators_power_spectrum_vbc}.
-
-\newpage
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\columnwidth]{images/ic_power_spectra/compare_generators_averaged_power_spectra_with_residual_delta_m.png}
-    \caption{The upper axes show a comparison of power spectra between legacy and new initial condition generation scripts, \textbf{after} the incorporation of CAMB. Best estimates are calculated using the average of power at each $k$ sample over $10$ iterations to smooth out effects from randomness in the initial Gaussian draws, and error bars are calculated by taking the standard deviation of the same quantity. The lower axes show the fractional error between the two scripts, treating the legacy script as truth.}
+    \caption{The upper axes show a comparison of power spectra between legacy and new initial condition generation scripts, \textbf{after} the incorporation of \code{CAMB}. Best estimates are calculated using the average of power at each $k$ sample over $10$ iterations to smooth out effects from randomness in the initial Gaussian draws, and error bars are calculated by taking the standard deviation of the same quantity. The lower axes show the fractional error between the two scripts, treating the legacy script as truth.}
     \label{fig:compare_generators_power_spectrum_delta_m}
 \end{figure}
 
@@ -577,7 +629,9 @@ The incorporation of \code{CAMB} into each execution of \code{get\_IC\_N} is als
 \end{figure}
 
 \newpage
-The fractional error plot in $v_{bc}$ shows all error bars overlapping with $0$ error; therefore, the $v_{bc}$ calculation when incorporating \code{CAMB} can be taken to be statistically identical. However, fractional error in the $\delta_m$ power spectrum shows an error of about $3 \%$. This is perhaps unsurprising, \red{since the legacy generation used parameters drawn from different sources, some updated over the years}. As well as this, $3 \%$ error is negligible in the scheme of current instrumental errors in observational 21-cm astronomy. Together, these consistency checks \red{are convincing} enough to approve the use of the \code{CAMB}-incorporated Python version of \code{get\_IC\_N} into 21cmSPACE.
+The fractional error plot in $v_{bc}$ shows all error bars overlapping with $0$ error; therefore, the $v_{bc}$ calculation when incorporating \code{CAMB} can be taken to be statistically identical. However, fractional error in the $\delta_m$ power spectrum shows an error of about $3 \%$, 
+% This is perhaps unsurprising, \red{since the legacy generation used parameters drawn from different sources, some updated over the years}. As well as this, 
+which is negligible in the scheme of current instrumental errors in observational 21-cm astronomy. Together, these consistency checks are enough to approve the use of the \code{CAMB}-incorporated Python version of \code{get\_IC\_N} into 21cmSPACE.
 
 With the infrastructure in place, it is also important to check that different cosmologies indeed imprint differences in the power spectra. This is shown in fig. \ref{fig:compare_cosmologies_averaged_IC_power_spectra}: in the range of wavenumbers simulated by 21cmSPACE, there is already measurable differences depending on the cosmology used.
 
@@ -591,21 +645,34 @@ With the infrastructure in place, it is also important to check that different c
 \newpage
 \section{Results and Discussion}
 \subsection{Simulation Suite}
-With the infrastructure for cosmology-dependent initial conditions successfully implemented, 21cmSPACE was executed using WMAP9 best-fit parameters and Planck 2018 best-fit parameters in the generation of initial grids. As well as this, 21cmSPACE was also run using initial conditions generated with custom cosmologies. In principle, it is possible to vary any of the parameters as outlined in tab. \ref{tab:cosmological_parameters}; to show  varying the value of $\Omega_m$. Their parameter values are summarized in tab. \ref{tab:IC_parameters}. The names of the custom cosmologies are defined so that the suffix is $10$ times the value of the parameter used.
+With the infrastructure for cosmology-dependent initial conditions successfully implemented, 21cmSPACE was executed using WMAP9 best fit parameters \citep{WMAP9results} and Planck 2018 best fit parameters \citep{Planck2018results} in the generation of initial grids. As well as this, 21cmSPACE was also run using initial conditions generated with custom cosmologies. In principle, it is possible to vary any of the parameters as outlined in tab. \ref{tab:cosmological_parameters}; in this example study, the three parameters $\Omega_m$, $\Omega_b$ and $h$ are varied. Their parameter values are summarized in tab. \ref{tab:IC_parameters}. The names of the custom cosmologies are arbitrary, but here defined so that the number suffix is $10$ times the value of the parameter used in the cases of $\Omega_m$ and $h$, and $100$ times the value of the parameter used in the case of $\Omega_b$. 
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|c|c|c|c|c|c|c|}
+\begin{tabular}{c c c c c c c}
 \hline
 Cosmology & $h$ & $\Omega_m$ & $\Omega_b$ & $\Omega_{dm}$ & $\Omega_{de}$ & $T_{\text{CMB}}$ / K \\
-\hhline{|=|=|=|=|=|=|=|}
-WMAP9 & 0.6932 & 0.2865 & 0.04628 & 0.24022 & 0.71341 & 2.725 \\ \hline
+\hhline{= = = = = = =}
+% WMAP9 & 0.6932 & 0.2865 & 0.04628 & 0.24022 & 0.71341 & 2.725 \\ \hline
 Planck18 & 0.6766 & 0.30966 & 0.04897 & 0.26069 & 0.68885 & 2.7255 \\ \hline
-Om1 & 0.6766 & 0.1 & 0.04897 & 0.05103 & 0.89991 & 2.7255 \\ \hline
-Om2 & 0.6766 & 0.2 & 0.04897 & 0.15103 & 0.79991 & 2.7255 \\ \hline
-Om3 & 0.6766 & 0.3 & 0.04897 & 0.25103 & 0.69991 & 2.7255 \\ \hline
-Om4 & 0.6766 & 0.4 & 0.04897 & 0.35103 & 0.59991 & 2.7255 \\ \hline
-Om5 & 0.6766 & 0.5 & 0.04897 & 0.45103 & 0.49991 & 2.7255 \\ \hline
+Om1 & 0.6766 & \blue{0.1} & 0.04897 & 0.05103 & 0.89991 & 2.7255 \\
+Om2 & 0.6766 & \blue{0.2} & 0.04897 & 0.15103 & 0.79991 & 2.7255 \\
+Om3 & 0.6766 & \blue{0.3} & 0.04897 & 0.25103 & 0.69991 & 2.7255 \\
+Om4 & 0.6766 & \blue{0.4} & 0.04897 & 0.35103 & 0.59991 & 2.7255 \\
+Om5 & 0.6766 & \blue{0.5} & 0.04897 & 0.45103 & 0.49991 & 2.7255 \\ \hline
+Ob3 & 0.6766 & 0.30966 & \blue{0.03} & 0.27966 & 0.69025 & 2.7255 \\
+Ob4 & 0.6766 & 0.30966 & \blue{0.04} & 0.26966 & 0.69025 & 2.7255 \\
+Ob5 & 0.6766 & 0.30966 & \blue{0.05} & 0.25966 & 0.69025 & 2.7255 \\
+Ob6 & 0.6766 & 0.30966 & \blue{0.06} & 0.24966 & 0.69025 & 2.7255 \\
+Ob7 & 0.6766 & 0.30966 & \blue{0.07} & 0.23966 & 0.69025 & 2.7255 \\
+\hline
+h5 & \blue{0.5} & 0.30966 & 0.04897 & 0.26069 & 0.69017 & 2.7255 \\
+h6 & \blue{0.6} & 0.30966 & 0.04897 & 0.26069 & 0.69022 & 2.7255 \\
+h7 & \blue{0.7} & 0.30966 & 0.04897 & 0.26069 & 0.69025 & 2.7255 \\
+h8 & \blue{0.8} & 0.30966 & 0.04897 & 0.26069 & 0.69027 & 2.7255 \\
+h9 & \blue{0.9} & 0.30966 & 0.04897 & 0.26069 & 0.69029 & 2.7255 \\
+\hline
+
 \end{tabular}
 \caption{Cosmological parameters used in the simulations.}
 \label{tab:IC_parameters}
@@ -615,7 +682,13 @@ Om5 & 0.6766 & 0.5 & 0.04897 & 0.45103 & 0.49991 & 2.7255 \\ \hline
 
 Sample plots of the initial conditions are shown in fig. \ref{fig:IC_custom}. Some differences are visually obvious: the correlation in both $\delta_m$ and $v_{\text{bc}}$ are both suppressed on smaller length scales in Om1 when compared to Om5. This behaviour is expected, since higher density matter results in matter generally being closer together, and hence being able to correlate more finely. 
 
-This is consistent with the power spectra shown in fig. \ref{fig:averaged_IC_power_spectra_custom}: the power spectra in both $\delta_m$ and $v_{\text{bc}}$ generally monotonically increase with higher $\Omega_m$, at least within the $k$ domain of interest. One thing to note is that the power spectrum in $v_{\text{bc}}$ also experiences some horizontal shifting towards higher $k$ (corresponding to smaller length scales) with higher $\Omega_m$, which continues to be consistent with the previous physical reasoning.
+This is consistent with the power spectra shown in fig. \ref{fig:averaged_IC_power_spectra_Om}: the power in both $\delta_m$ and $v_{\text{bc}}$ generally monotonically increase with higher $\Omega_m$, at least within the $k$ domain of interest. One thing to note is that the power spectrum in $v_{\text{bc}}$ also experiences some horizontal shifting towards higher $k$ (corresponding to smaller length scales) with higher $\Omega_m$, which continues to be consistent with the previous physical reasoning.
+
+Along with this, power spectra for varying $\Omega_b$ are shown in fig. \ref{fig:averaged_IC_power_spectra_Ob}. This time, power appears to instead decrease with increasing $\Omega_b$, both in $\delta_m$ and $v_{bc}$. In contrast to $\Omega_m$, though, varying $\Omega_b$ leaves the  does not appear to have as much of an effect on the redistribution of $v_{bc}$ power to different scales, but rather mostly changes only the amplitude.
+
+Finally, the power spectra for varying $h$ are shown in \ref{fig:averaged_IC_power_spectra_h}, which shows an increase in power for both $\delta_m$ and $v_{bc}$ with increasing $h$, as well as another shift of power towards higher $k$ with increasing $h$.
+
+It is important to note that since the cosmology is not yet altered in the evolutionary phase of 21cmSPACE; all differences shown in later sections are a result only of the dependence of initial conditions on cosmology. This is especially pertinent in the case of varied $h$: as $h$ governs the behaviour of the Universe at each timestep, and in fact even plays a part in relating time to redshift coordinates, the effect of varied $h$ in the evolution is expected to be significant. However, the incorporation of cosmological dependence in the evolution is expected only to amplify differences. Therefore, the following results should be taken as a lower bound of possible differences, and along with $\sim 20\%$ uncertainty in 21cmSPACE simulation results, the following outputs are primarily discussed in a qualitative manner.
 
 \begin{figure}[H]
      \centering
@@ -637,100 +710,273 @@ This is consistent with the power spectra shown in fig. \ref{fig:averaged_IC_pow
 \end{figure}
 
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\columnwidth]{images/ic_power_spectra/compare_cosmologies_averaged_power_spectra_custom.png}
-    \caption{Power spectra calculated by generating initial condition boxes for each cosmology, then taking the power spectrum.}
-    \label{fig:averaged_IC_power_spectra_custom}
+     \centering
+     \begin{subfigure}[b]{0.9\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/ic_power_spectra/compare_cosmologies_averaged_power_spectra_Om.png}
+         \caption{Gravimeter}
+         \label{fig:averaged_IC_power_spectra_Om}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.9\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/ic_power_spectra/compare_cosmologies_averaged_power_spectra_Ob.png}
+         \caption{Gravimeter}
+         \label{fig:averaged_IC_power_spectra_Ob}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.9\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/ic_power_spectra/compare_cosmologies_averaged_power_spectra_h.png}
+         \caption{Alignment cross-hairs}
+         \label{fig:averaged_IC_power_spectra_h}
+     \end{subfigure}
+        \caption{}
+        \label{fig:averaged_IC_power_spectra}
 \end{figure}
 
-\subsection{The 21-cm Global Signal}
 
-A plot of global signal is shown in fig. \ref{fig:global_signal_all_cosmologies}, with all cosmologies included. The general shape of the global signal curves is similar as expected, since the underlying evolutionary physics is identical. To quantify the exact impact of cosmology dependence in the initial conditions, (redshift, temperature) coordinates of each extremum of the 21-cm global signal is given in tab. \ref{tab:global_signal_extrema}.
+\subsection{Varying $\Omega_m$}
 
-\begin{figure}[H]
+A plot of global signal is for each cosmology is shown in fig. \ref{fig:global_signal_all}. The general shape of the global signal curves is similar as expected, since the underlying evolutionary physics is identical. To quantify the exact impact of cosmology dependence in the initial conditions, (redshift, temperature) coordinates of each extremum of the 21-cm global signal is given in tab. \ref{tab:global_signal_extrema}.
+
+\begin{table}[H]
     \centering
-    \includegraphics[width=0.9\columnwidth]{images/simulation_results/global_signal_all_cosmologies.png}
-    \caption{The 21-cm global signal as output by 21cmSPACE. Each curve corresponds to a different cosmology, with parameters as summarized in tab. \ref{tab:IC_parameters}.}
-    \label{fig:global_signal_all_cosmologies}
-\end{figure}
-
-
-The variation of $\Omega_m$ induces an obvious effect in the output of the 21-cm global signal, as shown in fig. \ref{fig:global_signal_all_cosmologies}. Most notably, the centering of the absorption trough is significantly shifted towards higher redshift for higher values of $\Omega_m$. As well as this, the depth of the absorption trough is shallower for higher values of $\Omega_m$, and the amplitude of the emission bump is also smaller for higher $\Omega_m$. The Planck 2018 best-fit cosmology, which uses a value of $\Omega_m = 0.2865$, produces a curve very similar to that of Om3 using $\Omega_m = 0.3$, which serves as a convenient consistency check. 
-
-
-\begin{table}
-    \centering
-    \begin{tabular}{|c|c|c|c|c|}
+    \begin{tabular}{c c c c}
         \hline
-        Cosmology name & beginning of dark ages & beginning of cosmic dawn & beginning of heating & beginning of reionization \\ 
-        \hhline{|=|=|=|=|=|}
-        Planck18 & (49, -21.35241) & (30, -5.46864) & (18, -141.66562) & (9, 11.63577) \\ \hline
-        Om1 & (49, -21.32675) & (29, -4.19783) & (16, -143.35666) & (8, 11.42862) \\ \hline
-        Om2 & (49, -21.33814) & (29, -4.76439) & (17, -142.8142) & (9, 10.50801) \\ \hline
-        Om3 & (49, -21.35213) & (30, -5.45955) & (18, -141.58407) & (9, 11.63895) \\ \hline
-        Om4 & (49, -21.36696) & (31, -6.19322) & (18, -141.43753) & (10, 11.88919) \\ \hline
-        Om5 & (49, -21.38207) & (32, -6.97091) & (19, -141.70151) & (11, 12.93463) \\ \hline
+        Cosmology name & beginning of cosmic dawn & beginning of heating & beginning of reionization \\ 
+        \hhline{= = = =}
+        Planck18 & (30, -5.5) & (18, -141.7) & (9, 11.6) \\ \hline
+        Om1 & (29, -4.2) & (16, -143.4) & (8, 11.4) \\
+        Om2 & (29, -4.8) & (17, -142.8) & (9, 10.5) \\
+        Om3 & (30, -5.5) & (18, -141.6) & (9, 11.6) \\
+        Om4 & (31, -6.2) & (18, -141.4) & (10, 11.9) \\
+        Om5 & (32, -7.0) & (19, -141.7) & (11, 12.9) \\ \hline
+        Ob3 & (31, -5.9) & (18, -142.7) & (10, 11.6) \\
+        Ob4 & (31, -5.7) & (18, -142.7) & (10, 11.3) \\
+        Ob5 & (30, -5.5) & (18, -141.9) & (10, 10.8) \\
+        Ob6 & (30, -5.3) & (17, -142.1) & (9, 10.7) \\
+        Ob7 & (30, -5.2) & (17, -143.0) & (9, 10.6) \\ \hline
+        h5 & (29, -4.8) & (17, -143.1) & (9, 11.4) \\
+        h6 & (30, -5.2) & (17, -142.7) & (9, 10.7) \\
+        h7 & (31, -5.6) & (18, -142.5) & (10, 11.1) \\
+        h8 & (31, -6.0) & (18, -142.5) & (10, 11.7) \\
+        h9 & (31, -6.5) & (19, -142.0) & (10, 12.0) \\ \hline
     \end{tabular}
     \caption{(redshift, temperature) pairs of the extrema present in the 21-cm global signal for each cosmology. The column are ordered chronologically (largest to smallest redshift), and the column headers indicate the physical change behind each extremum.}
     \label{tab:global_signal_extrema}
 \end{table}
 
-To show clearly the redshifts at which the difference in global signal is highest, their fractional differences are plotted in fig. \ref{fig:global_signal_difference_Om1_Om5}. For visual clarity, only the cosmologies Om1 and Om5, using the most extreme values of $\Omega_m = 0.1$ and $\Omega_m = 0.5$ respectively, were plotted for comparison.
-
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\columnwidth]{images/simulation_results/global_signal_difference_Om1_Om5.png}
-    \caption{A sample plot}
-    \label{fig:global_signal_difference_Om1_Om5}
+     \centering
+     \begin{subfigure}[b]{0.9\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/simulation_results/global_signal_Om.png}
+         \caption{The global signal, varying $\Omega_m$.}
+         \label{fig:global_signal_Om}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.9\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/simulation_results/global_signal_Ob.png}
+         \caption{The global signal, varying $\Omega_b$.}
+         \label{fig:global_signal_Ob}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.9\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/simulation_results/global_signal_h.png}
+         \caption{The global signal, varying $h$.}
+         \label{fig:global_signal_h}
+     \end{subfigure}
+        \caption{The 21-cm global signals as output by 21cmSPACE. Each curve corresponds to a different cosmology, with parameters as summarized in tab. \ref{tab:IC_parameters}.}
+        \label{fig:global_signal_all}
 \end{figure}
 
-Since the global signal is an imprint of the thermal and ionization history of the IGM during Cosmic Dawn and the EoR, it is highly sensitive to the timing of star formation and heating processes. Varying the matter density $\Omega_m$ has the effect of dictating when structure formation primarily occurs. When the value of $\Omega_m$ is low, as in the Om1 case, the universe is less dense; therefore, the density fluctuations take more time to grow, delaying the collapse of the first haloes and therefore the formation of the first stars. This delay causes Ly$\alpha$ coupling to also be delayed, at lower redshifts when the gas has further cooled and the CMB temperature is lower. Therefore, the absorption trough in the global signal, which arises due to $T_s$ dropping much below $T_\text{CMB}$, is deeper and centred at later time (lower $z$). On the other hand, a high $\Omega_m$ universe, for example in the case of Om5, collapses structure earlier and more efficiently. Hence, stars form earlier and the cosmic gas is heated by starlight earlier (higher $z$). This leads to earlier coupling and X-ray heating: the absorption trough for $\Omega_m = 0.5$ is at higher redshift and is shallower, since early X-ray photons begin heating the cold IGM sooner, while $T_\text{CMB}$ is still higher. 
+
+The variation of $\Omega_m$ induces the most pronounced effect in the output of the 21-cm global signal, as shown in fig. \ref{fig:global_signal_Om}. Most notably, the centering of the absorption trough is significantly shifted towards higher redshift for higher values of $\Omega_m$. As well as this, the depth of the absorption trough is shallower for higher values of $\Omega_m$, and the amplitude of the emission bump is also smaller for higher $\Omega_m$. The Planck 2018 best fit cosmology, which uses a value of $\Omega_m = 0.30966$, produces a curve very similar to that of Om3 using $\Omega_m = 0.3$, which serves as a convenient consistency check. 
+
+
+% To show clearly the redshifts at which the difference in global signal is highest, the absolute value of their differences are plotted in fig. \ref{fig:global_signal_difference_Om1_Om5}. For visual clarity, only the cosmologies Om1 and Om5, using the most extreme values of $\Omega_m = 0.1$ and $\Omega_m = 0.5$ respectively, were plotted for comparison.
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.9\columnwidth]{images/simulation_results/global_signal_difference_Om1_Om5.png}
+%     \caption{The upper panel shows the 21-cm global signal $\overline{T}_b$ plotted for cosmologies Om1 (solid blue) and Om5 (dashed orange). The lower panel shows the absolute difference between the two cosmologies.}
+%     \label{fig:global_signal_difference_Om1_Om5}
+% \end{figure}
+
+Since the global signal is an imprint of the thermal and ionization history of the IGM during Cosmic Dawn and the EoR, it is highly sensitive to the timing of star formation and heating processes. Varying the matter density $\Omega_m$ has the effect of dictating when structure formation primarily occurs. When the value of $\Omega_m$ is low, as in the Om1 case, the universe is less dense; therefore, the density fluctuations take more time to grow, delaying the collapse of the first haloes and therefore the formation of the first stars. This delay causes Ly$\alpha$ coupling to also be delayed, at lower redshifts when the gas has further cooled and the CMB temperature is lower. Therefore, the absorption trough in the global signal, which arises due to $T_s$ dropping much below $T_\text{CMB}$, is deeper and centred at later time (lower $z$). On the other hand, a high $\Omega_m$ universe, for example in the case of Om5, collapses structure earlier and more efficiently. Hence, stars form earlier and the cosmic gas is heated by starlight earlier (higher $z$). This leads to earlier coupling and X-ray heating: the absorption trough for $\Omega_m = 0.5$ is at higher redshift and is also slightly shallower, since early X-ray photons begin heating the cold IGM sooner, while $T_\text{CMB}$ is still higher. 
 
 In all cases, when X-ray heating becomes effective, the global brightness temperature rises. Since a higher $\Omega_m$ causes a higher star formation rate at each time, a higher $\Omega_m$ cosmology causes the IGM to be heated more rapidly. Therefore, the trough is narrower (as seen by larger spacing between the curves during falling temperatures, compared to rising temperatures). Similarly, reionization, which is driven by UV radiation from galaxies, begins at different times: in the high $\Omega_m$ cases, the higher density of galaxies at early times ionize the IGM faster, ending the 21-cm signal slightly earlier. On the other hand, lower $\Omega_m$ cases show delayed reionization, shifting the signal beyond that of the simulation domain of 21cmSPACE (later than $z = 6$). Physically, higher matter content should accelerate the buildup of the ionizing background, while lower density postpones it. 
 
-\subsection{The 21-cm Power Spectrum}
-
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\columnwidth]{images/simulation_results/power_spectrum_fixed_z.png}
-    \caption{CAPTION}
-    \label{fig:power_spectrum_fixed_z}
+     \centering
+     \begin{subfigure}[b]{0.9\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_0.1_Om.png}
+         \caption{Gravimeter}
+         \label{fig:IC_Om1}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.9\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_1.0_Om.png}
+         \caption{Alignment cross-hairs}
+         \label{fig:IC_Om5}
+     \end{subfigure}
+        \caption{}
+        \label{fig:power_spectrum_fixed_k_Om}
 \end{figure}
 
-The effect of varied $\Omega_m$ on the power spectrum, however, is less simple. Fig. \ref{fig:power_spectrum_fixed_z} shows slices of the 21-cm power spectra at specific values of $z$, as a function of $k$. The Planck 2018 cosmology appears between the two extreme custom cosmologies, as expected, since its density is intermediate.  Again, only the curves from the extreme cosmologies of Om1 and Om5 are plotted in fig. \ref{fig:power_spectrum_fixed_z_difference}, with their fractional difference. 
+Fig. \ref{fig:power_spectrum_fixed_k_Om} instead shows a perpendicular slice of the 21-cm power spectra, at fixed values of $k$ varying over $z$. Each 21-cm power spectrum exhibits peaks, corresponding most notably to the Cosmic Dawn and the EoR. As is consistent with the 21-cm global signal, varying $\Omega_m$ alters the timing and width of these peaks by changing the process of structure formation.
+
+
+As is expected, the difference is far larger at large $k$ than at small $k$ (more different at small scales than large scales), since both X-ray heating and reionization are results of small scale galactic sources. The fact that power is generally higher at all redshifts for high $\Omega_m$, both for low and high $k$, is also consistent with fig. \ref{fig:power_spectrum_fixed_z_Om}.
+
+
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.9\columnwidth]{images/simulation_results/power_spectrum_fixed_z.png}
+%     \caption{The 21-cm power spectrum for the cosmologies Om1 (blue), Om5 (orange) and Planck 2018 (green), plotted as a function of wavenumber $k$ at fixed redshifts of $z = 20$ (solid) and $z = 40$ (dashed).}
+%     \label{fig:power_spectrum_fixed_z}
+% \end{figure}
 
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\columnwidth]{images/simulation_results/power_spectrum_difference_fixed_z_Om1_Om5.png}
-    \caption{CAPTION}
-    \label{fig:power_spectrum_fixed_z_difference}
+     \centering
+     \begin{subfigure}[b]{0.9\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_40_Om.png}
+         \caption{Gravimeter}
+         \label{fig:IC_Om1}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.9\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_20_Om.png}
+         \caption{Alignment cross-hairs}
+         \label{fig:IC_Om5}
+     \end{subfigure}
+        \caption{}
+        \label{fig:power_spectrum_fixed_z_Om}
 \end{figure}
 
-At $z = 40$ (dashed curves), little to no star formation has occurred in any cosmology (as can be seen in the lack of deviation between curves in fig. \ref{fig:global_signal_all_cosmologies} at $z = 40$). The power spectra are thus reflective almost exclusively of the initial conditions themselves, closely resembling the curves in fig. \ref{}. The high $\Omega_m$ cosmology (oranged dashed) has significantly higher power on small scales (high $k$) than the low $\Omega_m$ case (blue dashed), since the higher matter density enables more correlation at these smaller length scales. 
+The effect of varied $\Omega_m$ on the power spectrum, however, is less simple. Fig. \ref{fig:power_spectrum_fixed_z_Om} shows slices of the 21-cm power spectra at specific values of $z$, as a function of $k$. \red{explain why these redshifts were chosen.}
 
-By $z = 20$ (solid lines), the impact of various astrophysical processes is far more significant, and the differences between cosmologies are a result of both the differences in initial conditions and the differences in star formation rates. At this later redshift, all models are in the midst of Cosmic Dawn: the first generations of stars have formed and emitted Ly$\alpha$ and X-rays. This induces patchy heating and coupling, as illustrated by the shallower or even negative gradient of the power spectra on small to mid-length scales ($k \sim 0.1 - 1 ~\text{MPc}^{-1}$). This patchy heating is a result of halo formation, which occurs at earlier times in higher $\Omega_m$ cosmologies, hence the higher power in Om5 compared to Om1. The shapes of the curves also shed light on the length scales of these haloes: in the low $\Omega_m$ case, the power spectrum peaks around $k \sim 0.3 \text{MPc}^{-1}$, indicating heated regions on the scale of a few Mpc; instead, the high $\Omega_m$ case shows high power all the way until $k \gtrsim 1$, indicating more structure at sub-Mpc scales. 
+At $z = 40$, little to no star formation has occurred in any cosmology (as can be seen in the lack of deviation between curves in fig. \ref{fig:global_signal_Om} at $z = 40$). The power spectra are thus reflective almost exclusively of the initial conditions themselves, closely resembling the curves in fig. \ref{fig:averaged_IC_power_spectra_Om}.
+The high $\Omega_m$ cosmologies have significantly higher power on small scales (high $k$) than the low $\Omega_m$ cases, since the higher matter density enables more correlation at these smaller length scales. 
+
+By $z = 20$, the impact of various astrophysical processes is far more significant, and the differences between cosmologies are a result of both the differences in initial conditions and the differences in star formation rates. At this later redshift, all models are in the midst of Cosmic Dawn: the first generations of stars have formed and emitted Ly$\alpha$ and X-rays. This induces patchy heating and coupling, as illustrated by the shallower or even negative gradient of the power spectra on small to mid-length scales ($k \sim 0.1 - 1 ~\text{MPc}^{-1}$). This patchy heating is a result of halo formation, which occurs at earlier times in higher $\Omega_m$ cosmologies, hence the higher power in high $\Omega_m$ cosmologies compared to low $\Omega_m$ cases. The shapes of the curves also shed light on the length scales of these haloes: in low $\Omega_m$ cases, the power spectrum peaks around $k \sim 0.3 \text{MPc}^{-1}$, indicating heated regions on the scale of a few Mpc; instead, the high $\Omega_m$ cases show high power all the way until $k \gtrsim 1$, indicating more structure at sub-Mpc scales. 
+
+
+\subsection{Varying $\Omega_b$}
+
+Varying $\Omega_b$ also shifts the timing and amplitude of the absorption trough (\ref{fig:global_signal_Ob}), albeit to a lesser degree than the variation of $\Omega_m$. The dependence is also different: whereas increases in both $\Omega_m$ and $\Omega_b$ cause the absorption trough to become deeper, a larger value of $\Omega_m$ causes the absorption trough to reach a minimum earlier, as opposed to an increase $\Omega_b$ causes the trough to shift later in the 21-cm evolution. 
+
+The most obvious reason for this increase in depth can be seen in eq. \ref{eq:brightness_temperature}: differential brightness temperature (i.e., contrast) scales with $\Omega_b$. In addition, the optical depth $\tau_{21}$ in eq. \ref{eq:optical_depth} scales with number density, which increases with higher $\Omega_b$. This leads to deeper absorption when the gas cools, and stronger emission when the gas heats. Further, increasing baryon density also supplies more fuel for first stars and their X-ray flux, increasing their spin temperature. While this does slightly decrease the optical depth, its overall impact on the brightness temperature, along with the aforementioned factors, cause the effects shown in fig. \ref{fig:global_signal_Ob}. The timing, meanwhile, is shifter to later for larger values of $\Omega_b$ since raising $\Omega_b$ while holding $\Omega_m$ constant necessarily reduces the cold dark matter fraction ($\Omega_{dm}$ in tab. \ref{tab:IC_parameters}). Thus, halos form later with more baryonic pressure, and the onset of Ly$\alpha$ coupling and heating occurs at lower redshift. Meanwhile, higher baryon density also strengthens collisional coupling at high $z$ , extending the dark-age absorption phase to lower redshifts. 
+
+
+\begin{figure}[H]
+     \centering
+     \begin{subfigure}[b]{0.9\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_40_Ob.png}
+         \caption{Gravimeter}
+         \label{fig:power_spectrum_fixed_z_40_Ob}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.9\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_20_Ob.png}
+         \caption{Alignment cross-hairs}
+         \label{fig:power_spectrum_fixed_z_20_Ob}
+     \end{subfigure}
+        \caption{}
+        \label{fig:power_spectrum_fixed_z_Ob}
+\end{figure}
+
+Fig. \ref{fig:power_spectrum_fixed_z_40_Ob} shows the same physical quantities for varying $\Omega_b$. Again, at $z = 40$, the power spectrum is still reflective of the $\delta_m$ power spectra in fig. \ref{fig:averaged_IC_power_spectra_Ob}. Higher $\Omega_b$ increases the power spectrum amplitude, since $T_b \propto \Omega_b$.  This increase is quite uniform, with only minor changes in shape arising from an increase in $\Omega_b$ increasing the Jeans scale, leading to a small suppression at high $k$. 
+
+The effect of this increase in the Jeans scale is far more pronounced at $z = 20$. At this redshift, when the Universe is partly coupled to the first sources, higher $\Omega_b$ still results generally in suppressed power over all scales. At higher $k$, the increase in Jeans length suppresses power through pressure; conversely, because haloes cluster slightly less strongly when dark matter density is reduced, the relative power at large scales can rise slightly. Therefore, in addition to power scaling, this shift in power from large $k$ to small $k$ (small length scales to large length scales) results in a "tilting" of the pwoer spectrum.
+
+
+
+\subsection{Varying $h$}
+
+Changing $h$ systematically alters the cosmic timeline (fig. \ref{fig:global_signal_h}). A higher $h$ produces a shallower trough earlier in time, since a larger $h$ means that the Universe was younger (and expanding faster) at each given redshift. Hence, there is less time for the gas to cool adiabatically relative to the CMB, and Ly$\alpha$ coupling and X-ray heating happen earlier. As a result, the gas temperature remains higher, the spin temperature is closer to $T_{\text{CMB}}$, and the 21-cm absorption is weaker. Although the differential brightness temperature eq: \ref{eq:brightness_temperature} does scale with $h$, the aforementioned effects are evidently dominant in fig. \ref{fig:global_signal_h}. 
+
 
 % On large scales ($k \gtrsim 0.1$), however, the low $\Omega_m$ cosmology has more power than the high $\Omega_m$ case. This is possibly because the evolution is simply further along in 
 
 
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.9\columnwidth]{images/simulation_results/power_spectrum_fixed_k.png}
+%     \caption{The 21-cm power spectrum for the cosmologies Om1 (blue), Om5 (orange) and Planck 2018 (green), plotted as a function of redshift $z$ at fixed wavenumbers of $k = 0.1 ~\text{MPc}^{-1}$ (solid) and $k = 1.0 ~\text{MPc}^{-1}$ (dashed).}
+%     \label{fig:power_spectrum_fixed_k}
+% \end{figure}
+
+
+
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\columnwidth]{images/simulation_results/power_spectrum_fixed_k.png}
-    \caption{CAPTION}
-    \label{fig:power_spectrum_fixed_k}
+     \centering
+     \begin{subfigure}[b]{0.9\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_0.1_Ob.png}
+         \caption{Gravimeter}
+         \label{fig:IC_Om1}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.9\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_1.0_Ob.png}
+         \caption{Alignment cross-hairs}
+         \label{fig:IC_Om5}
+     \end{subfigure}
+        \caption{}
+        \label{fig:apparatus}
 \end{figure}
 
-Fig. \ref{fig:power_spectrum_fixed_k} instead shows a perpendicular slice of the 21-cm power spectra, at fixed values of $k$ varying over $z$. Each 21-cm power spectrum exhibits peaks, corresponding most notably to the Cosmic Dawn and the EoR. As is consistent with the 21-cm global signal, varying $\Omega_m$ alters the timing and width of these peaks by changing the process of structure formation. Analogously with previous sections, fig. \ref{fig:power_spectrum_fixed_k_difference} shows the curves plotted for only Om1 and Om5, along with their fractional difference.
+Increasing 
 
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\columnwidth]{images/simulation_results/power_spectrum_difference_fixed_k_Om1_Om5.png}
-    \caption{CAPTION}
-    \label{fig:power_spectrum_fixed_k_difference}
+     \centering
+     \begin{subfigure}[b]{0.9\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_40_h.png}
+         \caption{Gravimeter}
+         \label{fig:IC_Om1}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.9\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_20_h.png}
+         \caption{Alignment cross-hairs}
+         \label{fig:IC_Om5}
+     \end{subfigure}
+        \caption{}
+        \label{fig:apparatus}
 \end{figure}
 
-It is clear to see from the fractional difference plot in fig. \ref{fig:power_spectrum_fixed_k_difference} that at both $k = 0.1 ~\text{MPc}^{-1}$ and $k = 1 ~\text{MPc}^{-1}$, the differences are most pronounced at the two redshifts, centered between $20 \lesssim z \lesssim 30$ and around $z \sim 10$. These redshifts correspond to the beginning of X-ray heating, and the beginning of reionization respectively. As can be seen in the global signal plot fig. \ref{fig:global_signal_difference_Om1_Om5}, these coincide with the gaps left by the lag between the two signals. As is expected, the difference is far larger at large $k$ than at small $k$ (more different at small scales than large scales), since both X-ray heating and reionization are results of small scale galactic sources. The fact that power is generally higher at all redshifts for high $\Omega_m$, both for low and high $k$, is also consistent with fig. \ref{fig:power_spectrum_fixed_z_difference}.
-
+\begin{figure}[H]
+     \centering
+     \begin{subfigure}[b]{0.9\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_0.1_h.png}
+         \caption{Gravimeter}
+         \label{fig:IC_Om1}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.9\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_1.0_h.png}
+         \caption{Alignment cross-hairs}
+         \label{fig:IC_Om5}
+     \end{subfigure}
+        \caption{}
+        \label{fig:apparatus}
+\end{figure}
 
 % \newpage
 % \section{Discussion}
@@ -738,7 +984,7 @@ It is clear to see from the fractional difference plot in fig. \ref{fig:power_sp
 % % \subsection{Implications for Cosmology with 21cm}
 % \subsection{Accuracy of Implementation}
 % \subsection{Comparison with Prior Work}
-\subsection{Uncertainties and Error Bars}
+% \subsection{Uncertainties and Error Bars}
 
 
 % \subsection{Relevance for Upcoming Experiments}
@@ -770,7 +1016,6 @@ Finally, programming and writing were significantly accelerated by generative AI
 
 % \addcontentsline{toc}{section}{References}
 \nocite{*}
-\bibliographystyle{mnras}
 \bibliography{references}
 
 \end{document}
