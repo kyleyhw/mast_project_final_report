@@ -20,6 +20,7 @@
 \usepackage{natbib}
 \bibpunct{(}{)}{;}{a}{}{,}
 % \setlength{\bibsep}{0pt plus 0.3ex}
+\usepackage[toc,page]{appendix}
 \usepackage{minted}
 \usepackage{xcolor}
 \definecolor{LightGray}{gray}{0.9}
@@ -740,33 +741,6 @@ It is important to note that since the cosmology is not yet altered in the evolu
 
 A plot of global signal is for each cosmology is shown in fig. \ref{fig:global_signal_all}. The general shape of the global signal curves is similar as expected, since the underlying evolutionary physics is identical. To quantify the exact impact of cosmology dependence in the initial conditions, (redshift, temperature) coordinates of each extremum of the 21-cm global signal is given in tab. \ref{tab:global_signal_extrema}.
 
-\begin{table}[H]
-    \centering
-    \begin{tabular}{c c c c}
-        \hline
-        Cosmology name & beginning of cosmic dawn & beginning of heating & beginning of reionization \\ 
-        \hhline{= = = =}
-        Planck18 & (30, -5.5) & (18, -141.7) & (9, 11.6) \\ \hline
-        Om1 & (29, -4.2) & (16, -143.4) & (8, 11.4) \\
-        Om2 & (29, -4.8) & (17, -142.8) & (9, 10.5) \\
-        Om3 & (30, -5.5) & (18, -141.6) & (9, 11.6) \\
-        Om4 & (31, -6.2) & (18, -141.4) & (10, 11.9) \\
-        Om5 & (32, -7.0) & (19, -141.7) & (11, 12.9) \\ \hline
-        Ob3 & (31, -5.9) & (18, -142.7) & (10, 11.6) \\
-        Ob4 & (31, -5.7) & (18, -142.7) & (10, 11.3) \\
-        Ob5 & (30, -5.5) & (18, -141.9) & (10, 10.8) \\
-        Ob6 & (30, -5.3) & (17, -142.1) & (9, 10.7) \\
-        Ob7 & (30, -5.2) & (17, -143.0) & (9, 10.6) \\ \hline
-        h5 & (29, -4.8) & (17, -143.1) & (9, 11.4) \\
-        h6 & (30, -5.2) & (17, -142.7) & (9, 10.7) \\
-        h7 & (31, -5.6) & (18, -142.5) & (10, 11.1) \\
-        h8 & (31, -6.0) & (18, -142.5) & (10, 11.7) \\
-        h9 & (31, -6.5) & (19, -142.0) & (10, 12.0) \\ \hline
-    \end{tabular}
-    \caption{(redshift, temperature) pairs of the extrema present in the 21-cm global signal for each cosmology. The column are ordered chronologically (largest to smallest redshift), and the column headers indicate the physical change behind each extremum.}
-    \label{tab:global_signal_extrema}
-\end{table}
-
 % \begin{figure}[H]
 %      \centering
 %      \begin{subfigure}[b]{0.9\textwidth}
@@ -884,17 +858,6 @@ Since the global signal is an imprint of the thermal and ionization history of t
 
 In all cases, when X-ray heating becomes effective, the global brightness temperature rises. Since a higher $\Omega_m$ causes a higher star formation rate at each time, a higher $\Omega_m$ cosmology causes the IGM to be heated more rapidly. Therefore, the trough is narrower (as seen by larger spacing between the curves during falling temperatures, compared to rising temperatures). Similarly, reionization, which is driven by UV radiation from galaxies, begins at different times: in the high $\Omega_m$ cases, the higher density of galaxies at early times ionize the IGM faster, ending the 21-cm signal slightly earlier. On the other hand, lower $\Omega_m$ cases show delayed reionization, shifting the signal beyond that of the simulation domain of 21cmSPACE (later than $z = 6$). Physically, higher matter content should accelerate the buildup of the ionizing background, while lower density postpones it.
 
-
-
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.9\columnwidth]{images/simulation_results/power_spectrum_fixed_z.png}
-%     \caption{The 21-cm power spectrum for the cosmologies Om1 (blue), Om5 (orange) and Planck 2018 (green), plotted as a function of wavenumber $k$ at fixed redshifts of $z = 20$ (solid) and $z = 40$ (dashed).}
-%     \label{fig:power_spectrum_fixed_z}
-% \end{figure}
-
-
-
 The effect of varied $\Omega_m$ on the power spectrum, however, is less simple. Fig. \ref{fig:power_spectrum_fixed_z_Om} shows slices of the 21-cm power spectra at specific values of $z$, as a function of $k$. \red{explain why these redshifts were chosen.}
 
 At $z = 40$, little to no star formation has occurred in any cosmology (as can be seen in the lack of deviation between curves in fig. \ref{fig:global_signal_Om} at $z = 40$). The power spectra are thus reflective almost exclusively of the initial conditions themselves, closely resembling the curves in fig. \ref{fig:averaged_IC_power_spectra_Om}.
@@ -916,46 +879,7 @@ Varying $\Omega_b$ also shifts the timing and amplitude of the absorption trough
 
 The most obvious reason for the increase in depth of the absorption trough can be seen in eq. \ref{eq:brightness_temperature}: differential brightness temperature (i.e., contrast) scales with $\Omega_b$. In addition, the optical depth $\tau_{21}$ in eq. \ref{eq:optical_depth} scales with number density, which increases with higher $\Omega_b$. This leads to deeper absorption when the gas cools, and stronger emission when the gas heats. Further, increasing baryon density also supplies more fuel for first stars and their X-ray flux, increasing their spin temperature. While this does slightly decrease the optical depth, its overall impact on the brightness temperature, along with the aforementioned factors, cause the effects shown in fig. \ref{fig:global_signal_Ob}. The timing, meanwhile, is shifter to later for larger values of $\Omega_b$ since raising $\Omega_b$ while holding $\Omega_m$ constant necessarily reduces the cold dark matter fraction ($\Omega_{dm}$ in tab. \ref{tab:IC_parameters}). Thus, halos form later with more baryonic pressure, and the onset of Ly$\alpha$ coupling and heating occurs at lower redshift. Meanwhile, higher baryon density also strengthens collisional coupling at high $z$ , extending the dark-age absorption phase to lower redshifts. 
 
-
-% \begin{figure}[H]
-%      \centering
-%      \begin{subfigure}[b]{0.9\textwidth}
-%          \centering
-%          \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_40_Ob.png}
-%          \caption{Gravimeter}
-%          \label{fig:power_spectrum_fixed_z_40_Ob}
-%      \end{subfigure}
-%      \hfill
-%      \begin{subfigure}[b]{0.9\textwidth}
-%          \centering
-%          \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_20_Ob.png}
-%          \caption{Alignment cross-hairs}
-%          \label{fig:power_spectrum_fixed_z_20_Ob}
-%      \end{subfigure}
-%         \caption{}
-%         \label{fig:power_spectrum_fixed_z_Ob}
-% \end{figure}
-
-% \begin{figure}[H]
-%      \centering
-%      \begin{subfigure}[b]{0.9\textwidth}
-%          \centering
-%          \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_0.1_Ob.png}
-%          \caption{Gravimeter}
-%          \label{fig:IC_Om1}
-%      \end{subfigure}
-%      \hfill
-%      \begin{subfigure}[b]{0.9\textwidth}
-%          \centering
-%          \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_1.0_Ob.png}
-%          \caption{Alignment cross-hairs}
-%          \label{fig:IC_Om5}
-%      \end{subfigure}
-%         \caption{}
-%         \label{fig:power_spectrum_fixed_k_Ob}
-% \end{figure}
-
-Fig. \ref{fig:power_spectrum_fixed_z_Ob} shows the same physical quantities for varying $\Omega_b$. Again, at $z = 40$, the power spectrum is still reflective of the $\delta_m$ power spectra in fig. \ref{fig:averaged_IC_power_spectra_Ob}. Higher $\Omega_b$ increases the power spectrum amplitude, since $T_b \propto \Omega_b$.  This increase is quite uniform, with only minor changes in shape arising from an increase in $\Omega_b$ increasing the Jeans scale, leading to a small suppression at high $k$. 
+The second row of fig. \ref{fig:simulation_results_Ob} shows power spectra at fixed $z$ as functions of $k$, varying $\Omega_b$. Again, at $z = 40$, the power spectrum is still reflective of the $\delta_m$ power spectra in fig. \ref{fig:averaged_IC_power_spectra_Ob}. Higher $\Omega_b$ increases the power spectrum amplitude, since $T_b \propto \Omega_b$.  This increase is quite uniform, with only minor changes in shape arising from an increase in $\Omega_b$ increasing the Jeans scale, leading to a small suppression at high $k$. 
 
 The effect of this increase in the Jeans scale is far more pronounced at $z = 20$. At this redshift, when the Universe is partly coupled to the first sources, higher $\Omega_b$ still results generally in suppressed power over all scales. At higher $k$, the increase in Jeans length suppresses power through pressure; conversely, because haloes cluster slightly less strongly when dark matter density is reduced, the relative power at large scales can rise slightly. Therefore, in addition to power scaling, this shift in power from large $k$ to small $k$ (small length scales to large length scales) results in a "tilting" of the power spectrum.
 
@@ -1124,5 +1048,38 @@ Finally, programming and writing were significantly accelerated by generative AI
 % \addcontentsline{toc}{section}{References}
 \nocite{*}
 \bibliography{references}
+
+\begin{appendices}
+\section{Global signal extrema}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c c c c}
+        \hline
+        Cosmology name & beginning of cosmic dawn & beginning of heating & beginning of reionization \\ 
+        \hhline{= = = =}
+        Planck18 & (30, -5.5) & (18, -141.7) & (9, 11.6) \\ \hline
+        Om1 & (29, -4.2) & (16, -143.4) & (8, 11.4) \\
+        Om2 & (29, -4.8) & (17, -142.8) & (9, 10.5) \\
+        Om3 & (30, -5.5) & (18, -141.6) & (9, 11.6) \\
+        Om4 & (31, -6.2) & (18, -141.4) & (10, 11.9) \\
+        Om5 & (32, -7.0) & (19, -141.7) & (11, 12.9) \\ \hline
+        Ob3 & (31, -5.9) & (18, -142.7) & (10, 11.6) \\
+        Ob4 & (31, -5.7) & (18, -142.7) & (10, 11.3) \\
+        Ob5 & (30, -5.5) & (18, -141.9) & (10, 10.8) \\
+        Ob6 & (30, -5.3) & (17, -142.1) & (9, 10.7) \\
+        Ob7 & (30, -5.2) & (17, -143.0) & (9, 10.6) \\ \hline
+        h5 & (29, -4.8) & (17, -143.1) & (9, 11.4) \\
+        h6 & (30, -5.2) & (17, -142.7) & (9, 10.7) \\
+        h7 & (31, -5.6) & (18, -142.5) & (10, 11.1) \\
+        h8 & (31, -6.0) & (18, -142.5) & (10, 11.7) \\
+        h9 & (31, -6.5) & (19, -142.0) & (10, 12.0) \\ \hline
+    \end{tabular}
+    \caption{(redshift, temperature) pairs of the extrema present in the 21-cm global signal for each cosmology. The column are ordered chronologically (largest to smallest redshift), and the column headers indicate the physical change behind each extremum.}
+    \label{tab:global_signal_extrema}
+\end{table}
+
+\end{appendices}
+
+
 
 \end{document}
