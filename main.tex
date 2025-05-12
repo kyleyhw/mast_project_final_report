@@ -767,30 +767,104 @@ A plot of global signal is for each cosmology is shown in fig. \ref{fig:global_s
     \label{tab:global_signal_extrema}
 \end{table}
 
+% \begin{figure}[H]
+%      \centering
+%      \begin{subfigure}[b]{0.9\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{images/simulation_results/global_signal_Om.png}
+%          \caption{The global signal, varying $\Omega_m$.}
+%          \label{fig:global_signal_Om}
+%      \end{subfigure}
+%      \hfill
+%      \begin{subfigure}[b]{0.9\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{images/simulation_results/global_signal_Ob.png}
+%          \caption{The global signal, varying $\Omega_b$.}
+%          \label{fig:global_signal_Ob}
+%      \end{subfigure}
+%      \hfill
+%      \begin{subfigure}[b]{0.9\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{images/simulation_results/global_signal_h.png}
+%          \caption{The global signal, varying $h$.}
+%          \label{fig:global_signal_h}
+%      \end{subfigure}
+%         \caption{The 21-cm global signals as output by 21cmSPACE. Each curve corresponds to a different cosmology, with parameters as summarized in tab. \ref{tab:IC_parameters}.}
+%         \label{fig:global_signal_all}
+% \end{figure}
+
+% \begin{figure}[H]
+%      \centering
+%      \begin{subfigure}[b]{0.9\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_40_Om.png}
+%          \caption{Gravimeter}
+%          \label{fig:IC_Om1}
+%      \end{subfigure}
+%      \hfill
+%      \begin{subfigure}[b]{0.9\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_20_Om.png}
+%          \caption{Alignment cross-hairs}
+%          \label{fig:IC_Om5}
+%      \end{subfigure}
+%         \caption{}
+%         \label{fig:power_spectrum_fixed_z_Om}
+% \end{figure}
+
+% \begin{figure}[H]
+%      \centering
+%      \begin{subfigure}[b]{0.9\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_0.1_Om.png}
+%          \caption{Gravimeter}
+%          \label{fig:IC_Om1}
+%      \end{subfigure}
+%      \hfill
+%      \begin{subfigure}[b]{0.9\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_1.0_Om.png}
+%          \caption{Alignment cross-hairs}
+%          \label{fig:IC_Om5}
+%      \end{subfigure}
+%         \caption{}
+%         \label{fig:power_spectrum_fixed_k_Om}
+% \end{figure}
+
+
 \begin{figure}[H]
      \centering
      \begin{subfigure}[b]{0.9\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/simulation_results/global_signal_Om.png}
-         \caption{The global signal, varying $\Omega_m$.}
          \label{fig:global_signal_Om}
      \end{subfigure}
      \hfill
-     \begin{subfigure}[b]{0.9\textwidth}
+     \begin{subfigure}[b]{0.45\textwidth}
          \centering
-         \includegraphics[width=\textwidth]{images/simulation_results/global_signal_Ob.png}
-         \caption{The global signal, varying $\Omega_b$.}
-         \label{fig:global_signal_Ob}
+         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_20_Om.png}
+         \label{fig:power_spectrum_fixed_z_20_Om}
      \end{subfigure}
      \hfill
-     \begin{subfigure}[b]{0.9\textwidth}
+     \begin{subfigure}[b]{0.45\textwidth}
          \centering
-         \includegraphics[width=\textwidth]{images/simulation_results/global_signal_h.png}
-         \caption{The global signal, varying $h$.}
-         \label{fig:global_signal_h}
+         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_40_Om.png}
+         \label{fig:power_spectrum_fixed_z_40_Om}
      \end{subfigure}
-        \caption{The 21-cm global signals as output by 21cmSPACE. Each curve corresponds to a different cosmology, with parameters as summarized in tab. \ref{tab:IC_parameters}.}
-        \label{fig:global_signal_all}
+     \hfill
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_0.1_Om.png}
+         \label{fig:power_spectrum_fixed_k_0.1_Om}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_1.0_Om.png}
+         \label{fig:power_spectrum_fixed_k_1.0_Om}
+     \end{subfigure}
+        \caption{CAPTION}
+        \label{fig:simulation_results_Om}
 \end{figure}
 
 
@@ -808,31 +882,7 @@ The variation of $\Omega_m$ induces the most pronounced effect in the output of 
 
 Since the global signal is an imprint of the thermal and ionization history of the IGM during Cosmic Dawn and the EoR, it is highly sensitive to the timing of star formation and heating processes. Varying the matter density $\Omega_m$ has the effect of dictating when structure formation primarily occurs. When the value of $\Omega_m$ is low, as in the Om1 case, the universe is less dense; therefore, the density fluctuations take more time to grow, delaying the collapse of the first haloes and therefore the formation of the first stars. This delay causes Ly$\alpha$ coupling to also be delayed, at lower redshifts when the gas has further cooled and the CMB temperature is lower. Therefore, the absorption trough in the global signal, which arises due to $T_s$ dropping much below $T_\text{CMB}$, is deeper and centred at later time (lower $z$). On the other hand, a high $\Omega_m$ universe, for example in the case of Om5, collapses structure earlier and more efficiently. Hence, stars form earlier and the cosmic gas is heated by starlight earlier (higher $z$). This leads to earlier coupling and X-ray heating: the absorption trough for $\Omega_m = 0.5$ is at higher redshift and is also slightly shallower, since early X-ray photons begin heating the cold IGM sooner, while $T_\text{CMB}$ is still higher. 
 
-In all cases, when X-ray heating becomes effective, the global brightness temperature rises. Since a higher $\Omega_m$ causes a higher star formation rate at each time, a higher $\Omega_m$ cosmology causes the IGM to be heated more rapidly. Therefore, the trough is narrower (as seen by larger spacing between the curves during falling temperatures, compared to rising temperatures). Similarly, reionization, which is driven by UV radiation from galaxies, begins at different times: in the high $\Omega_m$ cases, the higher density of galaxies at early times ionize the IGM faster, ending the 21-cm signal slightly earlier. On the other hand, lower $\Omega_m$ cases show delayed reionization, shifting the signal beyond that of the simulation domain of 21cmSPACE (later than $z = 6$). Physically, higher matter content should accelerate the buildup of the ionizing background, while lower density postpones it. 
-
-\begin{figure}[H]
-     \centering
-     \begin{subfigure}[b]{0.9\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_0.1_Om.png}
-         \caption{Gravimeter}
-         \label{fig:IC_Om1}
-     \end{subfigure}
-     \hfill
-     \begin{subfigure}[b]{0.9\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_1.0_Om.png}
-         \caption{Alignment cross-hairs}
-         \label{fig:IC_Om5}
-     \end{subfigure}
-        \caption{}
-        \label{fig:power_spectrum_fixed_k_Om}
-\end{figure}
-
-Fig. \ref{fig:power_spectrum_fixed_k_Om} instead shows a perpendicular slice of the 21-cm power spectra, at fixed values of $k$ varying over $z$. Each 21-cm power spectrum exhibits peaks, corresponding most notably to the Cosmic Dawn and the EoR. As is consistent with the 21-cm global signal, varying $\Omega_m$ alters the timing and width of these peaks by changing the process of structure formation.
-
-
-As is expected, the difference is far larger at large $k$ than at small $k$ (more different at small scales than large scales), since both X-ray heating and reionization are results of small scale galactic sources. The fact that power is generally higher at all redshifts for high $\Omega_m$, both for low and high $k$, is also consistent with fig. \ref{fig:power_spectrum_fixed_z_Om}.
+In all cases, when X-ray heating becomes effective, the global brightness temperature rises. Since a higher $\Omega_m$ causes a higher star formation rate at each time, a higher $\Omega_m$ cosmology causes the IGM to be heated more rapidly. Therefore, the trough is narrower (as seen by larger spacing between the curves during falling temperatures, compared to rising temperatures). Similarly, reionization, which is driven by UV radiation from galaxies, begins at different times: in the high $\Omega_m$ cases, the higher density of galaxies at early times ionize the IGM faster, ending the 21-cm signal slightly earlier. On the other hand, lower $\Omega_m$ cases show delayed reionization, shifting the signal beyond that of the simulation domain of 21cmSPACE (later than $z = 6$). Physically, higher matter content should accelerate the buildup of the ionizing background, while lower density postpones it.
 
 
 
@@ -843,24 +893,7 @@ As is expected, the difference is far larger at large $k$ than at small $k$ (mor
 %     \label{fig:power_spectrum_fixed_z}
 % \end{figure}
 
-\begin{figure}[H]
-     \centering
-     \begin{subfigure}[b]{0.9\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_40_Om.png}
-         \caption{Gravimeter}
-         \label{fig:IC_Om1}
-     \end{subfigure}
-     \hfill
-     \begin{subfigure}[b]{0.9\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_20_Om.png}
-         \caption{Alignment cross-hairs}
-         \label{fig:IC_Om5}
-     \end{subfigure}
-        \caption{}
-        \label{fig:power_spectrum_fixed_z_Om}
-\end{figure}
+
 
 The effect of varied $\Omega_m$ on the power spectrum, however, is less simple. Fig. \ref{fig:power_spectrum_fixed_z_Om} shows slices of the 21-cm power spectra at specific values of $z$, as a function of $k$. \red{explain why these redshifts were chosen.}
 
@@ -870,42 +903,137 @@ The high $\Omega_m$ cosmologies have significantly higher power on small scales 
 By $z = 20$, the impact of various astrophysical processes is far more significant, and the differences between cosmologies are a result of both the differences in initial conditions and the differences in star formation rates. At this later redshift, all models are in the midst of Cosmic Dawn: the first generations of stars have formed and emitted Ly$\alpha$ and X-rays. This induces patchy heating and coupling, as illustrated by the shallower or even negative gradient of the power spectra on small to mid-length scales ($k \sim 0.1 - 1 ~\text{MPc}^{-1}$). This patchy heating is a result of halo formation, which occurs at earlier times in higher $\Omega_m$ cosmologies, hence the higher power in high $\Omega_m$ cosmologies compared to low $\Omega_m$ cases. The shapes of the curves also shed light on the length scales of these haloes: in low $\Omega_m$ cases, the power spectrum peaks around $k \sim 0.3 \text{MPc}^{-1}$, indicating heated regions on the scale of a few Mpc; instead, the high $\Omega_m$ cases show high power all the way until $k \gtrsim 1$, indicating more structure at sub-Mpc scales. 
 
 
+
+Fig. \ref{fig:power_spectrum_fixed_k_Om} instead shows a perpendicular slice of the 21-cm power spectra, at fixed values of $k$ varying over $z$. Each 21-cm power spectrum exhibits peaks, corresponding most notably to the Cosmic Dawn and the EoR. As is consistent with the 21-cm global signal, varying $\Omega_m$ alters the timing and width of these peaks by changing the process of structure formation.
+
+
+As is expected, the difference is far larger at large $k$ than at small $k$ (more different at small scales than large scales), since both X-ray heating and reionization are results of small scale galactic sources. The fact that power is generally higher at all redshifts for high $\Omega_m$, both for low and high $k$, is also consistent with fig. \ref{fig:power_spectrum_fixed_z_Om}.
+
+
 \subsection{Varying $\Omega_b$}
 
-Varying $\Omega_b$ also shifts the timing and amplitude of the absorption trough (\ref{fig:global_signal_Ob}), albeit to a lesser degree than the variation of $\Omega_m$. The dependence is also different: whereas increases in both $\Omega_m$ and $\Omega_b$ cause the absorption trough to become deeper, a larger value of $\Omega_m$ causes the absorption trough to reach a minimum earlier, as opposed to an increase $\Omega_b$ causes the trough to shift later in the 21-cm evolution. 
+Varying $\Omega_b$ also shifts the timing and amplitude of the absorption trough (\ref{fig:global_signal_Ob}), albeit to a lesser degree than the variation of $\Omega_m$. The dependence is also different: whereas increases in both $\Omega_m$ and $\Omega_b$ cause the absorption trough to become deeper, a larger value of $\Omega_m$ causes the absorption trough to reach a minimum earlier, as opposed to an increase $\Omega_b$ causes the trough to shift later in the 21-cm evolution. The Planck 2018 fiducial value of $\Omega_b = 0.04897$ lies very close to the $\Omega_b = 0.05$ case, as expected.
 
-The most obvious reason for this increase in depth can be seen in eq. \ref{eq:brightness_temperature}: differential brightness temperature (i.e., contrast) scales with $\Omega_b$. In addition, the optical depth $\tau_{21}$ in eq. \ref{eq:optical_depth} scales with number density, which increases with higher $\Omega_b$. This leads to deeper absorption when the gas cools, and stronger emission when the gas heats. Further, increasing baryon density also supplies more fuel for first stars and their X-ray flux, increasing their spin temperature. While this does slightly decrease the optical depth, its overall impact on the brightness temperature, along with the aforementioned factors, cause the effects shown in fig. \ref{fig:global_signal_Ob}. The timing, meanwhile, is shifter to later for larger values of $\Omega_b$ since raising $\Omega_b$ while holding $\Omega_m$ constant necessarily reduces the cold dark matter fraction ($\Omega_{dm}$ in tab. \ref{tab:IC_parameters}). Thus, halos form later with more baryonic pressure, and the onset of Ly$\alpha$ coupling and heating occurs at lower redshift. Meanwhile, higher baryon density also strengthens collisional coupling at high $z$ , extending the dark-age absorption phase to lower redshifts. 
+The most obvious reason for the increase in depth of the absorption trough can be seen in eq. \ref{eq:brightness_temperature}: differential brightness temperature (i.e., contrast) scales with $\Omega_b$. In addition, the optical depth $\tau_{21}$ in eq. \ref{eq:optical_depth} scales with number density, which increases with higher $\Omega_b$. This leads to deeper absorption when the gas cools, and stronger emission when the gas heats. Further, increasing baryon density also supplies more fuel for first stars and their X-ray flux, increasing their spin temperature. While this does slightly decrease the optical depth, its overall impact on the brightness temperature, along with the aforementioned factors, cause the effects shown in fig. \ref{fig:global_signal_Ob}. The timing, meanwhile, is shifter to later for larger values of $\Omega_b$ since raising $\Omega_b$ while holding $\Omega_m$ constant necessarily reduces the cold dark matter fraction ($\Omega_{dm}$ in tab. \ref{tab:IC_parameters}). Thus, halos form later with more baryonic pressure, and the onset of Ly$\alpha$ coupling and heating occurs at lower redshift. Meanwhile, higher baryon density also strengthens collisional coupling at high $z$ , extending the dark-age absorption phase to lower redshifts. 
 
+
+% \begin{figure}[H]
+%      \centering
+%      \begin{subfigure}[b]{0.9\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_40_Ob.png}
+%          \caption{Gravimeter}
+%          \label{fig:power_spectrum_fixed_z_40_Ob}
+%      \end{subfigure}
+%      \hfill
+%      \begin{subfigure}[b]{0.9\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_20_Ob.png}
+%          \caption{Alignment cross-hairs}
+%          \label{fig:power_spectrum_fixed_z_20_Ob}
+%      \end{subfigure}
+%         \caption{}
+%         \label{fig:power_spectrum_fixed_z_Ob}
+% \end{figure}
+
+% \begin{figure}[H]
+%      \centering
+%      \begin{subfigure}[b]{0.9\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_0.1_Ob.png}
+%          \caption{Gravimeter}
+%          \label{fig:IC_Om1}
+%      \end{subfigure}
+%      \hfill
+%      \begin{subfigure}[b]{0.9\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_1.0_Ob.png}
+%          \caption{Alignment cross-hairs}
+%          \label{fig:IC_Om5}
+%      \end{subfigure}
+%         \caption{}
+%         \label{fig:power_spectrum_fixed_k_Ob}
+% \end{figure}
+
+Fig. \ref{fig:power_spectrum_fixed_z_Ob} shows the same physical quantities for varying $\Omega_b$. Again, at $z = 40$, the power spectrum is still reflective of the $\delta_m$ power spectra in fig. \ref{fig:averaged_IC_power_spectra_Ob}. Higher $\Omega_b$ increases the power spectrum amplitude, since $T_b \propto \Omega_b$.  This increase is quite uniform, with only minor changes in shape arising from an increase in $\Omega_b$ increasing the Jeans scale, leading to a small suppression at high $k$. 
+
+The effect of this increase in the Jeans scale is far more pronounced at $z = 20$. At this redshift, when the Universe is partly coupled to the first sources, higher $\Omega_b$ still results generally in suppressed power over all scales. At higher $k$, the increase in Jeans length suppresses power through pressure; conversely, because haloes cluster slightly less strongly when dark matter density is reduced, the relative power at large scales can rise slightly. Therefore, in addition to power scaling, this shift in power from large $k$ to small $k$ (small length scales to large length scales) results in a "tilting" of the power spectrum.
+
+The physics is further apparent in fig. \ref{fig:power_spectrum_fixed_k_Ob}: the delay in star formation induced by higher $\Omega_b$ reducing $\Omega_{dm}$ and hence physically lowering the number of dark matter haloes can clearly be seen. 
 
 \begin{figure}[H]
      \centering
      \begin{subfigure}[b]{0.9\textwidth}
          \centering
+         \includegraphics[width=\textwidth]{images/simulation_results/global_signal_Ob.png}
+         \label{fig:global_signal_Ob}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_20_Ob.png}
+         \label{fig:power_spectrum_fixed_z_20_Ob}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
          \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_40_Ob.png}
-         \caption{Gravimeter}
          \label{fig:power_spectrum_fixed_z_40_Ob}
      \end{subfigure}
      \hfill
-     \begin{subfigure}[b]{0.9\textwidth}
+     \begin{subfigure}[b]{0.45\textwidth}
          \centering
-         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_20_Ob.png}
-         \caption{Alignment cross-hairs}
-         \label{fig:power_spectrum_fixed_z_20_Ob}
+         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_0.1_Ob.png}
+         \label{fig:power_spectrum_fixed_k_0.1_Ob}
      \end{subfigure}
-        \caption{}
-        \label{fig:power_spectrum_fixed_z_Ob}
+     \hfill
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_1.0_Ob.png}
+         \label{fig:power_spectrum_fixed_k_1.0_Ob}
+     \end{subfigure}
+        \caption{CAPTION}
+        \label{fig:simulation_results_Ob}
 \end{figure}
-
-Fig. \ref{fig:power_spectrum_fixed_z_40_Ob} shows the same physical quantities for varying $\Omega_b$. Again, at $z = 40$, the power spectrum is still reflective of the $\delta_m$ power spectra in fig. \ref{fig:averaged_IC_power_spectra_Ob}. Higher $\Omega_b$ increases the power spectrum amplitude, since $T_b \propto \Omega_b$.  This increase is quite uniform, with only minor changes in shape arising from an increase in $\Omega_b$ increasing the Jeans scale, leading to a small suppression at high $k$. 
-
-The effect of this increase in the Jeans scale is far more pronounced at $z = 20$. At this redshift, when the Universe is partly coupled to the first sources, higher $\Omega_b$ still results generally in suppressed power over all scales. At higher $k$, the increase in Jeans length suppresses power through pressure; conversely, because haloes cluster slightly less strongly when dark matter density is reduced, the relative power at large scales can rise slightly. Therefore, in addition to power scaling, this shift in power from large $k$ to small $k$ (small length scales to large length scales) results in a "tilting" of the pwoer spectrum.
-
-
 
 \subsection{Varying $h$}
 
 Changing $h$ systematically alters the cosmic timeline (fig. \ref{fig:global_signal_h}). A higher $h$ produces a shallower trough earlier in time, since a larger $h$ means that the Universe was younger (and expanding faster) at each given redshift. Hence, there is less time for the gas to cool adiabatically relative to the CMB, and Ly$\alpha$ coupling and X-ray heating happen earlier. As a result, the gas temperature remains higher, the spin temperature is closer to $T_{\text{CMB}}$, and the 21-cm absorption is weaker. Although the differential brightness temperature eq: \ref{eq:brightness_temperature} does scale with $h$, the aforementioned effects are evidently dominant in fig. \ref{fig:global_signal_h}. 
 
+\begin{figure}[H]
+     \centering
+     \begin{subfigure}[b]{0.9\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/simulation_results/global_signal_h.png}
+         \label{fig:global_signal_h}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_20_h.png}
+         \label{fig:power_spectrum_fixed_z_20_h}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_40_h.png}
+         \label{fig:power_spectrum_fixed_z_40_h}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_0.1_h.png}
+         \label{fig:power_spectrum_fixed_k_0.1_h}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_1.0_h.png}
+         \label{fig:power_spectrum_fixed_k_1.0_h}
+     \end{subfigure}
+        \caption{CAPTION}
+        \label{fig:simulation_results_h}
+\end{figure}
 
 % On large scales ($k \gtrsim 0.1$), however, the low $\Omega_m$ cosmology has more power than the high $\Omega_m$ case. This is possibly because the evolution is simply further along in 
 
@@ -919,64 +1047,43 @@ Changing $h$ systematically alters the cosmic timeline (fig. \ref{fig:global_sig
 
 
 
-\begin{figure}[H]
-     \centering
-     \begin{subfigure}[b]{0.9\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_0.1_Ob.png}
-         \caption{Gravimeter}
-         \label{fig:IC_Om1}
-     \end{subfigure}
-     \hfill
-     \begin{subfigure}[b]{0.9\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_1.0_Ob.png}
-         \caption{Alignment cross-hairs}
-         \label{fig:IC_Om5}
-     \end{subfigure}
-        \caption{}
-        \label{fig:apparatus}
-\end{figure}
+% \begin{figure}[H]
+%      \centering
+%      \begin{subfigure}[b]{0.9\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_40_h.png}
+%          \caption{Gravimeter}
+%          \label{fig:IC_Om1}
+%      \end{subfigure}
+%      \hfill
+%      \begin{subfigure}[b]{0.9\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_20_h.png}
+%          \caption{Alignment cross-hairs}
+%          \label{fig:IC_Om5}
+%      \end{subfigure}
+%         \caption{}
+%         \label{fig:apparatus}
+% \end{figure}
 
-Increasing 
-
-\begin{figure}[H]
-     \centering
-     \begin{subfigure}[b]{0.9\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_40_h.png}
-         \caption{Gravimeter}
-         \label{fig:IC_Om1}
-     \end{subfigure}
-     \hfill
-     \begin{subfigure}[b]{0.9\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_20_h.png}
-         \caption{Alignment cross-hairs}
-         \label{fig:IC_Om5}
-     \end{subfigure}
-        \caption{}
-        \label{fig:apparatus}
-\end{figure}
-
-\begin{figure}[H]
-     \centering
-     \begin{subfigure}[b]{0.9\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_0.1_h.png}
-         \caption{Gravimeter}
-         \label{fig:IC_Om1}
-     \end{subfigure}
-     \hfill
-     \begin{subfigure}[b]{0.9\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_1.0_h.png}
-         \caption{Alignment cross-hairs}
-         \label{fig:IC_Om5}
-     \end{subfigure}
-        \caption{}
-        \label{fig:apparatus}
-\end{figure}
+% \begin{figure}[H]
+%      \centering
+%      \begin{subfigure}[b]{0.9\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_0.1_h.png}
+%          \caption{Gravimeter}
+%          \label{fig:IC_Om1}
+%      \end{subfigure}
+%      \hfill
+%      \begin{subfigure}[b]{0.9\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_1.0_h.png}
+%          \caption{Alignment cross-hairs}
+%          \label{fig:IC_Om5}
+%      \end{subfigure}
+%         \caption{}
+%         \label{fig:apparatus}
+% \end{figure}
 
 % \newpage
 % \section{Discussion}
