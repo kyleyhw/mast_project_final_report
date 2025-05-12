@@ -742,101 +742,6 @@ For each varied parameter, the global signal $\overline{T}_b$ is plotted. Additi
 
 \subsection{Varying $\Omega_m$}
 
-% A plot of global signal is for each cosmology is shown in fig. \ref{fig:global_signal_all}. The general shape of the global signal curves is similar as expected, since the underlying evolutionary physics is identical. To quantify the exact impact of cosmology dependence in the initial conditions, (redshift, temperature) coordinates of each extremum of the 21-cm global signal is given in tab. \ref{tab:global_signal_extrema}.
-
-% \begin{figure}[H]
-%      \centering
-%      \begin{subfigure}[b]{0.9\textwidth}
-%          \centering
-%          \includegraphics[width=\textwidth]{images/simulation_results/global_signal_Om.png}
-%          \caption{The global signal, varying $\Omega_m$.}
-%          \label{fig:global_signal_Om}
-%      \end{subfigure}
-%      \hfill
-%      \begin{subfigure}[b]{0.9\textwidth}
-%          \centering
-%          \includegraphics[width=\textwidth]{images/simulation_results/global_signal_Ob.png}
-%          \caption{The global signal, varying $\Omega_b$.}
-%          \label{fig:global_signal_Ob}
-%      \end{subfigure}
-%      \hfill
-%      \begin{subfigure}[b]{0.9\textwidth}
-%          \centering
-%          \includegraphics[width=\textwidth]{images/simulation_results/global_signal_h.png}
-%          \caption{The global signal, varying $h$.}
-%          \label{fig:global_signal_h}
-%      \end{subfigure}
-%         \caption{The 21-cm global signals as output by 21cmSPACE. Each curve corresponds to a different cosmology, with parameters as summarized in tab. \ref{tab:IC_parameters}.}
-%         \label{fig:global_signal_all}
-% \end{figure}
-
-% \begin{figure}[H]
-%      \centering
-%      \begin{subfigure}[b]{0.9\textwidth}
-%          \centering
-%          \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_40_Om.png}
-%          \caption{Gravimeter}
-%          \label{fig:IC_Om1}
-%      \end{subfigure}
-%      \hfill
-%      \begin{subfigure}[b]{0.9\textwidth}
-%          \centering
-%          \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_20_Om.png}
-%          \caption{Alignment cross-hairs}
-%          \label{fig:IC_Om5}
-%      \end{subfigure}
-%         \caption{}
-%         \label{fig:power_spectrum_fixed_z_Om}
-% \end{figure}
-
-% \begin{figure}[H]
-%      \centering
-%      \begin{subfigure}[b]{0.9\textwidth}
-%          \centering
-%          \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_0.1_Om.png}
-%          \caption{Gravimeter}
-%          \label{fig:IC_Om1}
-%      \end{subfigure}
-%      \hfill
-%      \begin{subfigure}[b]{0.9\textwidth}
-%          \centering
-%          \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_1.0_Om.png}
-%          \caption{Alignment cross-hairs}
-%          \label{fig:IC_Om5}
-%      \end{subfigure}
-%         \caption{}
-%         \label{fig:power_spectrum_fixed_k_Om}
-% \end{figure}
-
-
-Out of the three cosmological parameters varied, $\Omega_m$ induces the most pronounced effect in the output of the 21-cm global signal, as shown in the top row of fig. \ref{fig:simulation_results_Om}. Most notably, the centring of the absorption trough is significantly shifted towards higher redshift for higher values of $\Omega_m$. As well as this, the depth of the absorption trough is shallower for higher values of $\Omega_m$, and the amplitude of the emission bump is also smaller for higher $\Omega_m$. The Planck 2018 best fit cosmology, which uses a value of $\Omega_m = 0.30966$, produces a curve very similar to that of Om3 using $\Omega_m = 0.3$, which serves as a convenient consistency check. 
-
-
-% To show clearly the redshifts at which the difference in global signal is highest, the absolute value of their differences are plotted in fig. \ref{fig:global_signal_difference_Om1_Om5}. For visual clarity, only the cosmologies Om1 and Om5, using the most extreme values of $\Omega_m = 0.1$ and $\Omega_m = 0.5$ respectively, were plotted for comparison.
-
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.9\columnwidth]{images/simulation_results/global_signal_difference_Om1_Om5.png}
-%     \caption{The upper panel shows the 21-cm global signal $\overline{T}_b$ plotted for cosmologies Om1 (solid blue) and Om5 (dashed orange). The lower panel shows the absolute difference between the two cosmologies.}
-%     \label{fig:global_signal_difference_Om1_Om5}
-% \end{figure}
-
-Since the global signal is an imprint of the thermal and ionization history of the IGM during Cosmic Dawn and the EoR, it is highly sensitive to the timing of star formation and heating processes. Varying the matter density $\Omega_m$ has the effect of dictating when structure formation primarily occurs. When the value of $\Omega_m$ is low, the universe is less dense; therefore, the density fluctuations take more time to grow, delaying the collapse of the first haloes and therefore the formation of the first stars. This delay causes Ly$\alpha$ coupling to also be delayed, occuring at lower redshifts when the gas has further cooled and the CMB temperature is lower. Therefore, the absorption trough in the global signal, which arises due to $T_s$ dropping much below $T_\text{CMB}$, is deeper and centred at later time (lower $z$). On the other hand, a high $\Omega_m$ universe collapses structure earlier and more efficiently. Hence, stars form earlier and the cosmic gas is heated by starlight earlier (higher $z$). This leads to earlier coupling and X-ray heating: the absorption trough for $\Omega_m = 0.5$ is at higher redshift and is also slightly shallower, since early X-ray photons begin heating the cold IGM sooner, while $T_\text{CMB}$ is still higher. 
-
-In all cases, when X-ray heating becomes effective, the global brightness temperature rises. Since a higher $\Omega_m$ causes a higher star formation rate at each time, a higher $\Omega_m$ cosmology causes the IGM to be heated more rapidly. Therefore, the trough is narrower (as seen by larger spacing between the curves during falling temperatures, compared to rising temperatures). Similarly, reionization, which is driven by UV radiation from galaxies, begins at different times: in the high $\Omega_m$ cases, the higher density of galaxies at early times ionize the IGM faster, ending the 21-cm signal slightly earlier. On the other hand, lower $\Omega_m$ cases show delayed reionization, shifting the signal beyond that of the simulation domain of 21cmSPACE (later than $z = 6$). Physically, higher matter content should accelerate the buildup of the ionizing background, while lower density postpones it.
-
-The effect of varied $\Omega_m$ on the power spectrum, however, is less simple. The second row of fig. \ref{fig:simulation_results_Om} shows slices of the 21-cm power spectra at specific values of $z$, as a function of $k$. At $z = 40$, little to no star formation has occurred in any cosmology (as can be seen in the lack of deviation between curves in the global signal). The power spectra are thus reflective almost exclusively of the initial conditions themselves, closely resembling the curves in fig. \ref{fig:averaged_IC_power_spectra_Om}.
-The high $\Omega_m$ cosmologies have significantly higher power on small scales (high $k$) than the low $\Omega_m$ cases, since the higher matter density enables more correlation at these smaller length scales. 
-
-By $z = 20$, however, the impact of various astrophysical processes is far more significant, and the differences between cosmologies are a result of both the deviations in initial conditions and the differences in star formation rates. At this later redshift, all models are in the midst of Cosmic Dawn: the first generations of stars have formed and emitted Ly$\alpha$ and X-rays. This induces patchy heating and coupling, as illustrated by the shallower or even negative gradient of the power spectra on small to mid-length scales ($k \sim 0.1 - 1 ~\text{Mpc}^{-1}$). This patchy heating is a result of halo formation, which occurs at earlier times in higher $\Omega_m$ cosmologies, hence the higher power in high $\Omega_m$ cosmologies compared to low $\Omega_m$ cases. The shapes of the curves also shed light on the length scales of these haloes: in low $\Omega_m$ cases, the power spectrum peaks around $k \sim 0.3 ~\text{Mpc}^{-1}$, indicating heated regions on the scale of a few Mpc; instead, the high $\Omega_m$ cases show high power all the way until $k \gtrsim 1 ~\text{Mpc}^{-1}$, indicating more structure at sub-Mpc scales. 
-
-
-
-The last row of fig. \ref{fig:simulation_results_Om} instead shows a perpendicular slice of the 21-cm power spectra, at fixed values of $k$ varying over $z$. Each 21-cm power spectrum exhibits peaks around redshift $z = 20$ and $z = 10$, corresponding most notably to the Cosmic Dawn and the EoR. As is consistent with the 21-cm global signal, varying $\Omega_m$ alters the timing and width of these peaks by changing the process of structure formation.
-
-
-The differences in these power spectra are far larger at large $k$ than at small $k$ (more different at small scales than large scales), which is expected, since both X-ray heating and reionization are results of small scale galactic sources. The fact that power is generally higher at all redshifts for high $\Omega_m$, both for low and high $k$, is also consistent with the power spectra at fixed $z$ (middle row of fig. \ref{fig:averaged_IC_power_spectra_Om}).
-
 \begin{figure}[H]
      \centering
      \begin{subfigure}[b]{0.9\textwidth}
@@ -873,17 +778,26 @@ The differences in these power spectra are far larger at large $k$ than at small
 \end{figure}
 
 
+Out of the three cosmological parameters varied, $\Omega_m$ induces the most pronounced effect in the output of the 21-cm global signal, as shown in the top row of fig. \ref{fig:simulation_results_Om}. Most notably, the centring of the absorption trough is significantly shifted towards higher redshift for higher values of $\Omega_m$. As well as this, the depth of the absorption trough is shallower for higher values of $\Omega_m$, and the amplitude of the emission bump is also smaller for higher $\Omega_m$. The Planck 2018 best fit cosmology, which uses a value of $\Omega_m = 0.30966$, produces a curve very similar to that of the cosmology using $\Omega_m = 0.3$, which serves as a convenient consistency check. 
+
+Since the global signal is an imprint of the thermal and ionization history of the IGM during Cosmic Dawn and the EoR, it is highly sensitive to the timing of star formation and heating processes. Varying the matter density $\Omega_m$ has the effect of dictating when structure formation primarily occurs. When the value of $\Omega_m$ is low, the universe is less dense; therefore, the density fluctuations take more time to grow, delaying the collapse of the first haloes and therefore the formation of the first stars. This delay causes Ly$\alpha$ coupling to also be delayed, occuring at lower redshifts when the gas has further cooled and the CMB temperature is lower. Therefore, the absorption trough in the global signal, which arises due to $T_s$ dropping much below $T_\text{CMB}$, is deeper and centred at later time (lower $z$). On the other hand, a high $\Omega_m$ universe collapses structure earlier and more efficiently. Hence, stars form earlier and the cosmic gas is heated by starlight earlier (higher $z$). This leads to earlier coupling and X-ray heating: the absorption trough for $\Omega_m = 0.5$ is at higher redshift and is also slightly shallower, since early X-ray photons begin heating the cold IGM sooner, while $T_\text{CMB}$ is still higher. 
+
+In all cases, when X-ray heating becomes effective, the global brightness temperature rises. Since a higher $\Omega_m$ causes a higher star formation rate at each time, a higher $\Omega_m$ cosmology causes the IGM to be heated more rapidly. Therefore, the trough is narrower (as seen by larger spacing between the curves during falling temperatures, compared to rising temperatures). Similarly, reionization, which is driven by UV radiation from galaxies, begins at different times: in the high $\Omega_m$ cases, the higher density of galaxies at early times ionize the IGM faster, ending the 21-cm signal slightly earlier. On the other hand, lower $\Omega_m$ cases show delayed reionization, shifting the signal beyond that of the simulation domain of 21cmSPACE (later than $z = 6$). Physically, higher matter content should accelerate the buildup of the ionizing background, while lower density postpones it.
+
+The effect of varied $\Omega_m$ on the power spectrum, however, is less simple. The second row of fig. \ref{fig:simulation_results_Om} shows slices of the 21-cm power spectra at specific values of $z$, as a function of $k$. At $z = 40$, little to no star formation has occurred in any cosmology (as can be seen in the lack of deviation between curves in the global signal). The power spectra are thus reflective almost exclusively of the initial conditions themselves, closely resembling the curves in fig. \ref{fig:averaged_IC_power_spectra_Om}.
+The high $\Omega_m$ cosmologies have significantly higher power on small scales (high $k$) than the low $\Omega_m$ cases, since the higher matter density enables more correlation at these smaller length scales. 
+
+By $z = 20$, however, the impact of various astrophysical processes is far more significant, and the differences between cosmologies are a result of both the deviations in initial conditions and the differences in star formation rates. At this later redshift, all models are in the midst of Cosmic Dawn: the first generations of stars have formed and emitted Ly$\alpha$ and X-rays. This induces patchy heating and coupling, as illustrated by the shallower or even negative gradient of the power spectra on small to mid-length scales ($k \sim 0.1 - 1 ~\text{Mpc}^{-1}$). This patchy heating is a result of halo formation, which occurs at earlier times in higher $\Omega_m$ cosmologies, hence the higher power in high $\Omega_m$ cosmologies compared to low $\Omega_m$ cases. The shapes of the curves also shed light on the length scales of these haloes: in low $\Omega_m$ cases, the power spectrum peaks around $k \sim 0.3 ~\text{Mpc}^{-1}$, indicating heated regions on the scale of a few Mpc; instead, the high $\Omega_m$ cases show high power all the way until $k \gtrsim 1 ~\text{Mpc}^{-1}$, indicating more structure at sub-Mpc scales. 
+
+
+
+The last row of fig. \ref{fig:simulation_results_Om} instead shows a perpendicular slice of the 21-cm power spectra, at fixed values of $k$ varying over $z$. Each 21-cm power spectrum exhibits peaks around redshift $z = 20$ and $z = 10$, corresponding most notably to the Cosmic Dawn and the EoR. As is consistent with the 21-cm global signal, varying $\Omega_m$ alters the timing and width of these peaks by changing the process of structure formation.
+
+
+The differences in these power spectra are far larger at large $k$ than at small $k$ (more different at small scales than large scales), which is expected, since both X-ray heating and reionization are results of small scale galactic sources. The fact that power is generally higher at all redshifts for high $\Omega_m$, both for low and high $k$, is also consistent with the power spectra at fixed $z$ (middle row of fig. \ref{fig:averaged_IC_power_spectra_Om}).
+
+
 \subsection{Varying $\Omega_b$}
-
-Varying $\Omega_b$ also shifts the timing and amplitude of the absorption trough (the first row of fig. \ref{fig:simulation_results_Ob}), albeit to a lesser degree than the variation of $\Omega_m$. The dependence is also different: whereas increases in both $\Omega_m$ and $\Omega_b$ cause the absorption trough to become deeper, a larger value of $\Omega_m$ causes the absorption trough to reach a minimum earlier, as opposed to an increase $\Omega_b$ causes the trough to shift later in the 21-cm evolution. The fiducial curve using the  Planck 2018 value of $\Omega_b = 0.04897$ lies very close to the $\Omega_b = 0.05$ case, as expected.
-
-The most obvious reason for the increase in depth of the absorption trough can be seen in eq. \ref{eq:brightness_temperature}: differential brightness temperature (i.e., contrast) scales with $\Omega_b$. In addition, the optical depth $\tau_{21}$ in eq. \ref{eq:optical_depth} scales with hydrogen atom number density, which naturally increases with higher $\Omega_b$. This leads to deeper absorption when the gas cools, and stronger emission when the gas heats. Further, increasing baryon density also supplies more fuel for first stars and their X-ray flux, increasing their spin temperature. While this does slightly decrease the optical depth, the aforementioned affects remain dominant, as evident in the figure. The timing of the absorption trough, meanwhile, is shifted later to lower redshift for larger values of $\Omega_b$ since raising $\Omega_b$ while holding $\Omega_m$ constant necessarily reduces the cold dark matter fraction ($\Omega_{dm}$, as in tab. \ref{tab:IC_parameters}). Thus, halos form later with more baryonic pressure, and the onset of Ly$\alpha$ coupling and heating occurs at lower redshift. At the same time, higher baryon density also strengthens collisional coupling at high $z$ , extending the dark-age absorption phase to lower redshifts. 
-
-The second row of fig. \ref{fig:simulation_results_Ob} again shows power spectra at fixed $z$ as functions of $k$, for various values of $\Omega_b$. Again, at $z = 40$, the 21-cm power spectra are generally still reflective of the mass overdensity power spectra in fig. \ref{fig:averaged_IC_power_spectra_Ob}. Higher $\Omega_b$ increases the power spectrum amplitude, since $T_b \propto \Omega_b$.  This increase is quite uniform, with only minor changes in shape arising from an increase in $\Omega_b$ increasing the Jeans scale, leading to a small suppression at high $k$. 
-
-The effect of this increase in the Jeans scale is far more pronounced at $z = 20$. At this redshift, when the Universe is partly coupled to the first sources, higher $\Omega_b$ still results generally in suppressed power over all scales. At higher $k$, the increase in Jeans scale suppresses power through pressure. Conversely, because haloes cluster slightly less strongly when dark matter density is reduced, the relative power at small $k$ can rise slightly. Therefore, in addition to power scaling, this shift in power from large $k$ to small $k$ (small length scales to large length scales) results in a "tilting" of the power spectrum.
-
-The physics is further apparent in the bottom row of fig. \ref{fig:simulation_results_Ob}: the delay in star formation induced by higher $\Omega_b$ reducing $\Omega_{dm}$ and hence physically lowering the number of dark matter haloes can clearly be seen, resulting in rightward shifts of the curves toward lower redshift and a reduction in power over both small and large scales. Because of the previously mentioned shift in power from large $k$ to small $k$, the impact of increasing $\Omega_b$ is more pronounced at higher $k$, evidenced by the larger spacing between curves.
 
 \begin{figure}[H]
      \centering
@@ -920,16 +834,19 @@ The physics is further apparent in the bottom row of fig. \ref{fig:simulation_re
         \label{fig:simulation_results_Ob}
 \end{figure}
 
+Varying $\Omega_b$ also shifts the timing and amplitude of the absorption trough (the first row of fig. \ref{fig:simulation_results_Ob}), albeit to a lesser degree than the variation of $\Omega_m$. The dependence is also different: whereas increases in both $\Omega_m$ and $\Omega_b$ cause the absorption trough to become deeper, a larger value of $\Omega_m$ causes the absorption trough to reach a minimum earlier, as opposed to an increase $\Omega_b$ causes the trough to shift later in the 21-cm evolution. The fiducial curve using the  Planck 2018 value of $\Omega_b = 0.04897$ lies very close to the $\Omega_b = 0.05$ case, as expected.
+
+The most obvious reason for the increase in depth of the absorption trough can be seen in eq. \ref{eq:brightness_temperature}: differential brightness temperature (i.e., contrast) scales with $\Omega_b$. In addition, the optical depth $\tau_{21}$ in eq. \ref{eq:optical_depth} scales with hydrogen atom number density, which naturally increases with higher $\Omega_b$. This leads to deeper absorption when the gas cools, and stronger emission when the gas heats. Further, increasing baryon density also supplies more fuel for first stars and their X-ray flux, increasing their spin temperature. While this does slightly decrease the optical depth, the aforementioned affects remain dominant, as evident in the top row of fig. \ref{fig:simulation_results_Ob}. The timing of the absorption trough, meanwhile, is shifted later to lower redshift for larger values of $\Omega_b$ since raising $\Omega_b$ while holding $\Omega_m$ constant necessarily reduces the cold dark matter fraction ($\Omega_{dm}$, as in tab. \ref{tab:IC_parameters}). Thus, halos form later with more baryonic pressure, and the onset of Ly$\alpha$ coupling and heating occurs at lower redshift. At the same time, higher baryon density also strengthens collisional coupling at high $z$ , extending the dark-age absorption phase to lower redshifts. 
+
+The second row of fig. \ref{fig:simulation_results_Ob} again shows power spectra at fixed $z$ as functions of $k$, for various values of $\Omega_b$. Again, at $z = 40$, the 21-cm power spectra are generally still reflective of the mass overdensity power spectra in fig. \ref{fig:averaged_IC_power_spectra_Ob}. Higher $\Omega_b$ increases the power spectrum amplitude, since $T_b \propto \Omega_b$.  This increase is quite uniform, with only minor changes in shape arising from an increase in $\Omega_b$ increasing the Jeans scale, leading to a small suppression at high $k$. 
+
+The effect of this increase in the Jeans scale is far more pronounced at $z = 20$. At this redshift, when the Universe is partly coupled to the first sources, higher $\Omega_b$ still results generally in suppressed power over all scales. At higher $k$, the increase in Jeans scale suppresses power through pressure. Conversely, because haloes cluster slightly less strongly when dark matter density is reduced, the relative power at small $k$ can rise slightly. Therefore, in addition to power scaling, this shift in power from large $k$ to small $k$ (small length scales to large length scales) results in a "tilting" of the power spectrum.
+
+The physics is further apparent in the bottom row of fig. \ref{fig:simulation_results_Ob}: the delay in star formation induced by higher $\Omega_b$ reducing $\Omega_{dm}$ and hence physically lowering the number of dark matter haloes can clearly be seen, resulting in rightward shifts of the curves toward lower redshift and a reduction in power over both small and large scales. Because of the previously mentioned shift in power from large $k$ to small $k$, the impact of increasing $\Omega_b$ is more pronounced at higher $k$, evidenced by the larger spacing between curves.
+
+
+
 \subsection{Varying $h$}
-
-Changing $h$ systematically alters the cosmic timeline by altering the relationship between cosmic time and redshift. This imprints itself significantly onto the 21-cm global signal and 21-cm power spectra, as shown in fig. \ref{fig:simulation_results_h}, even if only taken into account through the initial conditions. In the 21-cm global signal, a higher value of $h$ produces a shallower trough earlier in time, since increasing $h$ means that the Universe is younger (and expanding faster) at each given redshift. Hence, there is less time for the gas to cool adiabatically relative to the CMB, and Ly$\alpha$ coupling and X-ray heating happen earlier. As a result, the gas temperature remains higher, the spin temperature is closer to $T_{\text{CMB}}$, and the 21-cm absorption is weaker. Although the differential brightness temperature eq: \ref{eq:brightness_temperature} does scale with $h$, the aforementioned effects are evidently dominant as can be seen in the top row of fig. \ref{fig:simulation_results_h}. 
-
-At $z = 40$ the power spectrum amplitude scales modestly with $h$ (the second row of fig. \ref{fig:simulation_results_h}), reflecting the fact that a larger Hubble constant (with fixed $A_s$) gives a higher matter density and slightly enhanced growth by $z = 40$. Compared to low $k$, the effect of varying $h$ is far more pronounced at high $k$: at these small scales, gas pressure is able to smooth out fluctuations, causing the turnover at $k \sim 1 ~\text{Mpc}^{-1}$. Because higher $h$ cases lead to hotter gas by $z = 40$ due to denser structure, its pressure smoothing scale is larger, causing its spectrum to fall off at slightly smaller $k$. 
-
-At $z = 20$, all curves rise on large scales, then flatten or turn over close to $k \sim 1 ~\text{Mpc}^{-1}$. On large scales ($k \lesssim 0.1 ~\text{Mpc}^{-1}$), the differences are less pronounced, since density contrasts are still linear. However, on small scales, the high $h$ cures are up to an order of magnitude higher than the low $h$ ones, with the difference stemming physically from the non-linear collapse and IGM thermal state. Since higher $h$ has denser early structures and earlier heating, contrast on small scales is boosted. The flattening and dropping of power at highest $k$ scales again reflect pressure smoothing of the gas: since high $h$ models heat earlier, their gas is warmer at $z = 20$, increasing the Jeans scale and causing lower $h$ curves to drop off faster than red curves.
-
-This is consistent with the power spectra at fixed $k$: for both $k = 0.1 ~\text{Mpc}^{-1}$ and $k = 1.0 ~\text{Mpc}^{-1}$, the earlier heating causes correlations to appear at earlier redshift, since the IGM fluctuations are larger for high $h$. As well as this, the spacing of the curves is more significant in the high $k$ regime, indicating the prominence of the differences in Jeans scale.
-
 
 \begin{figure}[H]
      \centering
@@ -966,66 +883,13 @@ This is consistent with the power spectra at fixed $k$: for both $k = 0.1 ~\text
         \label{fig:simulation_results_h}
 \end{figure}
 
-% On large scales ($k \gtrsim 0.1$), however, the low $\Omega_m$ cosmology has more power than the high $\Omega_m$ case. This is possibly because the evolution is simply further along in 
+Changing $h$ systematically alters the cosmic timeline by altering the relationship between cosmic time and redshift. As well as this, varying the expansion rate of the Universe changes the density of matter, even if the values of $\Omega_m$ and $\Omega_b$ are held constant at the conception of the universe. This imprints itself significantly onto the 21-cm global signal and 21-cm power spectra, as shown in fig. \ref{fig:simulation_results_h}, even if only taken into account through the initial conditions. In the 21-cm global signal, a higher value of $h$ produces a shallower trough earlier in time, since increasing $h$ means that the Universe is younger (and expanding faster) at each given redshift. Hence, there is less time for the gas to cool adiabatically relative to the CMB, and Ly$\alpha$ coupling and X-ray heating happen earlier. As a result, the gas temperature remains higher, the spin temperature is closer to $T_{\text{CMB}}$, and the 21-cm absorption is weaker. Although the differential brightness temperature eq: \ref{eq:brightness_temperature} does scale with $h$, the aforementioned effects are evidently dominant as can be seen in the top row of fig. \ref{fig:simulation_results_h}. 
 
+At $z = 40$ the power spectrum amplitude scales modestly with $h$ (the second row of fig. \ref{fig:simulation_results_h}), reflecting the fact that a larger Hubble constant (with fixed $A_s$) gives a higher matter density and slightly enhanced growth by $z = 40$. Compared to low $k$, the effect of varying $h$ is far more pronounced at high $k$: at these small scales, gas pressure is able to smooth out fluctuations, causing the turnover at $k \sim 1 ~\text{Mpc}^{-1}$. Because higher $h$ cases lead to hotter gas by $z = 40$ due to denser structure, its pressure smoothing scale is larger, causing its spectrum to fall off at slightly smaller $k$. 
 
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.9\columnwidth]{images/simulation_results/power_spectrum_fixed_k.png}
-%     \caption{The 21-cm power spectrum for the cosmologies Om1 (blue), Om5 (orange) and Planck 2018 (green), plotted as a function of redshift $z$ at fixed wavenumbers of $k = 0.1 ~\text{Mpc}^{-1}$ (solid) and $k = 1.0 ~\text{Mpc}^{-1}$ (dashed).}
-%     \label{fig:power_spectrum_fixed_k}
-% \end{figure}
+At $z = 20$, all curves rise on large scales, then flatten or turn over close to $k \sim 1 ~\text{Mpc}^{-1}$. On large scales ($k \lesssim 0.1 ~\text{Mpc}^{-1}$), the differences are less pronounced, since density contrasts are still linear. However, on small scales, the high $h$ cures are up to an order of magnitude higher than the low $h$ ones, with the difference stemming physically from the non-linear collapse and IGM thermal state. Since higher $h$ has denser early structures and earlier heating, contrast on small scales is boosted. The flattening and dropping of power at highest $k$ scales again reflect pressure smoothing of the gas: since high $h$ models heat earlier, their gas is warmer at $z = 20$, increasing the Jeans scale and causing lower $h$ curves to drop off faster than red curves.
 
-
-
-% \begin{figure}[H]
-%      \centering
-%      \begin{subfigure}[b]{0.9\textwidth}
-%          \centering
-%          \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_40_h.png}
-%          \caption{Gravimeter}
-%          \label{fig:IC_Om1}
-%      \end{subfigure}
-%      \hfill
-%      \begin{subfigure}[b]{0.9\textwidth}
-%          \centering
-%          \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_z_20_h.png}
-%          \caption{Alignment cross-hairs}
-%          \label{fig:IC_Om5}
-%      \end{subfigure}
-%         \caption{}
-%         \label{fig:apparatus}
-% \end{figure}
-
-% \begin{figure}[H]
-%      \centering
-%      \begin{subfigure}[b]{0.9\textwidth}
-%          \centering
-%          \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_0.1_h.png}
-%          \caption{Gravimeter}
-%          \label{fig:IC_Om1}
-%      \end{subfigure}
-%      \hfill
-%      \begin{subfigure}[b]{0.9\textwidth}
-%          \centering
-%          \includegraphics[width=\textwidth]{images/simulation_results/power_spectrum_fixed_k_1.0_h.png}
-%          \caption{Alignment cross-hairs}
-%          \label{fig:IC_Om5}
-%      \end{subfigure}
-%         \caption{}
-%         \label{fig:apparatus}
-% \end{figure}
-
-% \newpage
-% \section{Discussion}
-% \red{to be done after incorporating more results}
-% % \subsection{Implications for Cosmology with 21cm}
-% \subsection{Accuracy of Implementation}
-% \subsection{Comparison with Prior Work}
-% \subsection{Uncertainties and Error Bars}
-
-
-% \subsection{Relevance for Upcoming Experiments}
+This is consistent with the power spectra at fixed $k$: for both $k = 0.1 ~\text{Mpc}^{-1}$ and $k = 1.0 ~\text{Mpc}^{-1}$, the earlier heating causes correlations to appear at earlier redshift, since the IGM fluctuations are larger for high $h$. As well as this, the spacing of the curves is more significant in the high $k$ regime, indicating the prominence of the differences in Jeans scale.
 
 \section{Conclusions and Future Work}
 \subsection{Conclusions}
